@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.lmxdawn.him.api.dao.user.UserFriendDao">
+
+    <select id="listByUid" parameterType="long" resultType="com.lmxdawn.him.common.entity.user.UserFriend">
+        SELECT id,uid,`name`,avatar
+        FROM `user_friend`
+        where uid=#{uid}
+        limit #{offset},#{limit}
+    </select>
+
+    <insert id="insertUserFriend" keyProperty="uid" parameterType="com.lmxdawn.him.common.entity.user.UserFriend">
+        INSERT INTO user(`name`,avatar,create_time,modified_time)
+        VALUES
+        (#{name},
+        #{avatar},
+        #{createTime},
+        #{modifiedTime})
+    </insert>
+
+    <update id="updateUserFriend" parameterType="com.lmxdawn.him.common.entity.user.UserFriend">
+        UPDATE `user`
+        <set>
+            <if test="name != null">`name`=#{name},</if>
+            <if test="avatar != null">`avatar`=#{avatar},</if>
+            modified_time=#{modifiedTime}
+        </set>
+        WHERE uid=#{uid}
+    </update>
+
+    <delete id="deleteById" parameterType="long">
+        delete from `user` where uid = #{uid}
+    </delete>
+
+</mapper>

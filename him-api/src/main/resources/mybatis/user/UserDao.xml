@@ -10,6 +10,16 @@
         limit 1
     </select>
 
+    <select id="listByUidIn" resultType="com.lmxdawn.api.admin.entity.ad.Ad">
+        SELECT ad_id,title,`describe`,`status`
+        FROM ad
+        where ad_id in
+        <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+        LIMIT 150
+    </select>
+
     <insert id="insertUser" keyProperty="uid" parameterType="com.lmxdawn.him.common.entity.user.User">
         INSERT INTO user(`name`,avatar,create_time,modified_time)
         VALUES
