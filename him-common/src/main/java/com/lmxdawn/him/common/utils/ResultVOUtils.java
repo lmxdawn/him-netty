@@ -1,7 +1,7 @@
 package com.lmxdawn.him.common.utils;
 
-import com.lmxdawn.api.admin.enums.ResultEnum;
-import com.lmxdawn.api.admin.vo.ResultVO;
+import com.lmxdawn.him.common.enums.ResultEnum;
+import com.lmxdawn.him.common.vo.ResultVO;
 
 import java.util.HashMap;
 import java.util.Map;
