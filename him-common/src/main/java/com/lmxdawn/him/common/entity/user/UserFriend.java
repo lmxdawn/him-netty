@@ -23,6 +23,10 @@ public class UserFriend {
  	*/
 	private Long friendUid;
 	/**
+ 	* 备注
+ 	*/
+	private String remark;
+	/**
  	* 创建时间
  	*/
 	private Date createTime;

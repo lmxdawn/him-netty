@@ -19,6 +19,10 @@ public class Group {
  	*/
 	private String name;
 	/**
+ 	* 成员数量
+ 	*/
+	private Integer memberNum;
+	/**
  	* 创建时间
  	*/
 	private Date createTime;

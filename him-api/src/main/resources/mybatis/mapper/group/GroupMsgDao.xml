@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.lmxdawn.him.api.dao.group.GroupMsgDao">
+
+    <select id="listByLastMsgId" parameterType="long" resultType="com.lmxdawn.him.common.entity.group.GroupMsg">
+        select msg_id,group_id,sender_uid,msg_type,msg_content,create_time
+        from `group_msg`
+        where group_id = #{groupId} and msg_id > #{lastMsgId}
+        order by msg_id desc
+        limit 100
+    </select>
+
+    <insert id="insertGroupMsg" keyProperty="msgId" parameterType="com.lmxdawn.him.common.entity.group.GroupMsg">
+        insert into `group_msg`(`group_id`,sender_uid,msg_type,msg_content,create_time,modified_time)
+        values
+        (#{groupId},
+        #{senderUid},
+        #{msgType},
+        #{msgContent},
+        #{createTime},
+        #{modifiedTime})
+    </insert>
+</mapper>

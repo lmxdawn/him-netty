@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.lmxdawn.him.api.dao.group.GroupDao">
+
+    <select id="findByGroupId" parameterType="long" resultType="com.lmxdawn.him.common.entity.group.Group">
+        SELECT group_id,`name`,member_num,create_time
+        FROM `group`
+        where group_id=#{groupId}
+        limit 1
+    </select>
+
+    <select id="listByGroupIdIn" resultType="com.lmxdawn.him.common.entity.group.Group">
+        SELECT group_id,`name`,member_num
+        FROM `group`
+        where group_id in
+        <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
+
+    <insert id="insertGroup" keyProperty="groupId" parameterType="com.lmxdawn.him.common.entity.group.Group">
+        INSERT INTO `group`(`name`,member_num,create_time,modified_time)
+        VALUES
+        (#{name},
+        #{memberNum},
+        #{createTime},
+        #{modifiedTime})
+    </insert>
+
+    <update id="updateGroup" parameterType="com.lmxdawn.him.common.entity.group.Group">
+        UPDATE `group`
+        <set>
+            <if test="name != null">`name`=#{name},</if>
+            <if test="memberNum != null">`member_num`=#{memberNum},</if>
+            modified_time=#{modifiedTime}
+        </set>
+        WHERE group_id=#{groupId}
+    </update>
+
+    <delete id="deleteByGroupId" parameterType="long">
+        delete from `group` where group_id=#{groupId}
+    </delete>
+
+</mapper>

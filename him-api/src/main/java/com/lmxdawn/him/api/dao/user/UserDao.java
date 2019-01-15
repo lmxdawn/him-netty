@@ -3,6 +3,8 @@ package com.lmxdawn.him.api.dao.user;
 import com.lmxdawn.him.common.entity.user.User;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface UserDao {
 
@@ -12,6 +14,13 @@ public interface UserDao {
      * @return
      */
     User findByUid(Long uid);
+
+    /**
+     * 根据多个Uid查询
+     * @param uids
+     * @return
+     */
+     List<User> listByUidIn(List<Long> uids);
 
     /**
      * 插入

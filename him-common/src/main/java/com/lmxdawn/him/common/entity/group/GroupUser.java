@@ -23,6 +23,10 @@ public class GroupUser {
  	*/
 	private Long uid;
 	/**
+ 	* 群里的备注
+ 	*/
+	private String remark;
+	/**
  	* 最后一次确认的消息ID
  	*/
 	private Long lastAckMsgId;
@@ -30,5 +34,9 @@ public class GroupUser {
  	* 创建时间
  	*/
 	private Date createTime;
+	/**
+ 	* 创建时间
+ 	*/
+	private Date modifiedTime;
 
 }

@@ -25,7 +25,7 @@ public class UserOfflineMsg {
 	/**
  	* 消息类型 ( 0: 文本消息 )
  	*/
-	private Long msgType;
+	private Integer msgType;
 	/**
  	* 消息内容
  	*/

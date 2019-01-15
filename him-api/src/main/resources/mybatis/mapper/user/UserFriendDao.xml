@@ -3,34 +3,34 @@
 
 <mapper namespace="com.lmxdawn.him.api.dao.user.UserFriendDao">
 
-    <select id="listByUid" parameterType="long" resultType="com.lmxdawn.him.common.entity.user.UserFriend">
-        SELECT id,uid,`name`,avatar
-        FROM `user_friend`
-        where uid=#{uid}
+    <select id="listByUid" parameterType="com.lmxdawn.him.api.vo.req.UserFriendListReqVO" resultType="com.lmxdawn.him.common.entity.user.UserFriend">
+        select id,uid,`friend_uid`,remark
+        from `user_friend`
+        where uid = #{uid}
         limit #{offset},#{limit}
     </select>
 
-    <insert id="insertUserFriend" keyProperty="uid" parameterType="com.lmxdawn.him.common.entity.user.UserFriend">
-        INSERT INTO user(`name`,avatar,create_time,modified_time)
-        VALUES
-        (#{name},
-        #{avatar},
+    <insert id="insertUserFriend" keyProperty="id" parameterType="com.lmxdawn.him.common.entity.user.UserFriend">
+        insert into `user_friend`(`uid`,friend_uid,remark,create_time,modified_time)
+        values
+        (#{uid},
+        #{friendUid},
+        #{remark},
         #{createTime},
         #{modifiedTime})
     </insert>
 
     <update id="updateUserFriend" parameterType="com.lmxdawn.him.common.entity.user.UserFriend">
-        UPDATE `user`
+        update `user_friend`
         <set>
-            <if test="name != null">`name`=#{name},</if>
-            <if test="avatar != null">`avatar`=#{avatar},</if>
+            <if test="remark != null">`remark`=#{remark},</if>
             modified_time=#{modifiedTime}
         </set>
-        WHERE uid=#{uid}
+        where uid = #{uid} and friend_uid = #{friendUid}
     </update>
 
-    <delete id="deleteById" parameterType="long">
-        delete from `user` where uid = #{uid}
+    <delete id="deleteByUserFriend" parameterType="com.lmxdawn.him.common.entity.user.UserFriend">
+        delete from `user_friend` where uid = #{uid} and friend_uid = #{friendUid}
     </delete>
 
 </mapper>

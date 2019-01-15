@@ -1,37 +1,40 @@
 package com.lmxdawn.him.api.dao.user;
 
-import com.lmxdawn.him.common.entity.user.User;
+import com.lmxdawn.him.api.vo.req.UserFriendListReqVO;
+import com.lmxdawn.him.common.entity.user.UserFriend;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 @Mapper
 public interface UserFriendDao {
 
     /**
-     * 根据Uid查询
-     * @param uid
+     * 查询朋友列表
+     * @param userFriendListReqVO
      * @return
      */
-    User findByUid(Long uid);
+    List<UserFriend> listByUid(UserFriendListReqVO userFriendListReqVO);
 
     /**
      * 插入
-     * @param user
+     * @param userFriend
      * @return
      */
-    boolean insertUser(User user);
+    boolean insertUserFriend(UserFriend userFriend);
 
     /**
      * 更新
-     * @param user
+     * @param userFriend
      * @return
      */
-    boolean updateUser(User user);
+    boolean updateUserFriend(UserFriend userFriend);
 
     /**
      * 删除
-     * @param uid
+     * @param userFriend
      * @return
      */
-    boolean deleteByUid(Long uid);
+    boolean deleteByUserFriend(UserFriend userFriend);
 
 }
