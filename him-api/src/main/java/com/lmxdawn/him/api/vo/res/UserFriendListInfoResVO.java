@@ -1,16 +1,21 @@
 package com.lmxdawn.him.api.vo.res;
 
-import com.lmxdawn.him.common.vo.res.BaseResponseVO;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * 用户朋友列表信息
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
-public class UserFriendListInfoResVO extends BaseResponseVO {
+public class UserFriendListInfoResVO {
 
+    /**
+     * 用户id
+     */
+    private Long uid;
+    /**
+     * 朋友的用户id
+     */
+    private Long friendUid;
     /**
      * 备注
      */

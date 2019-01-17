@@ -3,6 +3,7 @@ package com.lmxdawn.him.api.dao.user;
 import com.lmxdawn.him.api.vo.req.UserFriendListReqVO;
 import com.lmxdawn.him.common.entity.user.UserFriend;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -15,6 +16,12 @@ public interface UserFriendDao {
      * @return
      */
     List<UserFriend> listByUid(UserFriendListReqVO userFriendListReqVO);
+
+    /**
+     * 查询两个用户是否是朋友关系
+     * @return
+     */
+    UserFriend findByUidAndFriendUid(@Param("uid") Long uid, @Param("friendUid") Long friendUid);
 
     /**
      * 插入
@@ -32,9 +39,8 @@ public interface UserFriendDao {
 
     /**
      * 删除
-     * @param userFriend
      * @return
      */
-    boolean deleteByUserFriend(UserFriend userFriend);
+    boolean deleteByUidAndFriendUid(@Param("uid") Long uid, @Param("friendUid") Long friendUid);
 
 }

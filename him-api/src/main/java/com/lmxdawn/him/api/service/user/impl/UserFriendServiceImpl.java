@@ -33,6 +33,11 @@ public class UserFriendServiceImpl implements UserFriendService {
     }
 
     @Override
+    public UserFriend findByUidAndFriendUid(Long uid, Long friendUid) {
+        return userFriendDao.findByUidAndFriendUid(uid, friendUid);
+    }
+
+    @Override
     public boolean insertUserFriend(UserFriend userFriend) {
         if (userFriend.getUid().equals(userFriend.getFriendUid())) {
             return false;
@@ -49,7 +54,7 @@ public class UserFriendServiceImpl implements UserFriendService {
     }
 
     @Override
-    public boolean deleteByUserFriend(UserFriend userFriend) {
-        return deleteByUserFriend(userFriend);
+    public boolean deleteByUidAndFriendUid(Long uid, Long friendUid) {
+        return deleteByUidAndFriendUid(uid, friendUid);
     }
 }

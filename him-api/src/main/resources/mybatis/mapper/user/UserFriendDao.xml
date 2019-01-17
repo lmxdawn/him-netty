@@ -10,6 +10,13 @@
         limit #{offset},#{limit}
     </select>
 
+    <select id="findByUidAndFriendUid" resultType="com.lmxdawn.him.common.entity.user.UserFriend">
+        select id
+        from `user_friend`
+        where uid = #{uid} and friend_uid=#{friendUid}
+        limit 1
+    </select>
+
     <insert id="insertUserFriend" keyProperty="id" parameterType="com.lmxdawn.him.common.entity.user.UserFriend">
         insert into `user_friend`(`uid`,friend_uid,remark,create_time,modified_time)
         values
@@ -29,7 +36,7 @@
         where uid = #{uid} and friend_uid = #{friendUid}
     </update>
 
-    <delete id="deleteByUserFriend" parameterType="com.lmxdawn.him.common.entity.user.UserFriend">
+    <delete id="deleteByUidAndFriendUid">
         delete from `user_friend` where uid = #{uid} and friend_uid = #{friendUid}
     </delete>
 

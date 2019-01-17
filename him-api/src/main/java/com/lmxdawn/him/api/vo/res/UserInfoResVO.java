@@ -1,17 +1,14 @@
 package com.lmxdawn.him.api.vo.res;
 
-import com.lmxdawn.him.common.vo.res.BaseResponseVO;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 
 /**
  * 用户信息
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
-public class UserInfoResVO extends BaseResponseVO {
+public class UserInfoResVO {
 
     /**
      * 用户id

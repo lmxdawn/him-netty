@@ -10,10 +10,12 @@ public interface UserFriendService {
 
     List<UserFriendListInfoResVO> listByUid(UserFriendListReqVO userFriendListReqVO);
 
+    UserFriend findByUidAndFriendUid(Long uid, Long friendUid);
+
     boolean insertUserFriend(UserFriend userFriend);
 
     boolean updateUserFriend(UserFriend userFriend);
 
-    boolean deleteByUserFriend(UserFriend userFriend);
+    boolean deleteByUidAndFriendUid(Long uid, Long friendUid);
 
 }

@@ -1,17 +1,12 @@
 package com.lmxdawn.him.api.vo.res;
 
-import com.lmxdawn.him.common.vo.res.BaseResponseVO;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-
-import java.util.Date;
 
 /**
  * 群列表信息
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
-public class GroupInfoListResVO extends BaseResponseVO {
+public class GroupInfoListResVO {
 
     /**
      * 群ID
