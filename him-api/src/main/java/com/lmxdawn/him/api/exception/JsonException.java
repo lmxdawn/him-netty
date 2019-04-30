@@ -1,4 +1,4 @@
-package com.lmxdawn.him.common.exception;
+package com.lmxdawn.him.api.exception;
 
 import com.lmxdawn.him.common.enums.ResultEnum;
 import lombok.Getter;

@@ -1,6 +1,6 @@
-package com.lmxdawn.him.api.vo.req;
+package com.lmxdawn.him.api.req;
 
-import com.lmxdawn.him.common.vo.req.BaseRequestVO;
+import com.lmxdawn.him.common.req.BaseRequest;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class UserFriendSaveReqVO extends BaseRequestVO {
+public class UserFriendSaveRequest extends BaseRequest {
 
     /**
      * 用户的ID

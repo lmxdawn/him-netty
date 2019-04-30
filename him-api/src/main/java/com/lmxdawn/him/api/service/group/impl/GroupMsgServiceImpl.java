@@ -2,7 +2,7 @@ package com.lmxdawn.him.api.service.group.impl;
 
 import com.lmxdawn.him.api.dao.group.GroupMsgDao;
 import com.lmxdawn.him.api.service.group.GroupMsgService;
-import com.lmxdawn.him.api.vo.res.GroupMsgListResVO;
+import com.lmxdawn.him.api.res.GroupMsgListResponse;
 import com.lmxdawn.him.common.entity.group.GroupMsg;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -19,13 +19,13 @@ public class GroupMsgServiceImpl implements GroupMsgService {
     private GroupMsgDao groupMsgDao;
 
     @Override
-    public List<GroupMsgListResVO> listByLastMsgId(Long groupId, Long lastMsgId) {
+    public List<GroupMsgListResponse> listByLastMsgId(Long groupId, Long lastMsgId) {
 
-        List<GroupMsgListResVO> groupMsgListResVOList = groupMsgDao.listByLastMsgId(groupId, lastMsgId).stream()
+        List<GroupMsgListResponse> groupMsgListResVOList = groupMsgDao.listByLastMsgId(groupId, lastMsgId).stream()
                 .map(v -> {
-                    GroupMsgListResVO groupMsgListResVO = new GroupMsgListResVO();
-                    BeanUtils.copyProperties(v, groupMsgListResVO);
-                    return groupMsgListResVO;
+                    GroupMsgListResponse groupMsgListResponse = new GroupMsgListResponse();
+                    BeanUtils.copyProperties(v, groupMsgListResponse);
+                    return groupMsgListResponse;
                 })
                 .collect(Collectors.toList());
 

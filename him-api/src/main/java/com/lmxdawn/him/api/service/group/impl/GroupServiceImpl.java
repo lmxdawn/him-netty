@@ -2,7 +2,7 @@ package com.lmxdawn.him.api.service.group.impl;
 
 import com.lmxdawn.him.api.dao.group.GroupDao;
 import com.lmxdawn.him.api.service.group.GroupService;
-import com.lmxdawn.him.api.vo.res.GroupInfoListResVO;
+import com.lmxdawn.him.api.res.GroupInfoListResponse;
 import com.lmxdawn.him.common.entity.group.Group;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -24,13 +24,13 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public List<GroupInfoListResVO> listByGroupIdIn(List<Long> groupIds) {
+    public List<GroupInfoListResponse> listByGroupIdIn(List<Long> groupIds) {
 
-        List<GroupInfoListResVO> groupInfoListResVOList = groupDao.listByGroupIdIn(groupIds).stream()
+        List<GroupInfoListResponse> groupInfoListResVOList = groupDao.listByGroupIdIn(groupIds).stream()
                 .map(v -> {
-                    GroupInfoListResVO groupInfoListResVO = new GroupInfoListResVO();
-                    BeanUtils.copyProperties(v, groupInfoListResVO);
-                    return groupInfoListResVO;
+                    GroupInfoListResponse groupInfoListResponse = new GroupInfoListResponse();
+                    BeanUtils.copyProperties(v, groupInfoListResponse);
+                    return groupInfoListResponse;
                 })
                 .collect(Collectors.toList());
 

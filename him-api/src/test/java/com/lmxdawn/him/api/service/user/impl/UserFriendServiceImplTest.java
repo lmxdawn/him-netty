@@ -2,8 +2,8 @@ package com.lmxdawn.him.api.service.user.impl;
 
 import com.lmxdawn.him.api.BaseApplicationTest;
 import com.lmxdawn.him.api.service.user.UserFriendService;
-import com.lmxdawn.him.api.vo.req.UserFriendListReqVO;
-import com.lmxdawn.him.api.vo.res.UserFriendListInfoResVO;
+import com.lmxdawn.him.api.req.UserFriendListRequest;
+import com.lmxdawn.him.api.res.UserFriendListInfoResponse;
 import com.lmxdawn.him.common.entity.user.UserFriend;
 import org.junit.Test;
 
@@ -21,10 +21,10 @@ public class UserFriendServiceImplTest extends BaseApplicationTest {
     @Test
     public void listByUid() {
 
-        UserFriendListReqVO userFriendListReqVO = new UserFriendListReqVO();
-        userFriendListReqVO.setUid(1L);
-        userFriendListReqVO.setOffset();
-        List<UserFriendListInfoResVO> userFriendListInfoResVOList = userFriendService.listByUid(userFriendListReqVO);
+        UserFriendListRequest userFriendListRequest = new UserFriendListRequest();
+        userFriendListRequest.setUid(1L);
+        userFriendListRequest.setOffset();
+        List<UserFriendListInfoResponse> userFriendListInfoResVOList = userFriendService.listByUid(userFriendListRequest);
 
         System.out.println(userFriendListInfoResVOList);
 

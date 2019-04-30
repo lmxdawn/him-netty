@@ -1,4 +1,4 @@
-package com.lmxdawn.him.api.vo.res;
+package com.lmxdawn.him.api.res;
 
 import lombok.Data;
 
@@ -8,7 +8,7 @@ import java.util.Date;
  * 用户信息
  */
 @Data
-public class UserInfoResVO {
+public class UserInfoResponse {
 
     /**
      * 用户id

@@ -3,14 +3,14 @@
 
 <mapper namespace="com.lmxdawn.him.api.dao.group.GroupUserDao">
 
-    <select id="listByGroupId" parameterType="com.lmxdawn.him.api.vo.req.GroupUserListReqVO" resultType="com.lmxdawn.him.common.entity.group.GroupUser">
+    <select id="listByGroupId" parameterType="com.lmxdawn.him.api.req.GroupUserListRequest" resultType="com.lmxdawn.him.common.entity.group.GroupUser">
         select id,group_id,uid,remark
         from `group_user`
         where group_id = #{groupId}
         limit #{offset},#{limit}
     </select>
 
-    <select id="listByUid" parameterType="com.lmxdawn.him.api.vo.req.UserGroupListReqVO" resultType="com.lmxdawn.him.common.entity.group.GroupUser">
+    <select id="listByUid" parameterType="com.lmxdawn.him.api.req.UserGroupListRequest" resultType="com.lmxdawn.him.common.entity.group.GroupUser">
         select id,group_id,uid
         from `group_user`
         where uid = #{uid}

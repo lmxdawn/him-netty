@@ -2,7 +2,7 @@ package com.lmxdawn.him.api.aspect;
 
 import com.lmxdawn.him.api.utils.JwtUtils;
 import com.lmxdawn.him.common.enums.ResultEnum;
-import com.lmxdawn.him.common.exception.JsonException;
+import com.lmxdawn.him.api.exception.JsonException;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.annotation.Aspect;

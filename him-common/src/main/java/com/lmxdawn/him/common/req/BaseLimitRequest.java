@@ -1,11 +1,9 @@
-package com.lmxdawn.him.common.vo.req;
-
-import lombok.Data;
+package com.lmxdawn.him.common.req;
 
 /**
  * 分页的请求
  */
-public class BaseLimitRequestVO extends BaseRequestVO{
+public class BaseLimitRequest extends BaseRequest{
 
     /**
      * 页码

@@ -1,7 +1,7 @@
 package com.lmxdawn.him.common.utils;
 
 import com.lmxdawn.him.common.enums.ResultEnum;
-import com.lmxdawn.him.common.vo.res.BaseResponseVO;
+import com.lmxdawn.him.common.res.BaseResponse;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,21 +14,21 @@ public class ResultVOUtils {
     /**
      * 成功时返回
      * @param data 返回的data对象
-     * @return {@link BaseResponseVO}
+     * @return {@link BaseResponse}
      */
-    public static BaseResponseVO success(Object data) {
-        BaseResponseVO<Object> baseResponseVO = new BaseResponseVO<>();
-        baseResponseVO.setCode(0);
-        baseResponseVO.setMessage("success");
-        baseResponseVO.setData(data);
-        return baseResponseVO;
+    public static BaseResponse success(Object data) {
+        BaseResponse<Object> baseResponse = new BaseResponse<>();
+        baseResponse.setCode(0);
+        baseResponse.setMessage("success");
+        baseResponse.setData(data);
+        return baseResponse;
     }
 
     /**
      * 成功时返回
-     * @return {@link BaseResponseVO}
+     * @return {@link BaseResponse}
      */
-    public static BaseResponseVO success() {
+    public static BaseResponse success() {
         Map data = new HashMap();
         return success(data);
     }
@@ -37,23 +37,23 @@ public class ResultVOUtils {
      * 错误时返回
      * @param code 错误码
      * @param message 错误信息
-     * @return {@link BaseResponseVO}
+     * @return {@link BaseResponse}
      */
-    public static BaseResponseVO error(Integer code, String message) {
-        BaseResponseVO<Object> baseResponseVO = new BaseResponseVO<>();
-        baseResponseVO.setCode(code);
-        baseResponseVO.setMessage(message);
+    public static BaseResponse error(Integer code, String message) {
+        BaseResponse<Object> baseResponse = new BaseResponse<>();
+        baseResponse.setCode(code);
+        baseResponse.setMessage(message);
         Map data = new HashMap();
-        baseResponseVO.setData(data);
-        return baseResponseVO;
+        baseResponse.setData(data);
+        return baseResponse;
     }
 
     /**
      * 错误时返回
      * @param resultEnum 错误枚举类
-     * @return {@link BaseResponseVO}
+     * @return {@link BaseResponse}
      */
-    public static BaseResponseVO error(ResultEnum resultEnum) {
+    public static BaseResponse error(ResultEnum resultEnum) {
         return error(resultEnum.getCode(), resultEnum.getMessage());
     }
 
@@ -61,9 +61,9 @@ public class ResultVOUtils {
      * 错误时返回
      * @param resultEnum 错误枚举类
      * @param message 错误的信息
-     * @return {@link BaseResponseVO}
+     * @return {@link BaseResponse}
      */
-    public static BaseResponseVO error(ResultEnum resultEnum, String message) {
+    public static BaseResponse error(ResultEnum resultEnum, String message) {
         return error(resultEnum.getCode(), message);
     }
 
