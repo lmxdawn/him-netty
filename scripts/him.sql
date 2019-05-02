@@ -43,14 +43,14 @@ CREATE TABLE `group_msg`  (
   `create_time` datetime(0) NOT NULL COMMENT '创建时间',
   `modified_time` datetime(0) NOT NULL COMMENT '更新时间',
   PRIMARY KEY (`msg_id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '群的消息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '群的消息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for group_user
 -- ----------------------------
 DROP TABLE IF EXISTS `group_user`;
 CREATE TABLE `group_user`  (
-  `id` bigint(20) UNSIGNED NOT NULL DEFAULT 0 AUTO_INCREMENT COMMENT '自增ID',
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '自增ID',
   `group_id` bigint(20) UNSIGNED NOT NULL COMMENT '群ID',
   `uid` bigint(20) UNSIGNED NOT NULL COMMENT '用户ID',
   `remark` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '群里的备注',
@@ -62,12 +62,6 @@ CREATE TABLE `group_user`  (
   UNIQUE INDEX `uk_group_id_uid`(`group_id`, `uid`) USING BTREE,
   INDEX `idx_uid`(`uid`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '群组表' ROW_FORMAT = Compact;
-
--- ----------------------------
--- Records of group_user
--- ----------------------------
-INSERT INTO `group_user` VALUES (1, 1, 2, '3', 0, 0, '2019-04-30 16:52:59', '2019-04-30 16:53:01');
-INSERT INTO `group_user` VALUES (2, 1, 1, '1', 0, 2, '2019-04-30 16:52:04', '2019-04-30 16:52:06');
 
 -- ----------------------------
 -- Table structure for user
