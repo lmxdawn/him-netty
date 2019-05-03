@@ -10,6 +10,13 @@
         limit 1
     </select>
 
+    <select id="findPwdByUid" parameterType="long" resultType="com.lmxdawn.him.common.entity.user.User">
+        SELECT pwd
+        FROM `user`
+        where uid=#{uid}
+        limit 1
+    </select>
+
     <select id="listByUidIn" resultType="com.lmxdawn.him.common.entity.user.User">
         SELECT uid,`name`,avatar
         FROM `user`

@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 后台登录授权/权限验证的注解
+ * 登录验证的注解
  */
 //此注解只能修饰方法
 @Target(ElementType.METHOD)

@@ -15,6 +15,10 @@ public class User {
  	*/
 	private Long uid;
 	/**
+ 	* 用户密码
+ 	*/
+	private String pwd;
+	/**
  	* 用户昵称
  	*/
 	private String name;

@@ -9,6 +9,8 @@ public interface UserService {
 
     User findByUid(Long uid);
 
+    User findPwdByUid(Long uid);
+
     List<UserInfoListResponse> listByUidIn(List<Long> uids);
 
     boolean insertUser(User user);

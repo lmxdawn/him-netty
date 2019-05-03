@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -21,34 +22,44 @@ import javax.servlet.http.HttpServletRequest;
 @Component
 @Slf4j
 public class AuthorizeAspect {
-
-
+    
+    
     @Pointcut("@annotation(com.lmxdawn.him.api.annotation.CheckLoginAnnotation)")
     public void checkLoginVerify() {
     }
-
+    
     /**
      * 登录验证
+     *
      * @param
      */
     @Before("checkLoginVerify()")
     public void doLoginVerify() {
-
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        if (attributes == null) {
-            throw new JsonException(ResultEnum.NOT_NETWORK);
-        }
         HttpServletRequest request = attributes.getRequest();
-
-        try {
-            Long uid = Long.valueOf(request.getParameter("uid"));
-
-
-            String token = request.getParameter("token");
-            if (token == null) {
+        
+        String sUid = request.getParameter("UID");
+        String token = request.getParameter("SID");
+        if (sUid == null || sUid.isEmpty() || token == null || token.isEmpty()) {
+            Cookie[] cookies = request.getCookies();
+            if (cookies == null) {
                 throw new JsonException(ResultEnum.LOGIN_VERIFY_FALL);
             }
-
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("UID")) {
+                    sUid = cookie.getValue();
+                } else if (cookie.getName().equals("SID")) {
+                    token = cookie.getValue();
+                }
+            }
+        }
+    
+        if (sUid == null || token == null) {
+            throw new JsonException(ResultEnum.LOGIN_VERIFY_FALL);
+        }
+        try {
+    
+            Long uid = Long.valueOf(sUid);
             // 验证 token
             Claims claims = JwtUtils.parse(token);
             if (claims == null) {
@@ -59,10 +70,10 @@ public class AuthorizeAspect {
                 throw new JsonException(ResultEnum.LOGIN_VERIFY_FALL);
             }
 
-        }catch (Exception e) {
+        } catch (Exception e) {
             throw new JsonException(ResultEnum.LOGIN_VERIFY_FALL);
         }
-
+        
     }
     
 }

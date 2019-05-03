@@ -53,13 +53,13 @@ public class FriendController {
 
 
     /**
-     * 创建朋友
+     * 发起朋友请求
      * @param userFriendSaveRequest
      * @param bindingResult
      * @return
      */
     @CheckLoginAnnotation
-    @PostMapping("/create")
+    @PostMapping("/ask")
     public BaseResponse create(@Valid @RequestBody UserFriendSaveRequest userFriendSaveRequest,
                                BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {

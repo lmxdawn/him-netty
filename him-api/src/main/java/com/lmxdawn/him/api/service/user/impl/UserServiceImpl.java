@@ -22,7 +22,12 @@ public class UserServiceImpl implements UserService {
     public User findByUid(Long uid) {
         return userDao.findByUid(uid);
     }
-
+    
+    @Override
+    public User findPwdByUid(Long uid) {
+        return userDao.findPwdByUid(uid);
+    }
+    
     @Override
     public List<UserInfoListResponse> listByUidIn(List<Long> uids) {
         List<User> users = userDao.listByUidIn(uids);

@@ -67,4 +67,12 @@ public class ResultVOUtils {
         return error(resultEnum.getCode(), message);
     }
 
+    /**
+     * 默认的错误
+     * @return {@link BaseResponse}
+     */
+    public static BaseResponse error() {
+        return error(ResultEnum.NOT_NETWORK);
+    }
+
 }

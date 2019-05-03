@@ -29,5 +29,12 @@ public class GlobalExceptionHandler {
         // 返回对应的错误信息
         return ResultVOUtils.error(ResultEnum.NOT_NETWORK);
     }
+
+    // 拦截API异常
+    @ExceptionHandler(value = Exception.class)
+    public BaseResponse handlerRuntimeException(Exception e) {
+        log.error(e.getMessage());
+        return ResultVOUtils.error(ResultEnum.NOT_NETWORK, "Request resource not found.");
+    }
     
 }

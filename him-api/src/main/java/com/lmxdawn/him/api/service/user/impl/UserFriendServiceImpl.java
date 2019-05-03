@@ -22,14 +22,14 @@ public class UserFriendServiceImpl implements UserFriendService {
     @Override
     public List<UserFriendListInfoResponse> listByUid(UserFriendListRequest userFriendListRequest) {
         userFriendListRequest.setOffset();
-        List<UserFriendListInfoResponse> userFriendListInfoResVOList = userFriendDao.listByUid(userFriendListRequest).stream()
+        List<UserFriendListInfoResponse> userFriendListInfoResponseList = userFriendDao.listByUid(userFriendListRequest).stream()
                 .map(v -> {
                     UserFriendListInfoResponse userFriendListInfoResponse = new UserFriendListInfoResponse();
                     BeanUtils.copyProperties(v, userFriendListInfoResponse);
                     return userFriendListInfoResponse;
                 })
                 .collect(Collectors.toList());
-        return userFriendListInfoResVOList;
+        return userFriendListInfoResponseList;
     }
 
     @Override
@@ -55,6 +55,6 @@ public class UserFriendServiceImpl implements UserFriendService {
 
     @Override
     public boolean deleteByUidAndFriendUid(Long uid, Long friendUid) {
-        return deleteByUidAndFriendUid(uid, friendUid);
+        return userFriendDao.deleteByUidAndFriendUid(uid, friendUid);
     }
 }
