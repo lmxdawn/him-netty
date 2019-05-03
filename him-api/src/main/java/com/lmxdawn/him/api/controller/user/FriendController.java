@@ -2,13 +2,13 @@ package com.lmxdawn.him.api.controller.user;
 
 import com.lmxdawn.him.api.annotation.CheckLoginAnnotation;
 import com.lmxdawn.him.api.service.user.UserFriendService;
-import com.lmxdawn.him.api.req.UserFriendSaveRequest;
-import com.lmxdawn.him.api.req.UserFriendListRequest;
-import com.lmxdawn.him.api.res.UserFriendListInfoResponse;
+import com.lmxdawn.him.api.vo.req.UserFriendSaveReqVO;
+import com.lmxdawn.him.api.vo.req.UserFriendListReqVO;
+import com.lmxdawn.him.api.vo.res.UserFriendListInfoResVO;
 import com.lmxdawn.him.common.entity.user.UserFriend;
 import com.lmxdawn.him.common.enums.ResultEnum;
 import com.lmxdawn.him.common.utils.ResultVOUtils;
-import com.lmxdawn.him.common.res.BaseResponse;
+import com.lmxdawn.him.common.vo.res.BaseResVO;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,19 +32,19 @@ public class FriendController {
      */
     @CheckLoginAnnotation
     @GetMapping("/lists")
-    public BaseResponse lists(@RequestParam("uid") Long uid,
-                              @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
-                              @RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit) {
+    public BaseResVO lists(@RequestParam("uid") Long uid,
+                           @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+                           @RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit) {
 
         if (limit > 50) {
             limit = 50;
         }
 
-        UserFriendListRequest userFriendListRequest = new UserFriendListRequest();
+        UserFriendListReqVO userFriendListRequest = new UserFriendListReqVO();
         userFriendListRequest.setUid(uid);
         userFriendListRequest.setPage(page);
         userFriendListRequest.setLimit(limit);
-        List<UserFriendListInfoResponse> userFriendListInfoResVOList = userFriendService.listByUid(userFriendListRequest);
+        List<UserFriendListInfoResVO> userFriendListInfoResVOList = userFriendService.listByUid(userFriendListRequest);
 
 
         return ResultVOUtils.success(userFriendListInfoResVOList);
@@ -54,28 +54,28 @@ public class FriendController {
 
     /**
      * 发起朋友请求
-     * @param userFriendSaveRequest
+     * @param userFriendSaveReqVO
      * @param bindingResult
      * @return
      */
     @CheckLoginAnnotation
     @PostMapping("/ask")
-    public BaseResponse create(@Valid @RequestBody UserFriendSaveRequest userFriendSaveRequest,
-                               BindingResult bindingResult) {
+    public BaseResVO create(@Valid @RequestBody UserFriendSaveReqVO userFriendSaveReqVO,
+                            BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return ResultVOUtils.error(ResultEnum.PARAM_VERIFY_FALL, bindingResult.getFieldError().getDefaultMessage());
         }
 
         // 查找是否是好友关系
-        UserFriend byUidAndFriendUid = userFriendService.findByUidAndFriendUid(userFriendSaveRequest.getUid(), userFriendSaveRequest.getFriendUid());
+        UserFriend byUidAndFriendUid = userFriendService.findByUidAndFriendUid(userFriendSaveReqVO.getUid(), userFriendSaveReqVO.getFriendUid());
         if (null != byUidAndFriendUid.getId()) {
             return ResultVOUtils.success();
         }
 
         UserFriend userFriend = new UserFriend();
-        userFriend.setFriendUid(userFriendSaveRequest.getUid());
-        userFriend.setFriendUid(userFriendSaveRequest.getFriendUid());
-        userFriend.setRemark(userFriendSaveRequest.getRemark());
+        userFriend.setFriendUid(userFriendSaveReqVO.getUid());
+        userFriend.setFriendUid(userFriendSaveReqVO.getFriendUid());
+        userFriend.setRemark(userFriendSaveReqVO.getRemark());
 
         boolean b = userFriendService.insertUserFriend(userFriend);
 
@@ -92,13 +92,13 @@ public class FriendController {
      */
     @CheckLoginAnnotation
     @PostMapping("/delete")
-    public BaseResponse delete(@Valid @RequestBody UserFriendSaveRequest userFriendSaveRequest,
-                               BindingResult bindingResult) {
+    public BaseResVO delete(@Valid @RequestBody UserFriendSaveReqVO userFriendSaveReqVO,
+                            BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return ResultVOUtils.error(ResultEnum.PARAM_VERIFY_FALL, bindingResult.getFieldError().getDefaultMessage());
         }
 
-        boolean b = userFriendService.deleteByUidAndFriendUid(userFriendSaveRequest.getUid(), userFriendSaveRequest.getFriendUid());
+        boolean b = userFriendService.deleteByUidAndFriendUid(userFriendSaveReqVO.getUid(), userFriendSaveReqVO.getFriendUid());
 
         if (!b) {
             return ResultVOUtils.error(ResultEnum.NOT_NETWORK);

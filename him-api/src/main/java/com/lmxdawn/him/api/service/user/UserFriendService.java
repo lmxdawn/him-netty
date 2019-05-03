@@ -1,14 +1,14 @@
 package com.lmxdawn.him.api.service.user;
 
-import com.lmxdawn.him.api.req.UserFriendListRequest;
-import com.lmxdawn.him.api.res.UserFriendListInfoResponse;
+import com.lmxdawn.him.api.vo.req.UserFriendListReqVO;
+import com.lmxdawn.him.api.vo.res.UserFriendListInfoResVO;
 import com.lmxdawn.him.common.entity.user.UserFriend;
 
 import java.util.List;
 
 public interface UserFriendService {
 
-    List<UserFriendListInfoResponse> listByUid(UserFriendListRequest userFriendListRequest);
+    List<UserFriendListInfoResVO> listByUid(UserFriendListReqVO userFriendListRequest);
 
     UserFriend findByUidAndFriendUid(Long uid, Long friendUid);
 

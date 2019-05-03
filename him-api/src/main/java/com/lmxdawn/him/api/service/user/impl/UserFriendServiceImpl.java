@@ -2,8 +2,8 @@ package com.lmxdawn.him.api.service.user.impl;
 
 import com.lmxdawn.him.api.dao.user.UserFriendDao;
 import com.lmxdawn.him.api.service.user.UserFriendService;
-import com.lmxdawn.him.api.req.UserFriendListRequest;
-import com.lmxdawn.him.api.res.UserFriendListInfoResponse;
+import com.lmxdawn.him.api.vo.req.UserFriendListReqVO;
+import com.lmxdawn.him.api.vo.res.UserFriendListInfoResVO;
 import com.lmxdawn.him.common.entity.user.UserFriend;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -20,13 +20,13 @@ public class UserFriendServiceImpl implements UserFriendService {
     private UserFriendDao userFriendDao;
 
     @Override
-    public List<UserFriendListInfoResponse> listByUid(UserFriendListRequest userFriendListRequest) {
+    public List<UserFriendListInfoResVO> listByUid(UserFriendListReqVO userFriendListRequest) {
         userFriendListRequest.setOffset();
-        List<UserFriendListInfoResponse> userFriendListInfoResponseList = userFriendDao.listByUid(userFriendListRequest).stream()
+        List<UserFriendListInfoResVO> userFriendListInfoResponseList = userFriendDao.listByUid(userFriendListRequest).stream()
                 .map(v -> {
-                    UserFriendListInfoResponse userFriendListInfoResponse = new UserFriendListInfoResponse();
-                    BeanUtils.copyProperties(v, userFriendListInfoResponse);
-                    return userFriendListInfoResponse;
+                    UserFriendListInfoResVO userFriendListInfoResVO = new UserFriendListInfoResVO();
+                    BeanUtils.copyProperties(v, userFriendListInfoResVO);
+                    return userFriendListInfoResVO;
                 })
                 .collect(Collectors.toList());
         return userFriendListInfoResponseList;

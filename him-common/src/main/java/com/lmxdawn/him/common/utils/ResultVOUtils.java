@@ -1,7 +1,7 @@
 package com.lmxdawn.him.common.utils;
 
 import com.lmxdawn.him.common.enums.ResultEnum;
-import com.lmxdawn.him.common.res.BaseResponse;
+import com.lmxdawn.him.common.vo.res.BaseResVO;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,21 +14,21 @@ public class ResultVOUtils {
     /**
      * 成功时返回
      * @param data 返回的data对象
-     * @return {@link BaseResponse}
+     * @return {@link BaseResVO}
      */
-    public static BaseResponse success(Object data) {
-        BaseResponse<Object> baseResponse = new BaseResponse<>();
-        baseResponse.setCode(0);
-        baseResponse.setMessage("success");
-        baseResponse.setData(data);
-        return baseResponse;
+    public static BaseResVO success(Object data) {
+        BaseResVO<Object> baseResVO = new BaseResVO<>();
+        baseResVO.setCode(0);
+        baseResVO.setMessage("success");
+        baseResVO.setData(data);
+        return baseResVO;
     }
 
     /**
      * 成功时返回
-     * @return {@link BaseResponse}
+     * @return {@link BaseResVO}
      */
-    public static BaseResponse success() {
+    public static BaseResVO success() {
         Map data = new HashMap();
         return success(data);
     }
@@ -37,23 +37,23 @@ public class ResultVOUtils {
      * 错误时返回
      * @param code 错误码
      * @param message 错误信息
-     * @return {@link BaseResponse}
+     * @return {@link BaseResVO}
      */
-    public static BaseResponse error(Integer code, String message) {
-        BaseResponse<Object> baseResponse = new BaseResponse<>();
-        baseResponse.setCode(code);
-        baseResponse.setMessage(message);
+    public static BaseResVO error(Integer code, String message) {
+        BaseResVO<Object> baseResVO = new BaseResVO<>();
+        baseResVO.setCode(code);
+        baseResVO.setMessage(message);
         Map data = new HashMap();
-        baseResponse.setData(data);
-        return baseResponse;
+        baseResVO.setData(data);
+        return baseResVO;
     }
 
     /**
      * 错误时返回
      * @param resultEnum 错误枚举类
-     * @return {@link BaseResponse}
+     * @return {@link BaseResVO}
      */
-    public static BaseResponse error(ResultEnum resultEnum) {
+    public static BaseResVO error(ResultEnum resultEnum) {
         return error(resultEnum.getCode(), resultEnum.getMessage());
     }
 
@@ -61,17 +61,17 @@ public class ResultVOUtils {
      * 错误时返回
      * @param resultEnum 错误枚举类
      * @param message 错误的信息
-     * @return {@link BaseResponse}
+     * @return {@link BaseResVO}
      */
-    public static BaseResponse error(ResultEnum resultEnum, String message) {
+    public static BaseResVO error(ResultEnum resultEnum, String message) {
         return error(resultEnum.getCode(), message);
     }
 
     /**
      * 默认的错误
-     * @return {@link BaseResponse}
+     * @return {@link BaseResVO}
      */
-    public static BaseResponse error() {
+    public static BaseResVO error() {
         return error(ResultEnum.NOT_NETWORK);
     }
 

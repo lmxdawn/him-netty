@@ -1,4 +1,4 @@
-package com.lmxdawn.him.api.res;
+package com.lmxdawn.him.api.vo.res;
 
 import lombok.Data;
 
@@ -6,7 +6,7 @@ import lombok.Data;
  * 用户朋友列表信息
  */
 @Data
-public class UserFriendListInfoResponse {
+public class UserFriendListInfoResVO {
 
     /**
      * 用户id

@@ -2,7 +2,7 @@ package com.lmxdawn.him.api.service.user.impl;
 
 import com.lmxdawn.him.api.dao.user.UserDao;
 import com.lmxdawn.him.api.service.user.UserService;
-import com.lmxdawn.him.api.res.UserInfoListResponse;
+import com.lmxdawn.him.api.vo.res.UserInfoListResVO;
 import com.lmxdawn.him.common.entity.user.User;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -29,13 +29,13 @@ public class UserServiceImpl implements UserService {
     }
     
     @Override
-    public List<UserInfoListResponse> listByUidIn(List<Long> uids) {
+    public List<UserInfoListResVO> listByUidIn(List<Long> uids) {
         List<User> users = userDao.listByUidIn(uids);
-        List<UserInfoListResponse> userListInfoResVOList = users.stream()
+        List<UserInfoListResVO> userListInfoResVOList = users.stream()
                 .map(v -> {
-                    UserInfoListResponse userInfoListResponse = new UserInfoListResponse();
-                    BeanUtils.copyProperties(v, userInfoListResponse);
-                    return userInfoListResponse;
+                    UserInfoListResVO userInfoListResVO = new UserInfoListResVO();
+                    BeanUtils.copyProperties(v, userInfoListResVO);
+                    return userInfoListResVO;
                 })
                 .collect(Collectors.toList());
         return userListInfoResVOList;

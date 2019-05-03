@@ -1,6 +1,6 @@
 package com.lmxdawn.him.api.dao.user;
 
-import com.lmxdawn.him.api.req.UserFriendListRequest;
+import com.lmxdawn.him.api.vo.req.UserFriendListReqVO;
 import com.lmxdawn.him.common.entity.user.UserFriend;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -15,7 +15,7 @@ public interface UserFriendDao {
      * @param userFriendListRequest
      * @return
      */
-    List<UserFriend> listByUid(UserFriendListRequest userFriendListRequest);
+    List<UserFriend> listByUid(UserFriendListReqVO userFriendListRequest);
 
     /**
      * 查询两个用户是否是朋友关系

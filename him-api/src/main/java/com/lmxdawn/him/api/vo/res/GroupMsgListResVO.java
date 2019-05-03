@@ -1,4 +1,4 @@
-package com.lmxdawn.him.api.res;
+package com.lmxdawn.him.api.vo.res;
 
 import lombok.Data;
 
@@ -8,7 +8,7 @@ import java.util.Date;
  * 群列表信息
  */
 @Data
-public class GroupMsgListResponse {
+public class GroupMsgListResVO {
 
     /**
      * 消息ID

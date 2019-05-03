@@ -1,9 +1,9 @@
-package com.lmxdawn.him.common.req;
+package com.lmxdawn.him.common.vo.req;
 
 /**
  * 分页的请求
  */
-public class BaseLimitRequest extends BaseRequest{
+public class BaseLimitReqVO extends BaseReqVO{
 
     /**
      * 页码

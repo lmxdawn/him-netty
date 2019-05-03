@@ -1,8 +1,8 @@
-package com.lmxdawn.him.common.req;
+package com.lmxdawn.him.common.vo.req;
 
 import java.util.UUID;
 
-public class BaseRequest {
+public class BaseReqVO {
 
     /**
      * 唯一请求号
@@ -14,7 +14,7 @@ public class BaseRequest {
      */
     private Long timeStamp;
 
-    public BaseRequest() {
+    public BaseReqVO() {
         this.reqNo = UUID.randomUUID().toString();
         this.timeStamp = System.currentTimeMillis();
     }

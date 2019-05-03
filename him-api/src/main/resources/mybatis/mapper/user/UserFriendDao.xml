@@ -3,7 +3,7 @@
 
 <mapper namespace="com.lmxdawn.him.api.dao.user.UserFriendDao">
 
-    <select id="listByUid" parameterType="com.lmxdawn.him.api.req.UserFriendListRequest" resultType="com.lmxdawn.him.common.entity.user.UserFriend">
+    <select id="listByUid" parameterType="com.lmxdawn.him.api.vo.req.UserFriendListReqVO" resultType="com.lmxdawn.him.common.entity.user.UserFriend">
         select id,uid,`friend_uid`,remark
         from `user_friend`
         where uid = #{uid}

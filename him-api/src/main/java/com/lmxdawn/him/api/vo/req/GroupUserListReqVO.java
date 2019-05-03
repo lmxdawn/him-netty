@@ -1,6 +1,6 @@
-package com.lmxdawn.him.api.req;
+package com.lmxdawn.him.api.vo.req;
 
-import com.lmxdawn.him.common.req.BaseLimitRequest;
+import com.lmxdawn.him.common.vo.req.BaseLimitReqVO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -9,7 +9,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class GroupUserListRequest extends BaseLimitRequest {
+public class GroupUserListReqVO extends BaseLimitReqVO {
 
     /**
      * 群ID

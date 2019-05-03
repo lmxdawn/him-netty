@@ -1,7 +1,7 @@
 package com.lmxdawn.him.api.dao.group;
 
-import com.lmxdawn.him.api.req.GroupUserListRequest;
-import com.lmxdawn.him.api.req.UserGroupListRequest;
+import com.lmxdawn.him.api.vo.req.GroupUserListReqVO;
+import com.lmxdawn.him.api.vo.req.UserGroupListReqVO;
 import com.lmxdawn.him.common.entity.group.GroupUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -15,13 +15,13 @@ public interface GroupUserDao {
      * 查询群的用户列表
      * @return
      */
-    List<GroupUser> listByGroupId(GroupUserListRequest groupUserListRequest);
+    List<GroupUser> listByGroupId(GroupUserListReqVO groupUserListReqVO);
 
     /**
      * 查询用户的群列表
      * @return
      */
-    List<GroupUser> listByUid(UserGroupListRequest userGroupListRequest);
+    List<GroupUser> listByUid(UserGroupListReqVO userGroupListRequest);
 
     /**
      * 插入

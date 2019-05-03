@@ -1,6 +1,6 @@
 package com.lmxdawn.him.api.service.user;
 
-import com.lmxdawn.him.api.res.UserInfoListResponse;
+import com.lmxdawn.him.api.vo.res.UserInfoListResVO;
 import com.lmxdawn.him.common.entity.user.User;
 
 import java.util.List;
@@ -11,7 +11,7 @@ public interface UserService {
 
     User findPwdByUid(Long uid);
 
-    List<UserInfoListResponse> listByUidIn(List<Long> uids);
+    List<UserInfoListResVO> listByUidIn(List<Long> uids);
 
     boolean insertUser(User user);
 

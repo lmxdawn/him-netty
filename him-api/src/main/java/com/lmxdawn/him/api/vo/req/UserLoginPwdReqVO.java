@@ -1,6 +1,6 @@
-package com.lmxdawn.him.api.req;
+package com.lmxdawn.him.api.vo.req;
 
-import com.lmxdawn.him.common.req.BaseRequest;
+import com.lmxdawn.him.common.vo.req.BaseReqVO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class UserLoginPwdRequest extends BaseRequest {
+public class UserLoginPwdReqVO extends BaseReqVO {
     
     @NotNull(message = "用户ID不能为空")
     private Long uid;

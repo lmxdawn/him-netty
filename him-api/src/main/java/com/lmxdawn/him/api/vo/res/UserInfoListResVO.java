@@ -1,14 +1,12 @@
-package com.lmxdawn.him.api.res;
+package com.lmxdawn.him.api.vo.res;
 
 import lombok.Data;
 
-import java.util.Date;
-
 /**
- * 用户信息
+ * 用户列表信息
  */
 @Data
-public class UserInfoResponse {
+public class UserInfoListResVO {
 
     /**
      * 用户id
@@ -22,9 +20,5 @@ public class UserInfoResponse {
      * 用户头像
      */
     private String avatar;
-    /**
-     * 创建时间
-     */
-    private Date createTime;
 
 }

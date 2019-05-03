@@ -1,4 +1,4 @@
-package com.lmxdawn.him.common.res;
+package com.lmxdawn.him.common.vo.res;
 
 import lombok.Data;
 
@@ -7,7 +7,7 @@ import lombok.Data;
  * @param <T>
  */
 @Data
-public class BaseResponse<T> {
+public class BaseResVO<T> {
 
     private Integer code;
 
