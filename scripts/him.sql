@@ -11,7 +11,7 @@
  Target Server Version : 50717
  File Encoding         : 65001
 
- Date: 30/04/2019 17:25:18
+ Date: 03/05/2019 19:46:53
 */
 
 SET NAMES utf8mb4;
@@ -90,6 +90,21 @@ CREATE TABLE `user_friend`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uk_uid_friend_uid`(`uid`, `friend_uid`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户的朋友表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for user_friend_ask
+-- ----------------------------
+DROP TABLE IF EXISTS `user_friend_ask`;
+CREATE TABLE `user_friend_ask`  (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '自增ID',
+  `uid` bigint(20) UNSIGNED NOT NULL COMMENT '用户ID',
+  `friend_uid` bigint(20) UNSIGNED NOT NULL COMMENT '发送消息的用户ID',
+  `remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注信息',
+  `status` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '状态（0：未确认过，1：已确认）',
+  `create_time` datetime(0) NOT NULL,
+  `modified_time` datetime(0) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '好友请求表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for user_offline_msg
