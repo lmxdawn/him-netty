@@ -104,8 +104,8 @@ public class FriendMsgController {
         Long receiverUid = userFriendMsgSaveReqVO.getReceiverUid();
     
         // 判断是不是朋友
-        UserFriend userFriend1 = userFriendService.findByUidAndFriendUid(uid, receiverUid);
-        if (userFriend1 == null) {
+        UserFriend userFriend = userFriendService.findByUidAndFriendUid(uid, receiverUid);
+        if (userFriend == null) {
             return ResultVOUtils.error(ResultEnum.PARAM_VERIFY_FALL, "该用户还不是你的好友~");
         }
     
@@ -116,19 +116,19 @@ public class FriendMsgController {
         userFriendMsg.setSenderUid(uid);
         Integer msgType = userFriendMsgSaveReqVO.getMsgType();
         String msgContent = userFriendMsgSaveReqVO.getMsgContent();
-        String lastMsgCount = msgContent;
+        String lastMsgContent = msgContent;
         switch (msgType) {
             case 1:
-                lastMsgCount = "[图片消息]";
+                lastMsgContent = "[图片消息]";
                 break;
             case 2:
-                lastMsgCount = "[文件消息]";
+                lastMsgContent = "[文件消息]";
                 break;
             case 3:
-                lastMsgCount = "[语言消息]";
+                lastMsgContent = "[语言消息]";
                 break;
             case 4:
-                lastMsgCount = "[视频消息]";
+                lastMsgContent = "[视频消息]";
                 break;
         }
         userFriendMsg.setMsgType(msgType);
@@ -138,13 +138,27 @@ public class FriendMsgController {
             return ResultVOUtils.error();
         }
         
-        // 更新最后一次的消息
-        UserFriend userFriend = new UserFriend();
-        userFriend.setUid(receiverUid);
-        userFriend.setFriendUid(uid);
-        userFriend.setUnMsgCount(1);
-        userFriend.setLastMsgContent(lastMsgCount);
-        userFriendService.updateUserFriend(userFriend);
+        List<UserFriend> userFriends = new ArrayList<>();
+        // 给接收者更新最后一次的消息
+        UserFriend userFriend1 = new UserFriend();
+        userFriend1.setUid(receiverUid);
+        userFriend1.setFriendUid(uid);
+        userFriend1.setUnMsgCount(1);
+        userFriend1.setLastMsgContent(lastMsgContent);
+        userFriend1.setCreateTime(new Date());
+        userFriend1.setModifiedTime(new Date());
+        userFriends.add(userFriend1);
+        // 给当前用户更新最后一次的消息
+        UserFriend userFriend2 = new UserFriend();
+        userFriend2.setUid(uid);
+        userFriend2.setFriendUid(receiverUid);
+        userFriend2.setUnMsgCount(0);
+        userFriend2.setLastMsgContent(lastMsgContent);
+        userFriend2.setCreateTime(new Date());
+        userFriend2.setModifiedTime(new Date());
+        userFriends.add(userFriend2);
+        
+        userFriendService.insertUserFriendAll(userFriends);
     
         return ResultVOUtils.success();
     }

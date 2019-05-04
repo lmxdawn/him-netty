@@ -19,7 +19,7 @@
 
     <insert id="insertUserFriendAll">
         insert into `user_friend`
-        (`uid`,friend_uid,remark,last_msg_content,create_time,modified_time)
+        (`uid`,friend_uid,remark,un_msg_count,last_msg_content,create_time,modified_time)
         values
         <foreach collection="list" item="item" separator=",">
             <if test="item.uid != null
@@ -29,12 +29,25 @@
                 (#{item.uid},
                 #{item.friendUid},
                 #{item.remark},
+                <choose>
+                    <when test="item.unMsgCount != null and item.unMsgCount != 0">
+                        #{item.unMsgCount},
+                    </when>
+                    <when test="item.unMsgCount != null and item.unMsgCount == 0">
+                        0,
+                    </when>
+                    <otherwise>
+                    </otherwise>
+                </choose>
                 #{item.lastMsgContent},
                 #{item.createTime},
                 #{item.modifiedTime})
             </if>
         </foreach>
-        ON DUPLICATE KEY UPDATE modified_time = VALUES(modified_time)
+        ON DUPLICATE KEY UPDATE
+        un_msg_count=un_msg_count + VALUES(un_msg_count),
+        last_msg_content=VALUES(last_msg_content),
+        modified_time = VALUES(modified_time)
     </insert>
 
     <update id="updateUserFriend" parameterType="com.lmxdawn.him.common.entity.user.UserFriend">
