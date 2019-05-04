@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.lmxdawn.him.api.dao.user.UserProfileDao">
+
+    <select id="findByUid" parameterType="long" resultType="com.lmxdawn.him.common.entity.user.UserProfile">
+        SELECT friend_ask_count,friend_count
+        FROM `user_profile`
+        where uid=#{uid}
+        limit 1
+    </select>
+
+    <select id="listByUidIn" resultType="com.lmxdawn.him.common.entity.user.UserProfile">
+        SELECT friend_ask_count,friend_count
+        FROM `user_profile`
+        where uid in
+        <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
+
+    <insert id="insertUserProfile" parameterType="com.lmxdawn.him.common.entity.user.UserProfile">
+        INSERT INTO user_profile(uid,friend_ask_count,friend_count,create_time,modified_time)
+        VALUES
+        (#{uid},
+        <choose>
+            <when test="friendAskCount != null">
+                #{friendAskCount},
+            </when>
+            <otherwise>
+                0,
+            </otherwise>
+        </choose>
+        <choose>
+            <when test="friendCount != null">
+                #{friendCount},
+            </when>
+            <otherwise>
+                0,
+            </otherwise>
+        </choose>
+        #{createTime},
+        #{modifiedTime})
+        ON DUPLICATE KEY UPDATE
+        friend_ask_count = friend_ask_count + VALUES(friend_ask_count),
+        friend_count = friend_count + VALUES(friend_count),
+        modified_time = VALUES(modified_time)
+    </insert>
+
+    <insert id="insertUserProfileAll">
+        INSERT INTO user_profile(uid,friend_ask_count,friend_count,create_time,modified_time)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            <if test="item.uid != null
+                        and item.createTime != null
+                        and item.modifiedTime != null">
+                (#{item.uid},
+                <choose>
+                    <when test="item.friendAskCount != null">
+                        #{item.friendAskCount},
+                    </when>
+                    <otherwise>
+                        0,
+                    </otherwise>
+                </choose>
+                <choose>
+                    <when test="item.friendCount != null">
+                        #{item.friendCount},
+                    </when>
+                    <otherwise>
+                        0,
+                    </otherwise>
+                </choose>
+                #{item.createTime},
+                #{item.modifiedTime})
+            </if>
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+        friend_ask_count = friend_ask_count + VALUES(friend_ask_count),
+        friend_count = friend_count + VALUES(friend_count),
+        modified_time = VALUES(modified_time)
+    </insert>
+
+    <update id="updateUserProfile" parameterType="com.lmxdawn.him.common.entity.user.UserProfile">
+        UPDATE user_profile
+        <set>
+            <if test="friendAskCount != null">friend_ask_count=#{friendAskCount},</if>
+            modified_time=#{modifiedTime}
+        </set>
+        WHERE uid=#{uid}
+    </update>
+
+</mapper>

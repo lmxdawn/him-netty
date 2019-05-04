@@ -2,16 +2,12 @@ package com.lmxdawn.him.api.service.user.impl;
 
 import com.lmxdawn.him.api.dao.user.UserFriendDao;
 import com.lmxdawn.him.api.service.user.UserFriendService;
-import com.lmxdawn.him.api.vo.req.UserFriendListReqVO;
-import com.lmxdawn.him.api.vo.res.UserFriendListInfoResVO;
 import com.lmxdawn.him.common.entity.user.UserFriend;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class UserFriendServiceImpl implements UserFriendService {
@@ -20,16 +16,8 @@ public class UserFriendServiceImpl implements UserFriendService {
     private UserFriendDao userFriendDao;
 
     @Override
-    public List<UserFriendListInfoResVO> listByUid(UserFriendListReqVO userFriendListRequest) {
-        userFriendListRequest.setOffset();
-        List<UserFriendListInfoResVO> userFriendListInfoResponseList = userFriendDao.listByUid(userFriendListRequest).stream()
-                .map(v -> {
-                    UserFriendListInfoResVO userFriendListInfoResVO = new UserFriendListInfoResVO();
-                    BeanUtils.copyProperties(v, userFriendListInfoResVO);
-                    return userFriendListInfoResVO;
-                })
-                .collect(Collectors.toList());
-        return userFriendListInfoResponseList;
+    public List<UserFriend> listByUid(Long uid, Integer offset, Integer limit) {
+        return userFriendDao.listByUid(uid, offset, limit);
     }
 
     @Override
@@ -38,13 +26,8 @@ public class UserFriendServiceImpl implements UserFriendService {
     }
 
     @Override
-    public boolean insertUserFriend(UserFriend userFriend) {
-        if (userFriend.getUid().equals(userFriend.getFriendUid())) {
-            return false;
-        }
-        userFriend.setCreateTime(new Date());
-        userFriend.setModifiedTime(new Date());
-        return userFriendDao.insertUserFriend(userFriend);
+    public boolean insertUserFriendAll(List<UserFriend> userFriends) {
+        return userFriendDao.insertUserFriendAll(userFriends);
     }
 
     @Override

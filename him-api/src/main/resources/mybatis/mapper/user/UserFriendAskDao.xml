@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.lmxdawn.him.api.dao.user.UserFriendAskDao">
+
+    <select id="listByUid" resultType="com.lmxdawn.him.common.entity.user.UserFriendAsk">
+        select id,uid,`friend_uid`,remark,status,create_time
+        from `user_friend_ask`
+        where uid = #{uid}
+        order by id desc
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="findById" parameterType="long" resultType="com.lmxdawn.him.common.entity.user.UserFriendAsk">
+        select id,uid,`friend_uid`,remark,status,create_time
+        from `user_friend_ask`
+        where id = #{id}
+        limit 1
+    </select>
+
+    <insert id="insertUserFriendAsk" keyProperty="id" parameterType="com.lmxdawn.him.common.entity.user.UserFriendAsk">
+        insert into `user_friend_ask`(`uid`,friend_uid,remark,`status`,create_time,modified_time)
+        values
+        (#{uid},
+        #{friendUid},
+        #{remark},
+        #{status},
+        #{createTime},
+        #{modifiedTime})
+    </insert>
+
+    <update id="updateUserFriendAsk" parameterType="com.lmxdawn.him.common.entity.user.UserFriendAsk">
+        update `user_friend_ask`
+        <set>
+            <if test="status != null">`status`=#{status},</if>
+            <if test="remark != null">`remark`=#{remark},</if>
+            modified_time=#{modifiedTime}
+        </set>
+        where id = #{id}
+        and status = 0
+    </update>
+
+    <delete id="deleteById">
+        delete from `user_friend_ask` where id = #{id}
+    </delete>
+
+</mapper>

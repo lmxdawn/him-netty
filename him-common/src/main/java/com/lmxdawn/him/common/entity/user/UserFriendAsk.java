@@ -27,7 +27,7 @@ public class UserFriendAsk {
  	*/
 	private String remark;
 	/**
- 	* 状态（0：未确认过，1：已确认）
+ 	* 状态（0：未确认过，1：已确认, 2: 已拒绝）
  	*/
 	private Integer status;
 	private Date createTime;

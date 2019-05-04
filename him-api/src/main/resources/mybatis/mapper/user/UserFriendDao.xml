@@ -3,8 +3,8 @@
 
 <mapper namespace="com.lmxdawn.him.api.dao.user.UserFriendDao">
 
-    <select id="listByUid" parameterType="com.lmxdawn.him.api.vo.req.UserFriendListReqVO" resultType="com.lmxdawn.him.common.entity.user.UserFriend">
-        select id,uid,`friend_uid`,remark
+    <select id="listByUid" resultType="com.lmxdawn.him.common.entity.user.UserFriend">
+        select id,uid,`friend_uid`,remark,un_msg_count,last_msg_content,modified_time
         from `user_friend`
         where uid = #{uid}
         limit #{offset},#{limit}
@@ -17,20 +17,41 @@
         limit 1
     </select>
 
-    <insert id="insertUserFriend" keyProperty="id" parameterType="com.lmxdawn.him.common.entity.user.UserFriend">
-        insert into `user_friend`(`uid`,friend_uid,remark,create_time,modified_time)
+    <insert id="insertUserFriendAll">
+        insert into `user_friend`
+        (`uid`,friend_uid,remark,last_msg_content,create_time,modified_time)
         values
-        (#{uid},
-        #{friendUid},
-        #{remark},
-        #{createTime},
-        #{modifiedTime})
+        <foreach collection="list" item="item" separator=",">
+            <if test="item.uid != null
+                        and item.friendUid != null
+                        and item.createTime != null
+                        and item.modifiedTime != null">
+                (#{item.uid},
+                #{item.friendUid},
+                #{item.remark},
+                #{item.lastMsgContent},
+                #{item.createTime},
+                #{item.modifiedTime})
+            </if>
+        </foreach>
+        ON DUPLICATE KEY UPDATE modified_time = VALUES(modified_time)
     </insert>
 
     <update id="updateUserFriend" parameterType="com.lmxdawn.him.common.entity.user.UserFriend">
         update `user_friend`
         <set>
             <if test="remark != null">`remark`=#{remark},</if>
+            <choose>
+                <when test="unMsgCount != null and unMsgCount != 0">
+                    un_msg_count = un_msg_count + #{unMsgCount},
+                </when>
+                <when test="unMsgCount != null and unMsgCount == 0">
+                    un_msg_count = 0,
+                </when>
+                <otherwise>
+                </otherwise>
+            </choose>
+            <if test="lastMsgContent != null">last_msg_content=#{lastMsgContent},</if>
             modified_time=#{modifiedTime}
         </set>
         where uid = #{uid} and friend_uid = #{friendUid}

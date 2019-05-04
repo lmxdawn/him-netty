@@ -1,6 +1,5 @@
 package com.lmxdawn.him.api.dao.user;
 
-import com.lmxdawn.him.api.vo.req.UserFriendListReqVO;
 import com.lmxdawn.him.common.entity.user.UserFriend;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -12,10 +11,11 @@ public interface UserFriendDao {
 
     /**
      * 查询朋友列表
-     * @param userFriendListRequest
      * @return
      */
-    List<UserFriend> listByUid(UserFriendListReqVO userFriendListRequest);
+    List<UserFriend> listByUid(@Param("uid") Long uid,
+                               @Param("offset") Integer offset,
+                               @Param("limit") Integer limit);
 
     /**
      * 查询两个用户是否是朋友关系
@@ -25,10 +25,10 @@ public interface UserFriendDao {
 
     /**
      * 插入
-     * @param userFriend
+     * @param userFriends
      * @return
      */
-    boolean insertUserFriend(UserFriend userFriend);
+    boolean insertUserFriendAll(List<UserFriend> userFriends);
 
     /**
      * 更新

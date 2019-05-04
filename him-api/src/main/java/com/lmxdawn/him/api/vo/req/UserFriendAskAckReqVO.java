@@ -7,27 +7,21 @@ import lombok.EqualsAndHashCode;
 import javax.validation.constraints.NotNull;
 
 /**
- * 添加好友
+ * 发起好友请求
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class UserFriendSaveReqVO extends BaseReqVO {
-
-    /**
-     * 用户的ID
-     */
-    @NotNull(message = "参数错误！")
-    private Long uid;
+public class UserFriendAskAckReqVO extends BaseReqVO {
 
     /**
      * 朋友的ID
      */
     @NotNull(message = "参数错误！")
-    private Long friendUid;
+    private Long id;
 
     /**
-     * 朋友的备注
+     * 状态
      */
-    private String remark;
+    private Integer status;
 
 }

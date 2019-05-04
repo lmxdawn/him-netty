@@ -1,6 +1,5 @@
 package com.lmxdawn.him.api.vo.res;
 
-import com.lmxdawn.him.common.entity.user.UserProfile;
 import lombok.Data;
 
 import java.util.Date;
@@ -9,7 +8,7 @@ import java.util.Date;
  * 用户信息
  */
 @Data
-public class UserInfoResVO {
+public class UserReadResVO {
 
     /**
      * 用户id
@@ -23,11 +22,5 @@ public class UserInfoResVO {
      * 用户头像
      */
     private String avatar;
-    /**
-     * 创建时间
-     */
-    private Date createTime;
-    
-    private UserProfileInfoResVO profile;
 
 }

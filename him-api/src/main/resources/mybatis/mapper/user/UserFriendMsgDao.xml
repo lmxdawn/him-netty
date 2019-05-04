@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.lmxdawn.him.api.dao.user.UserFriendMsgDao">
+
+    <select id="listByReceiverUidAndSenderUid" resultType="com.lmxdawn.him.common.entity.user.UserFriendMsg">
+        select msg_id,receiver_uid,sender_uid,msg_type,msg_content,create_time
+        from `user_friend_msg`
+        where sender_uid = #{senderUid} and receiver_uid = #{receiverUid}
+        order by msg_id desc
+        limit #{offset},#{limit}
+    </select>
+
+    <insert id="insertUserFriendMsg" keyProperty="msgId" parameterType="com.lmxdawn.him.common.entity.user.UserFriendMsg">
+        insert into `user_friend_msg`(`receiver_uid`,sender_uid,msg_type,msg_content,create_time)
+        values
+        (#{receiverUid},
+        #{senderUid},
+        #{msgType},
+        #{msgContent},
+        #{createTime})
+    </insert>
+</mapper>

@@ -2,7 +2,6 @@ package com.lmxdawn.him.api.service.user.impl;
 
 import com.lmxdawn.him.api.dao.user.UserFriendAskDao;
 import com.lmxdawn.him.api.service.user.UserFriendAskService;
-import com.lmxdawn.him.api.vo.req.UserFriendAskListReqVO;
 import com.lmxdawn.him.api.vo.res.UserFriendAskListResVO;
 import com.lmxdawn.him.common.entity.user.UserFriendAsk;
 import org.springframework.beans.BeanUtils;
@@ -20,8 +19,8 @@ public class UserFriendAskServiceImpl implements UserFriendAskService {
     private UserFriendAskDao userFriendAskDao;
 
     @Override
-    public List<UserFriendAskListResVO> listByUid(UserFriendAskListReqVO userFriendAskListReqVO) {
-        List<UserFriendAsk> userFriendAsks = userFriendAskDao.listByUid(userFriendAskListReqVO);
+    public List<UserFriendAskListResVO> listByUid(Long uid, Integer offset, Integer limit) {
+        List<UserFriendAsk> userFriendAsks = userFriendAskDao.listByUid(uid, offset, limit);
         List<UserFriendAskListResVO> userFriendAskListResVOS = userFriendAsks.stream().map(v -> {
             UserFriendAskListResVO userFriendAskListResVO = new UserFriendAskListResVO();
             BeanUtils.copyProperties(v, userFriendAskListResVO);
@@ -29,7 +28,12 @@ public class UserFriendAskServiceImpl implements UserFriendAskService {
         }).collect(Collectors.toList());
         return userFriendAskListResVOS;
     }
-
+    
+    @Override
+    public UserFriendAsk findById(Long id) {
+        return userFriendAskDao.findById(id);
+    }
+    
     @Override
     public boolean insertUserFriendAsk(UserFriendAsk userFriendAsk) {
         userFriendAsk.setCreateTime(new Date());

@@ -9,7 +9,12 @@ import java.util.Date;
  */
 @Data
 public class UserFriendAskListResVO {
-
+    
+    /**
+     * 自增ID
+     */
+    private Long id;
+    
     /**
      * 用户id
      */
@@ -22,6 +27,10 @@ public class UserFriendAskListResVO {
      * 备注
      */
     private String remark;
+    /**
+     * 状态（0：未确认过，1：已确认, 2: 已拒绝）
+     */
+    private Integer status;
     /**
      * 创建时间
      */

@@ -4,14 +4,15 @@ import com.lmxdawn.him.api.vo.res.UserInfoListResVO;
 import com.lmxdawn.him.common.entity.user.User;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserService {
 
     User findByUid(Long uid);
 
     User findPwdByUid(Long uid);
-
-    List<UserInfoListResVO> listByUidIn(List<Long> uids);
+    
+    Map<Long, UserInfoListResVO> listByUidIn(List<Long> uids);
 
     boolean insertUser(User user);
 

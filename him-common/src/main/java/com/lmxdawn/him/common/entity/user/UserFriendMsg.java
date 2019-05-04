@@ -5,10 +5,10 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * table:user_offline_msg  
+ * table:user_friend_msg  
  */
 @Data
-public class UserOfflineMsg {
+public class UserFriendMsg {
 
 	/**
  	* 消息ID
@@ -23,7 +23,7 @@ public class UserOfflineMsg {
  	*/
 	private Long senderUid;
 	/**
- 	* 消息类型 ( 0: 文本消息 )
+ 	* 消息类型（0：普通文字消息，1：图片消息，2：文件消息，3：语音消息，4：视频消息）
  	*/
 	private Integer msgType;
 	/**
