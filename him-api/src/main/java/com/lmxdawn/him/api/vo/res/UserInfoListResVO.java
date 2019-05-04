@@ -20,5 +20,9 @@ public class UserInfoListResVO {
      * 用户头像
      */
     private String avatar;
+    /**
+     * 个性签名
+     */
+    private String remark;
 
 }

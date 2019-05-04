@@ -24,6 +24,10 @@ public class UserInfoResVO {
      */
     private String avatar;
     /**
+     * 个性签名
+     */
+    private String remark;
+    /**
      * 创建时间
      */
     private Date createTime;

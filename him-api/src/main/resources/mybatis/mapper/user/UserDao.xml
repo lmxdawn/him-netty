@@ -4,7 +4,7 @@
 <mapper namespace="com.lmxdawn.him.api.dao.user.UserDao">
 
     <select id="findByUid" parameterType="long" resultType="com.lmxdawn.him.common.entity.user.User">
-        SELECT uid,`name`,avatar,create_time
+        SELECT uid,`name`,avatar,remark,create_time
         FROM `user`
         where uid=#{uid}
         limit 1
@@ -18,7 +18,7 @@
     </select>
 
     <select id="listByUidIn" resultType="com.lmxdawn.him.common.entity.user.User">
-        SELECT uid,`name`,avatar
+        SELECT uid,`name`,avatar,remark
         FROM `user`
         where uid in
         <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
@@ -27,10 +27,11 @@
     </select>
 
     <insert id="insertUser" keyProperty="uid" parameterType="com.lmxdawn.him.common.entity.user.User">
-        INSERT INTO user(`name`,avatar,create_time,modified_time)
+        INSERT INTO user(`name`,avatar,remark,create_time,modified_time)
         VALUES
         (#{name},
         #{avatar},
+        #{remark},
         #{createTime},
         #{modifiedTime})
     </insert>
@@ -40,6 +41,7 @@
         <set>
             <if test="name != null">`name`=#{name},</if>
             <if test="avatar != null">`avatar`=#{avatar},</if>
+            <if test="remark != null">`remark`=#{remark},</if>
             modified_time=#{modifiedTime}
         </set>
         WHERE uid=#{uid}
