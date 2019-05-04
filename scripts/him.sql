@@ -11,7 +11,7 @@
  Target Server Version : 50719
  File Encoding         : utf-8
 
- Date: 05/05/2019 02:14:05 AM
+ Date: 05/05/2019 02:49:02 AM
 */
 
 SET NAMES utf8mb4;
@@ -93,9 +93,9 @@ CREATE TABLE `user_friend` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增id',
   `uid` bigint(20) unsigned NOT NULL COMMENT '用户id',
   `friend_uid` bigint(20) NOT NULL COMMENT '朋友的用户id',
-  `remark` varchar(30) DEFAULT NULL COMMENT '备注',
+  `remark` varchar(30) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '备注',
   `un_msg_count` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '未读消息数量',
-  `last_msg_content` varchar(255) DEFAULT NULL COMMENT '最后一次接收的消息内容',
+  `last_msg_content` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '最后一次接收的消息内容',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   `modified_time` datetime NOT NULL COMMENT '更新的时间',
   PRIMARY KEY (`id`) USING BTREE,
@@ -106,7 +106,7 @@ CREATE TABLE `user_friend` (
 --  Records of `user_friend`
 -- ----------------------------
 BEGIN;
-INSERT INTO `user_friend` VALUES ('20', '2', '1', '', '1', '毒贩夫妇', '2019-05-04 12:53:46', '2019-05-05 02:12:42'), ('21', '1', '2', '', '0', ':emoji[sunglasses]三生三世', '2019-05-04 12:53:46', '2019-05-05 02:12:10'), ('22', '2', '3', 'fff', '0', '[图片消息]', '2019-05-04 23:32:57', '2019-05-05 01:46:37');
+INSERT INTO `user_friend` VALUES ('20', '2', '1', '', '0', '毒贩夫妇', '2019-05-04 12:53:46', '2019-05-05 02:34:54'), ('21', '1', '2', '', '2', '😆', '2019-05-04 12:53:46', '2019-05-05 02:48:28'), ('22', '2', '3', 'fff', '0', '[图片消息]', '2019-05-04 23:32:57', '2019-05-05 01:46:37');
 COMMIT;
 
 -- ----------------------------
@@ -117,7 +117,7 @@ CREATE TABLE `user_friend_ask` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增ID',
   `uid` bigint(20) unsigned NOT NULL COMMENT '用户ID',
   `friend_uid` bigint(20) unsigned NOT NULL COMMENT '发送消息的用户ID',
-  `remark` varchar(255) DEFAULT NULL COMMENT '备注信息',
+  `remark` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '备注信息',
   `status` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '状态（0：未确认过，1：已确认，2: 拒绝）',
   `create_time` datetime NOT NULL,
   `modified_time` datetime NOT NULL,
@@ -141,17 +141,17 @@ CREATE TABLE `user_friend_msg` (
   `uid` bigint(20) unsigned NOT NULL COMMENT '用户ID',
   `sender_uid` bigint(20) unsigned NOT NULL COMMENT '发送方用户ID',
   `msg_type` tinyint(4) NOT NULL DEFAULT '0' COMMENT '消息类型（0：普通文字消息，1：图片消息，2：文件消息，3：语音消息，4：视频消息）',
-  `msg_content` varchar(255) NOT NULL COMMENT '消息内容',
+  `msg_content` varchar(255) CHARACTER SET utf8mb4 NOT NULL COMMENT '消息内容',
   `create_time` datetime NOT NULL COMMENT '消息创建时间',
   PRIMARY KEY (`msg_id`) USING BTREE,
   KEY `idx_uid` (`uid`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='用户的好友消息表';
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='用户的好友消息表';
 
 -- ----------------------------
 --  Records of `user_friend_msg`
 -- ----------------------------
 BEGIN;
-INSERT INTO `user_friend_msg` VALUES ('24', '1', '2', '0', '反反复复', '2019-05-05 02:09:38'), ('25', '1', '2', '0', '是是是', '2019-05-05 02:11:18'), ('26', '1', '2', '0', ':emoji[sunglasses]三生三世', '2019-05-05 02:11:56'), ('27', '1', '1', '0', '毒贩夫妇', '2019-05-05 02:12:42');
+INSERT INTO `user_friend_msg` VALUES ('24', '1', '2', '0', '反反复复', '2019-05-05 02:09:38'), ('25', '1', '2', '0', '是是是', '2019-05-05 02:11:18'), ('26', '1', '2', '0', ':emoji[sunglasses]三生三世', '2019-05-05 02:11:56'), ('27', '1', '1', '0', '毒贩夫妇', '2019-05-05 02:12:42'), ('28', '1', '2', '0', '😋\n', '2019-05-05 02:22:24'), ('29', '1', '2', '0', '😋\n', '2019-05-05 02:24:41'), ('30', '1', '2', '0', '😋\n', '2019-05-05 02:24:46'), ('31', '1', '2', '0', '😋\n', '2019-05-05 02:26:27'), ('32', '1', '2', '0', '?\n', '2019-05-05 02:34:34'), ('33', '1', '2', '0', '?\n', '2019-05-05 02:40:20'), ('34', '1', '2', '0', '?', '2019-05-05 02:42:07'), ('35', '1', '2', '0', '?', '2019-05-05 02:44:22'), ('36', '1', '2', '0', '😆', '2019-05-05 02:46:12'), ('37', '1', '2', '0', '😆', '2019-05-05 02:47:23'), ('38', '1', '2', '0', '😆', '2019-05-05 02:48:28');
 COMMIT;
 
 -- ----------------------------

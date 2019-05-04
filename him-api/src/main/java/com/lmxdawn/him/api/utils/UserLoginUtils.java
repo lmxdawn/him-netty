@@ -21,7 +21,6 @@ public class UserLoginUtils {
         return null;
       }
       for (Cookie cookie : cookies) {
-        System.out.println(cookie.getName());
         if (cookie.getName().equals("UID")) {
           sUid = cookie.getValue();
         } else if (cookie.getName().equals("SID")) {
