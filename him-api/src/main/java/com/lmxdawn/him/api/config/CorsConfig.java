@@ -18,5 +18,7 @@ public class CorsConfig {
     private String allowedMethods;
     // 允许的头信息
     private String allowedHeaders;
+    // 是否允许Cookie
+    private String allowedCredentials;
 
 }

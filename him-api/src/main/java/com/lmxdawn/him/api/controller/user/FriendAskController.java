@@ -218,8 +218,9 @@ public class FriendAskController {
     
     // 追加消息
     UserFriendMsg userFriendMsg = new UserFriendMsg();
+    // 把最小的那个 用户ID作为 之后的查询uid
+    userFriendMsg.setUid(uid > friendUid ? friendUid : uid);
     userFriendMsg.setSenderUid(friendUid);
-    userFriendMsg.setReceiverUid(uid);
     userFriendMsg.setMsgContent(userFriendAsk.getRemark());
     userFriendMsg.setMsgType(1);
     userFriendMsgService.insertUserFriendMsg(userFriendMsg);

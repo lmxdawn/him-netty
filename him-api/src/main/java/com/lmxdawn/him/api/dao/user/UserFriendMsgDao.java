@@ -8,20 +8,21 @@ import java.util.List;
 
 @Mapper
 public interface UserFriendMsgDao {
-
+    
     /**
      * 根据最后一次获取的消息ID获取离线消息列表
+     *
      * @return
      */
-    List<UserFriendMsg> listByReceiverUidAndSenderUid(@Param(value = "receiverUid") Long receiverUid,
-                                                      @Param(value = "senderUid") Long senderUid,
-                                                      @Param(value = "offset") Integer offset,
-                                                      @Param(value = "limit") Integer limit);
-
+    List<UserFriendMsg> listByUid(@Param(value = "uid") Long uid,
+                                  @Param(value = "offset") Integer offset,
+                                  @Param(value = "limit") Integer limit);
+    
     /**
      * 插入
+     *
      * @return
      */
     boolean insertUserFriendMsg(UserFriendMsg userFriendMsg);
-
+    
 }

@@ -11,7 +11,7 @@
  Target Server Version : 50719
  File Encoding         : utf-8
 
- Date: 05/04/2019 13:40:34 PM
+ Date: 05/05/2019 02:14:05 AM
 */
 
 SET NAMES utf8mb4;
@@ -72,16 +72,17 @@ CREATE TABLE `user` (
   `pwd` varchar(255) DEFAULT NULL COMMENT '密码',
   `name` varchar(20) CHARACTER SET utf8mb4 NOT NULL COMMENT '用户昵称',
   `avatar` varchar(255) DEFAULT NULL COMMENT '用户头像',
+  `remark` varchar(255) DEFAULT NULL COMMENT '个性签名',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   `modified_time` datetime NOT NULL COMMENT '更新时间',
   PRIMARY KEY (`uid`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='用户表';
 
 -- ----------------------------
 --  Records of `user`
 -- ----------------------------
 BEGIN;
-INSERT INTO `user` VALUES ('1', '14e1b600b1fd579f47433b88e8d85291', '是是是', null, '2019-05-04 03:39:36', '2019-05-04 03:39:38'), ('2', '14e1b600b1fd579f47433b88e8d85291', '随时随地', null, '2019-05-04 03:39:48', '2019-05-04 03:39:50');
+INSERT INTO `user` VALUES ('1', '14e1b600b1fd579f47433b88e8d85291', '是是是', 'http://thirdwx.qlogo.cn/mmopen/vi_32/onZtiaPzj0hhsBjlKiaE2Dib7dahCLqZXAqTBy6y6mXpicCu2X5arzDvSh0eDfyibR0CW06cNudiaxyiaEWic6MEm1Veow/132', '很好喝', '2019-05-04 03:39:36', '2019-05-04 03:39:38'), ('2', '14e1b600b1fd579f47433b88e8d85291', '随时随地', 'http://thirdwx.qlogo.cn/mmopen/vi_32/DYAIOgq83er68jLFmuyksnx80vqaKx1V2On1KAX69IiahGyvYKXhwU3qcQHud44xjlvcQa7WEv9SPnGs2YibPQkQ/132', '女女女女', '2019-05-04 03:39:48', '2019-05-04 03:39:50'), ('3', '14e1b600b1fd579f47433b88e8d85291', 'lmxdawn', 'http://thirdwx.qlogo.cn/mmopen/Kf2cpiarhCfcNn2dNkvhwwUibvoKzrWQqFSpbVB4nB5gTtd5KGyhFUF5PWLq1S8SIFCNStJI6cs2dpS90yq2AUuwbFrticBNQibp/132', '大胆的', '2019-05-04 23:31:54', '2019-05-04 23:31:57');
 COMMIT;
 
 -- ----------------------------
@@ -99,13 +100,13 @@ CREATE TABLE `user_friend` (
   `modified_time` datetime NOT NULL COMMENT '更新的时间',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `uk_uid_friend_uid` (`uid`,`friend_uid`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='用户的朋友表';
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='用户的朋友表';
 
 -- ----------------------------
 --  Records of `user_friend`
 -- ----------------------------
 BEGIN;
-INSERT INTO `user_friend` VALUES ('20', '2', '1', '', '0', 'hi额hi是浪费减肥', '2019-05-04 12:53:46', '2019-05-04 13:38:20'), ('21', '1', '2', '', '2', '[图片消息]', '2019-05-04 12:53:46', '2019-05-04 13:38:17');
+INSERT INTO `user_friend` VALUES ('20', '2', '1', '', '1', '毒贩夫妇', '2019-05-04 12:53:46', '2019-05-05 02:12:42'), ('21', '1', '2', '', '0', ':emoji[sunglasses]三生三世', '2019-05-04 12:53:46', '2019-05-05 02:12:10'), ('22', '2', '3', 'fff', '0', '[图片消息]', '2019-05-04 23:32:57', '2019-05-05 01:46:37');
 COMMIT;
 
 -- ----------------------------
@@ -137,20 +138,20 @@ COMMIT;
 DROP TABLE IF EXISTS `user_friend_msg`;
 CREATE TABLE `user_friend_msg` (
   `msg_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '消息ID',
-  `receiver_uid` bigint(20) unsigned NOT NULL COMMENT '消息接收方',
+  `uid` bigint(20) unsigned NOT NULL COMMENT '用户ID',
   `sender_uid` bigint(20) unsigned NOT NULL COMMENT '发送方用户ID',
   `msg_type` tinyint(4) NOT NULL DEFAULT '0' COMMENT '消息类型（0：普通文字消息，1：图片消息，2：文件消息，3：语音消息，4：视频消息）',
   `msg_content` varchar(255) NOT NULL COMMENT '消息内容',
   `create_time` datetime NOT NULL COMMENT '消息创建时间',
   PRIMARY KEY (`msg_id`) USING BTREE,
-  KEY `idx_receiver_uid_sender_uid` (`receiver_uid`,`sender_uid`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='用户的好友消息表';
+  KEY `idx_uid` (`uid`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='用户的好友消息表';
 
 -- ----------------------------
 --  Records of `user_friend_msg`
 -- ----------------------------
 BEGIN;
-INSERT INTO `user_friend_msg` VALUES ('13', '1', '2', '1', '2fff', '2019-05-04 00:07:56'), ('14', '1', '2', '1', 'sssss', '2019-05-04 00:08:10'), ('15', '1', '2', '1', 'ssssss', '2019-05-04 00:08:20'), ('16', '2', '1', '1', 'sss', '2019-05-04 00:09:52'), ('17', '2', '1', '1', 'aaa', '2019-05-04 00:10:05'), ('18', '3', '1', '1', 'sssss', '2019-05-04 00:10:14'), ('19', '2', '1', '1', 'hi额hi是浪费减肥', '2019-05-04 12:53:46'), ('20', '1', '2', '1', 'sssssff', '2019-05-04 13:08:21'), ('21', '1', '2', '1', 'sssssff', '2019-05-04 13:11:27'), ('22', '1', '2', '1', 'sssssff', '2019-05-04 13:28:19'), ('23', '1', '2', '1', 'sssssff', '2019-05-04 13:38:17');
+INSERT INTO `user_friend_msg` VALUES ('24', '1', '2', '0', '反反复复', '2019-05-05 02:09:38'), ('25', '1', '2', '0', '是是是', '2019-05-05 02:11:18'), ('26', '1', '2', '0', ':emoji[sunglasses]三生三世', '2019-05-05 02:11:56'), ('27', '1', '1', '0', '毒贩夫妇', '2019-05-05 02:12:42');
 COMMIT;
 
 -- ----------------------------

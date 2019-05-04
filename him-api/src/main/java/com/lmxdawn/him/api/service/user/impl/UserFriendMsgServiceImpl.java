@@ -16,8 +16,8 @@ public class UserFriendMsgServiceImpl implements UserFriendMsgService {
     private UserFriendMsgDao userFriendMsgDao;
 
     @Override
-    public List<UserFriendMsg> listByReceiverUidAndSenderUid(Long receiverUid, Long senderUid, Integer offset, Integer limit) {
-        return userFriendMsgDao.listByReceiverUidAndSenderUid(receiverUid, senderUid, offset, limit);
+    public List<UserFriendMsg> listByUid(Long uid, Integer offset, Integer limit) {
+        return userFriendMsgDao.listByUid(uid, offset, limit);
     }
 
     @Override

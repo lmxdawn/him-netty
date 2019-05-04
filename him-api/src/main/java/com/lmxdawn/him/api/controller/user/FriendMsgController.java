@@ -71,8 +71,11 @@ public class FriendMsgController {
         }
     
         Integer offset = PageUtils.createOffset(page, limit);
+        
+        // 把最小的那个 用户ID作为查询条件
+        uid = uid > senderUid ? senderUid : uid;
     
-        List<UserFriendMsg> userFriendMsgs = userFriendMsgService.listByReceiverUidAndSenderUid(uid, senderUid, offset, limit);
+        List<UserFriendMsg> userFriendMsgs = userFriendMsgService.listByUid(uid, offset, limit);
     
         return ResultVOUtils.success(userFriendMsgs);
         
@@ -108,8 +111,9 @@ public class FriendMsgController {
     
         // 追加消息
         UserFriendMsg userFriendMsg = new UserFriendMsg();
+        // 把最小的那个 用户ID作为 之后的查询uid
+        userFriendMsg.setUid(uid > receiverUid ? receiverUid : uid);
         userFriendMsg.setSenderUid(uid);
-        userFriendMsg.setReceiverUid(receiverUid);
         Integer msgType = userFriendMsgSaveReqVO.getMsgType();
         String msgContent = userFriendMsgSaveReqVO.getMsgContent();
         String lastMsgCount = msgContent;

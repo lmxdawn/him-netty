@@ -30,6 +30,9 @@ public class CorsFilter implements Filter {
 		response.setHeader("Access-Control-Allow-Methods", corsConfig.getAllowedMethods());
 		 
 		response.setHeader("Access-Control-Allow-Headers", corsConfig.getAllowedHeaders());
+		if ("true".equals(corsConfig.getAllowedCredentials())) {
+			response.setHeader("Access-Control-Allow-Credentials", "true");
+		}
 		chain.doFilter(req, res);
 	}
 

@@ -15,9 +15,9 @@ public class UserFriendMsg {
  	*/
 	private Long msgId;
 	/**
- 	* 消息接收方
+ 	* 用户ID
  	*/
-	private Long receiverUid;
+	private Long uid;
 	/**
  	* 发送方用户ID
  	*/
