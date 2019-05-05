@@ -14,9 +14,9 @@ public class UserFriendUtils {
    * 创建群的验证码
    * @return
    */
-  public static String createCheckCode(Long groupId) {
+  public static String createCheckCode(Long uid) {
     Map<String, Object> claims = new HashMap<>();
-    claims.put("uid", groupId);
+    claims.put("uid", uid);
     return JwtUtils.createToken(claims, null); // 不过期
   }
 

@@ -3,6 +3,7 @@ package com.lmxdawn.him.api.controller.user;
 import com.lmxdawn.him.api.dto.UserLoginDTO;
 import com.lmxdawn.him.api.service.user.UserProfileService;
 import com.lmxdawn.him.api.service.user.UserService;
+import com.lmxdawn.him.api.utils.UserFriendUtils;
 import com.lmxdawn.him.api.utils.UserLoginUtils;
 import com.lmxdawn.him.api.vo.res.UserInfoResVO;
 import com.lmxdawn.him.api.vo.res.UserProfileInfoResVO;
@@ -83,5 +84,30 @@ public class UserIndexController {
         return ResultVOUtils.success(userReadResVO);
         
     }
-
+    
+    
+    
+    /**
+     * 获取二维码
+     *
+     * @param request
+     * @return
+     */
+    @GetMapping("/getQRCheckCode")
+    public BaseResVO getQRCheckCode(HttpServletRequest request) {
+        // 验证登录
+        UserLoginDTO userLoginDTO = UserLoginUtils.check(request);
+        if (userLoginDTO == null) {
+            return ResultVOUtils.error(ResultEnum.LOGIN_VERIFY_FALL);
+        }
+        
+        Long uid = userLoginDTO.getUid();
+        
+        String checkCode = UserFriendUtils.createCheckCode(uid);
+        
+        return ResultVOUtils.success(checkCode);
+        
+    }
+    
+    
 }

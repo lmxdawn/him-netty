@@ -3,7 +3,6 @@ package com.lmxdawn.him.api.controller.user;
 import com.lmxdawn.him.api.dto.UserLoginDTO;
 import com.lmxdawn.him.api.service.user.UserFriendService;
 import com.lmxdawn.him.api.service.user.UserService;
-import com.lmxdawn.him.api.utils.PageUtils;
 import com.lmxdawn.him.api.utils.UserLoginUtils;
 import com.lmxdawn.him.api.vo.req.UserFriendDeleteReqVO;
 import com.lmxdawn.him.api.vo.res.UserFriendListInfoResVO;
@@ -107,5 +106,4 @@ public class UserFriendController {
         
         return ResultVOUtils.success();
     }
-    
 }
