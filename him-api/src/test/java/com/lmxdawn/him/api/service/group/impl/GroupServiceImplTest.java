@@ -2,7 +2,6 @@ package com.lmxdawn.him.api.service.group.impl;
 
 import com.lmxdawn.him.api.BaseApplicationTest;
 import com.lmxdawn.him.api.service.group.GroupService;
-import com.lmxdawn.him.api.vo.res.GroupInfoListResVO;
 import com.lmxdawn.him.common.entity.group.Group;
 import org.junit.Test;
 
@@ -31,8 +30,8 @@ public class GroupServiceImplTest extends BaseApplicationTest {
     public void listByGroupIdIn() {
 
         List<Long> groupIds = Arrays.asList(1L,2L);
-        List<GroupInfoListResVO> groupInfoListResVOList = groupService.listByGroupIdIn(groupIds);
-        assertTrue(groupInfoListResVOList.size() > 0);
+        List<Group> groupList = groupService.listByGroupIdIn(groupIds);
+        assertTrue(groupList.size() > 0);
     }
 
     @Test
