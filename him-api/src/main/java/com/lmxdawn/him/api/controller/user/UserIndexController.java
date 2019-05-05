@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @RequestMapping("/user")
 @RestController
-public class IndexController {
+public class UserIndexController {
     
     @Resource
     private UserService userService;

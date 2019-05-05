@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
  */
 @RequestMapping("/user/friend")
 @RestController
-public class FriendController {
+public class UserFriendController {
     
     @Resource
     private UserFriendService userFriendService;

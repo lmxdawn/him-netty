@@ -3,42 +3,59 @@
 
 <mapper namespace="com.lmxdawn.him.api.dao.group.GroupUserDao">
 
-    <select id="listByGroupId" parameterType="com.lmxdawn.him.api.vo.req.GroupUserListReqVO" resultType="com.lmxdawn.him.common.entity.group.GroupUser">
-        select id,group_id,uid,remark
+    <select id="listByGroupId" resultType="com.lmxdawn.him.common.entity.group.GroupUser">
+        select id,group_id,uid,remark,`rank`
         from `group_user`
         where group_id = #{groupId}
         limit #{offset},#{limit}
     </select>
 
-    <select id="listByUid" parameterType="com.lmxdawn.him.api.vo.req.UserGroupListReqVO" resultType="com.lmxdawn.him.common.entity.group.GroupUser">
-        select id,group_id,uid
+    <select id="listByUid" resultType="com.lmxdawn.him.common.entity.group.GroupUser">
+        select id,group_id,uid,last_ack_msg_id,last_msg_content,offline_count,`rank`,last_msg_time
         from `group_user`
         where uid = #{uid}
         limit #{offset},#{limit}
     </select>
 
     <insert id="insertGroupUser" keyProperty="id" parameterType="com.lmxdawn.him.common.entity.group.GroupUser">
-        insert into `group_user`(group_id,uid,remark,create_time,modified_time)
+        insert into `group_user`(group_id,uid,remark,`rank`,create_time,modified_time)
         values
         (#{groupId},
         #{uid},
         #{remark},
+        #{rank},
         #{createTime},
         #{modifiedTime})
     </insert>
 
-    <update id="updateGroupUser" parameterType="com.lmxdawn.him.common.entity.group.GroupUser">
+    <update id="updateGroupUserByGroupIdAndUid" parameterType="com.lmxdawn.him.common.entity.group.GroupUser">
         update `group_user`
         <set>
             <if test="remark != null">`remark`=#{remark},</if>
-            <if test="lastAckMsgId != null">`last_ack_msg_id`=#{lastAckMsgId},</if>
+            <if test="rank != null">`rank`=#{rank},</if>
             modified_time=#{modifiedTime}
         </set>
         where group_id = #{groupId} and uid = #{uid}
     </update>
 
+    <update id="updateGroupUserByGroupId" parameterType="com.lmxdawn.him.common.entity.group.GroupUser">
+        update `group_user`
+        <set>
+            <if test="lastAckMsgId != null">`last_ack_msg_id`=#{lastAckMsgId},</if>
+            <if test="lastMsgContent != null">`last_msg_content`=#{lastMsgContent},</if>
+            <if test="lastMsgTime != null">`last_msg_time`=#{lastMsgTime},</if>
+            <if test="offlineCount != null">`offline_count`= offline_count + #{offlineCount},</if>
+            modified_time=#{modifiedTime}
+        </set>
+        where group_id = #{groupId}
+    </update>
+
     <delete id="deleteByGroupIdAndUid">
         delete from `group_user` where group_id = #{groupId} and uid = #{uid}
+    </delete>
+
+    <delete id="deleteByGroupId">
+        delete from `group_user` where group_id = #{groupId}
     </delete>
 
 </mapper>

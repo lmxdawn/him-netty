@@ -23,7 +23,7 @@ import java.util.Map;
  */
 @RequestMapping("/user/login")
 @RestController
-public class LoginController {
+public class UserLoginController {
     
     @Resource
     private UserService userService;

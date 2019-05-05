@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
  */
 @RequestMapping("/user/friendMsg")
 @RestController
-public class FriendMsgController {
+public class UserFriendMsgController {
     
     @Resource
     private UserFriendMsgService userFriendMsgService;
@@ -65,7 +65,7 @@ public class FriendMsgController {
         }
         
         Long uid = userLoginDTO.getUid();
-    
+
         if (limit > 50) {
             limit = 50;
         }

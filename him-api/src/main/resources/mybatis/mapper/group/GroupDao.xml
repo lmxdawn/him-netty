@@ -4,14 +4,14 @@
 <mapper namespace="com.lmxdawn.him.api.dao.group.GroupDao">
 
     <select id="findByGroupId" parameterType="long" resultType="com.lmxdawn.him.common.entity.group.Group">
-        SELECT group_id,`name`,member_num,create_time
+        SELECT group_id,uid,`name`,member_num,create_time
         FROM `group`
         where group_id=#{groupId}
         limit 1
     </select>
 
     <select id="listByGroupIdIn" resultType="com.lmxdawn.him.common.entity.group.Group">
-        SELECT group_id,`name`,member_num
+        SELECT group_id,uid,`name`,member_num,remark
         FROM `group`
         where group_id in
         <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
@@ -20,10 +20,12 @@
     </select>
 
     <insert id="insertGroup" keyProperty="groupId" parameterType="com.lmxdawn.him.common.entity.group.Group">
-        INSERT INTO `group`(`name`,member_num,create_time,modified_time)
+        INSERT INTO `group`(uid,`name`,member_num,remark,create_time,modified_time)
         VALUES
-        (#{name},
+        (#{uid},
+        #{name},
         #{memberNum},
+        #{remark},
         #{createTime},
         #{modifiedTime})
     </insert>
@@ -31,8 +33,10 @@
     <update id="updateGroup" parameterType="com.lmxdawn.him.common.entity.group.Group">
         UPDATE `group`
         <set>
+            <if test="uid != null">`uid`=#{uid},</if>
             <if test="name != null">`name`=#{name},</if>
-            <if test="memberNum != null">`member_num`=#{memberNum},</if>
+            <if test="memberNum != null">`member_num`= member_num + #{memberNum},</if>
+            <if test="remark != null">`remark`=#{remark},</if>
             modified_time=#{modifiedTime}
         </set>
         WHERE group_id=#{groupId}

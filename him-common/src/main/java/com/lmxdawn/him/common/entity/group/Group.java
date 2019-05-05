@@ -15,13 +15,25 @@ public class Group {
  	*/
 	private Long groupId;
 	/**
+ 	* 创建者用户ID
+ 	*/
+	private Long uid;
+	/**
  	* 群昵称
  	*/
 	private String name;
 	/**
+ 	* 群头像
+ 	*/
+	private String avatar;
+	/**
  	* 成员数量
  	*/
 	private Integer memberNum;
+	/**
+ 	* 描述
+ 	*/
+	private String remark;
 	/**
  	* 创建时间
  	*/

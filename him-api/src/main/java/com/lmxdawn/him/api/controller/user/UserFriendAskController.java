@@ -25,7 +25,7 @@ import java.util.*;
  */
 @RequestMapping("/user/friendAsk")
 @RestController
-public class FriendAskController {
+public class UserFriendAskController {
   
   @Resource
   private UserFriendAskService userFriendAskService;

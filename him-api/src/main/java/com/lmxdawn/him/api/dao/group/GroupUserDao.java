@@ -1,7 +1,5 @@
 package com.lmxdawn.him.api.dao.group;
 
-import com.lmxdawn.him.api.vo.req.GroupUserListReqVO;
-import com.lmxdawn.him.api.vo.req.UserGroupListReqVO;
 import com.lmxdawn.him.common.entity.group.GroupUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -15,13 +13,17 @@ public interface GroupUserDao {
      * 查询群的用户列表
      * @return
      */
-    List<GroupUser> listByGroupId(GroupUserListReqVO groupUserListReqVO);
+    List<GroupUser> listByGroupId(@Param("groupId") Long groupId,
+                                  @Param("offset") Integer offset,
+                                  @Param("limit") Integer limit);
 
     /**
      * 查询用户的群列表
      * @return
      */
-    List<GroupUser> listByUid(UserGroupListReqVO userGroupListRequest);
+    List<GroupUser> listByUid(@Param("uid") Long uid,
+                              @Param("offset") Integer offset,
+                              @Param("limit") Integer limit);
 
     /**
      * 插入
@@ -33,12 +35,24 @@ public interface GroupUserDao {
      * 更新
      * @return
      */
-    boolean updateGroupUser(GroupUser groupUser);
+    boolean updateGroupUserByGroupIdAndUid(GroupUser groupUser);
+
+    /**
+     * 根据群ID批量更新
+     * @return
+     */
+    boolean updateGroupUserByGroupId(GroupUser groupUser);
 
     /**
      * 删除
      * @return
      */
     boolean deleteByGroupIdAndUid(@Param(value = "groupId") Long groupId, @Param(value = "uid") Long uid);
+
+    /**
+     * 删除
+     * @return
+     */
+    boolean deleteByGroupId(@Param(value = "groupId") Long groupId);
 
 }

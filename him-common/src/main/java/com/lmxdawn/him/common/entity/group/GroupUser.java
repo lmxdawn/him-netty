@@ -31,6 +31,18 @@ public class GroupUser {
  	*/
 	private Long lastAckMsgId;
 	/**
+ 	* 最后一次的消息内容
+ 	*/
+	private String lastMsgContent;
+	/**
+ 	* 离线消息数量
+ 	*/
+	private Integer offlineCount;
+	/**
+ 	* 等级（0：普通成员，1：管理员，2：群主）
+ 	*/
+	private Integer rank;
+	/**
  	* 创建时间
  	*/
 	private Date createTime;
