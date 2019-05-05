@@ -8,6 +8,7 @@ import com.lmxdawn.him.api.utils.UserLoginUtils;
 import com.lmxdawn.him.api.vo.req.GroupUserSaveReqVO;
 import com.lmxdawn.him.api.vo.res.GroupUserListResVO;
 import com.lmxdawn.him.common.entity.group.Group;
+import com.lmxdawn.him.common.entity.group.GroupMsg;
 import com.lmxdawn.him.common.entity.group.GroupUser;
 import com.lmxdawn.him.common.enums.ResultEnum;
 import com.lmxdawn.him.common.utils.ResultVOUtils;
@@ -20,6 +21,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -30,13 +32,13 @@ import java.util.stream.Collectors;
 @RequestMapping("/group/user")
 @RestController
 public class GroupUserController {
-
+    
     @Resource
     private GroupService groupService;
-
+    
     @Resource
     private GroupUserService groupUserService;
-
+    
     /**
      * 列表
      *
@@ -46,65 +48,65 @@ public class GroupUserController {
     public BaseResVO lists(@RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
                            @RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit,
                            HttpServletRequest request) {
-
+        
         limit = limit > 100 ? 100 : limit;
         // 验证登录
         UserLoginDTO userLoginDTO = UserLoginUtils.check(request);
         if (userLoginDTO == null) {
             return ResultVOUtils.error(ResultEnum.LOGIN_VERIFY_FALL);
         }
-
+        
         Long uid = userLoginDTO.getUid();
-
+        
         List<GroupUserListResVO> groupUserListResVOS = new ArrayList<>();
-
+        
         List<GroupUser> groupUsers = groupUserService.listByUid(uid, page, limit);
         // 没有加入任何群
         if (groupUsers.size() <= 0) {
             return ResultVOUtils.success(groupUserListResVOS);
         }
-
+        
         List<Long> groupIds = groupUsers.stream().map(GroupUser::getGroupId).collect(Collectors.toList());
         // 查询群
         Map<Long, Group> groupMap = groupService.listByGroupIdIn(groupIds);
-
+        
         groupUsers.forEach(v -> {
             GroupUserListResVO groupUserListResVO = new GroupUserListResVO();
             BeanUtils.copyProperties(v, groupUserListResVO);
             groupUserListResVO.setGroup(groupMap.get(v.getGroupId()));
             groupUserListResVOS.add(groupUserListResVO);
         });
-
+        
         return ResultVOUtils.success(groupUserListResVOS);
     }
-
+    
     /**
      * 添加
+     *
      * @return
      */
     @PostMapping("/create")
     public BaseResVO create(@RequestParam("checkCode") String checkCode,
-                            @Valid @RequestBody GroupUserSaveReqVO groupUserSaveReqVO,
                             BindingResult bindingResult,
                             HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
             return ResultVOUtils.error(ResultEnum.PARAM_VERIFY_FALL, bindingResult.getFieldError().getDefaultMessage());
         }
-
+        
         // 验证登录
         UserLoginDTO userLoginDTO = UserLoginUtils.check(request);
         if (userLoginDTO == null) {
             return ResultVOUtils.error(ResultEnum.LOGIN_VERIFY_FALL);
         }
-
+        
         Long uid = userLoginDTO.getUid();
-
-        Long groupId = groupUserSaveReqVO.getGroupId();
+        
+        Long groupId = GroupUserUtils.checkCode(checkCode);
         // 验证用户是否合法加入
-        if (!GroupUserUtils.checkCode(groupId, checkCode)) {
-            return ResultVOUtils.error(ResultEnum.AUTH_FAILED, "二维码过期~");
+        if (groupId == null) {
+            return ResultVOUtils.error(ResultEnum.PARAM_VERIFY_FALL, "二维码过期~");
         }
-
+        
         Group group = groupService.findByGroupId(groupId);
         if (group == null) {
             return ResultVOUtils.error(ResultEnum.DATA_NOT);
@@ -113,31 +115,35 @@ public class GroupUserController {
         if (uid.equals(group.getUid())) {
             return ResultVOUtils.success();
         }
-
+        
+        // 最多500人
+        if (group.getMemberNum() >= 500) {
+            return ResultVOUtils.error(ResultEnum.AUTH_FAILED, "群用户已达上限~");
+        }
+        
         // 判断是否在群里面
         GroupUser groupUser1 = groupUserService.findByGroupIdAndUid(groupId, uid);
         if (groupUser1 != null) {
             return ResultVOUtils.success();
         }
-
+        
         GroupUser groupUser = new GroupUser();
         groupUser.setGroupId(groupId);
         groupUser.setUid(uid);
-        groupUser.setRemark(groupUserSaveReqVO.getRemark());
         groupUser.setRank(0);
-
+        
         // 递增群用户数量
         groupService.incMemberNumByGroupId(groupId, 1);
-
+        
         boolean b = groupUserService.insertGroupUser(groupUser);
-
+        
         if (!b) {
             return ResultVOUtils.error(ResultEnum.NOT_NETWORK);
         }
-
+        
         return ResultVOUtils.success();
     }
-
+    
     /**
      * 更新
      *
@@ -150,29 +156,29 @@ public class GroupUserController {
         if (bindingResult.hasErrors()) {
             return ResultVOUtils.error(ResultEnum.PARAM_VERIFY_FALL, bindingResult.getFieldError().getDefaultMessage());
         }
-
+        
         // 验证登录
         UserLoginDTO userLoginDTO = UserLoginUtils.check(request);
         if (userLoginDTO == null) {
             return ResultVOUtils.error(ResultEnum.LOGIN_VERIFY_FALL);
         }
-
+        
         Long uid = userLoginDTO.getUid();
-
+        
         GroupUser groupUser = new GroupUser();
         groupUser.setGroupId(groupUserSaveReqVO.getGroupId());
         groupUser.setUid(uid);
         groupUser.setRemark(groupUserSaveReqVO.getRemark());
-
+        
         boolean b = groupUserService.updateGroupUserByGroupIdAndUid(groupUser);
-
+        
         if (!b) {
             return ResultVOUtils.error(ResultEnum.NOT_NETWORK);
         }
-
+        
         return ResultVOUtils.success();
     }
-
+    
     /**
      * 删除 （退出群）
      *
@@ -181,20 +187,20 @@ public class GroupUserController {
     @PostMapping("/delete")
     public BaseResVO delete(@RequestParam(value = "groupId") Long groupId,
                             HttpServletRequest request) {
-
+        
         if (groupId == null
                 || groupId <= 0) {
             return ResultVOUtils.error(ResultEnum.PARAM_VERIFY_FALL, "参数错误~");
         }
-
+        
         // 验证登录
         UserLoginDTO userLoginDTO = UserLoginUtils.check(request);
         if (userLoginDTO == null) {
             return ResultVOUtils.error(ResultEnum.LOGIN_VERIFY_FALL);
         }
-
+        
         Long uid = userLoginDTO.getUid();
-
+        
         // 判断是不是群主
         Group group = groupService.findByGroupId(groupId);
         if (group == null) {
@@ -203,45 +209,75 @@ public class GroupUserController {
         if (uid.equals(group.getUid())) {
             return ResultVOUtils.error(ResultEnum.PARAM_VERIFY_FALL, "群主不能退群~");
         }
-
+        
         // 删除群成员信息
         boolean b = groupUserService.deleteByGroupIdAndUid(groupId, uid);
         if (!b) {
             return ResultVOUtils.error(ResultEnum.PARAM_VERIFY_FALL, "退群失败，请重试~");
         }
-
+        
         // 递减群用户数量
         groupService.decMemberNumByGroupId(groupId);
-
+        
         return ResultVOUtils.success();
     }
-
+    
     /**
      * 获取二维码
+     *
      * @param groupId
      * @param request
      * @return
      */
     @GetMapping("/getCheckCode")
     public BaseResVO getCheckCode(@RequestParam(value = "groupId") Long groupId,
-                               HttpServletRequest request) {
+                                  HttpServletRequest request) {
         // 验证登录
         UserLoginDTO userLoginDTO = UserLoginUtils.check(request);
         if (userLoginDTO == null) {
             return ResultVOUtils.error(ResultEnum.LOGIN_VERIFY_FALL);
         }
-
+        
         Long uid = userLoginDTO.getUid();
-
+        
         GroupUser groupUser = groupUserService.findByGroupIdAndUid(groupId, uid);
         if (groupUser == null) {
             return ResultVOUtils.error(ResultEnum.PARAM_VERIFY_FALL, "请先加入群~");
         }
-
+        
         String checkCode = GroupUserUtils.createCheckCode(groupId);
-
+        
         return ResultVOUtils.success(checkCode);
-
+        
     }
-
+    
+    
+    /**
+     * 清空未读消息数量
+     * @return
+     */
+    @PostMapping("/clearUnMsgCount")
+    public BaseResVO clearUnMsgCount(@RequestParam(value = "groupId") Long groupId,
+                                     HttpServletRequest request) {
+        // 验证登录
+        UserLoginDTO userLoginDTO = UserLoginUtils.check(request);
+        if (userLoginDTO == null) {
+            return ResultVOUtils.error(ResultEnum.LOGIN_VERIFY_FALL);
+        }
+        
+        Long uid = userLoginDTO.getUid();
+        // 判断是否在群里面
+        GroupUser groupUser = groupUserService.findByGroupIdAndUid(groupId, uid);
+        if (groupUser == null) {
+            return ResultVOUtils.error(ResultEnum.PARAM_VERIFY_FALL, "不是该群成员~");
+        }
+        
+        GroupUser groupUser1 = new GroupUser();
+        groupUser1.setGroupId(groupId);
+        groupUser1.setUid(uid);
+        groupUserService.clearUnMsgCountByGroupIdAndUid(groupUser1);
+        
+        return ResultVOUtils.success();
+    }
+    
 }

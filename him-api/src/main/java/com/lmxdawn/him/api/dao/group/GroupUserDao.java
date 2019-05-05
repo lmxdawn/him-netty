@@ -45,6 +45,12 @@ public interface GroupUserDao {
     boolean updateGroupUserByGroupIdAndUid(GroupUser groupUser);
 
     /**
+     * 清空未读消息数量
+     * @return
+     */
+    boolean clearUnMsgCountByGroupIdAndUid(GroupUser groupUser);
+
+    /**
      * 根据群ID批量更新
      * @return
      */

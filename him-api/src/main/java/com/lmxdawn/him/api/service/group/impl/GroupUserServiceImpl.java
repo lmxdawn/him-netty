@@ -45,7 +45,13 @@ public class GroupUserServiceImpl implements GroupUserService {
         groupUser.setModifiedTime(new Date());
         return groupUserDao.updateGroupUserByGroupIdAndUid(groupUser);
     }
-
+    
+    @Override
+    public boolean clearUnMsgCountByGroupIdAndUid(GroupUser groupUser) {
+        groupUser.setModifiedTime(new Date());
+        return groupUserDao.clearUnMsgCountByGroupIdAndUid(groupUser);
+    }
+    
     @Override
     public boolean updateGroupUserByGroupId(GroupUser groupUser) {
         groupUser.setModifiedTime(new Date());

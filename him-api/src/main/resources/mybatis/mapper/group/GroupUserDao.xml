@@ -46,6 +46,15 @@
         where group_id = #{groupId} and uid = #{uid}
     </update>
 
+    <update id="clearUnMsgCountByGroupIdAndUid" parameterType="com.lmxdawn.him.common.entity.group.GroupUser">
+        update `group_user`
+        <set>
+            `un_msg_count`=0,
+            modified_time=#{modifiedTime}
+        </set>
+        where group_id = #{groupId} and uid = #{uid}
+    </update>
+
     <update id="updateGroupUserByGroupId" parameterType="com.lmxdawn.him.common.entity.group.GroupUser">
         update `group_user`
         <set>

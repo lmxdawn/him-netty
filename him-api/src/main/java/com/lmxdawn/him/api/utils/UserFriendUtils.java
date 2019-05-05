@@ -6,9 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 群用户相关
+ * 用户朋友相关
  */
-public class GroupUserUtils {
+public class UserFriendUtils {
 
   /**
    * 创建群的验证码
@@ -16,7 +16,7 @@ public class GroupUserUtils {
    */
   public static String createCheckCode(Long groupId) {
     Map<String, Object> claims = new HashMap<>();
-    claims.put("gid", groupId);
+    claims.put("uid", groupId);
     return JwtUtils.createToken(claims, null); // 不过期
   }
 
@@ -37,7 +37,7 @@ public class GroupUserUtils {
       if (claims == null) {
         return null;
       }
-      return Long.valueOf(claims.get("gid").toString());
+      return Long.valueOf(claims.get("uid").toString());
       
     } catch (Exception e) {
       return null;

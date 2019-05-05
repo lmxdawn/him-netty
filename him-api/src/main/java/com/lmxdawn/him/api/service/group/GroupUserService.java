@@ -35,6 +35,12 @@ public interface GroupUserService {
      * @return
      */
     boolean updateGroupUserByGroupIdAndUid(GroupUser groupUser);
+    
+    /**
+     * 清空未读消息
+     * @return
+     */
+    boolean clearUnMsgCountByGroupIdAndUid(GroupUser groupUser);
 
     /**
      * 根据群ID更新
