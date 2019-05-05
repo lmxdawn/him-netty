@@ -35,9 +35,13 @@ public class GroupUser {
  	*/
 	private String lastMsgContent;
 	/**
- 	* 离线消息数量
+ 	* 最后一次的消息时间
  	*/
-	private Integer offlineCount;
+	private Date lastMsgTime;
+	/**
+ 	* 未读消息数量
+ 	*/
+	private Integer unMsgCount;
 	/**
  	* 等级（0：普通成员，1：管理员，2：群主）
  	*/

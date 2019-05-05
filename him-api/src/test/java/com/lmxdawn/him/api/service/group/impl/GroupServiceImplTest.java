@@ -29,9 +29,6 @@ public class GroupServiceImplTest extends BaseApplicationTest {
     @Test
     public void listByGroupIdIn() {
 
-        List<Long> groupIds = Arrays.asList(1L,2L);
-        List<Group> groupList = groupService.listByGroupIdIn(groupIds);
-        assertTrue(groupList.size() > 0);
     }
 
     @Test

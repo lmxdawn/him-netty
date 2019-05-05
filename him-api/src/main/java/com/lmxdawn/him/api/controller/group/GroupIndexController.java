@@ -3,19 +3,27 @@ package com.lmxdawn.him.api.controller.group;
 import com.lmxdawn.him.api.dto.UserLoginDTO;
 import com.lmxdawn.him.api.service.group.GroupService;
 import com.lmxdawn.him.api.service.group.GroupUserService;
+import com.lmxdawn.him.api.service.user.UserService;
 import com.lmxdawn.him.api.utils.UserLoginUtils;
+import com.lmxdawn.him.api.vo.res.GroupIndexListResVO;
 import com.lmxdawn.him.api.vo.req.GroupSaveReqVO;
+import com.lmxdawn.him.api.vo.res.UserInfoListResVO;
 import com.lmxdawn.him.common.entity.group.Group;
 import com.lmxdawn.him.common.entity.group.GroupUser;
 import com.lmxdawn.him.common.enums.ResultEnum;
 import com.lmxdawn.him.common.utils.ResultVOUtils;
 import com.lmxdawn.him.common.vo.res.BaseResVO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 群相关
@@ -30,6 +38,48 @@ public class GroupIndexController {
     @Resource
     private GroupUserService groupUserService;
 
+
+    @Resource
+    private UserService userService;
+
+    /**
+     * 群用户列表
+     *
+     * @return
+     */
+    @GetMapping("/lists")
+    public BaseResVO lists(@RequestParam("groupId") Long groupId,
+                           @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+                           @RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit,
+                           HttpServletRequest request) {
+        // 验证登录
+        UserLoginDTO userLoginDTO = UserLoginUtils.check(request);
+        if (userLoginDTO == null) {
+            return ResultVOUtils.error(ResultEnum.LOGIN_VERIFY_FALL);
+        }
+
+        Long uid = userLoginDTO.getUid();
+        // 判断是不是在群里边
+        GroupUser groupUser = groupUserService.findByGroupIdAndUid(groupId, uid);
+        if (groupUser == null) {
+            return ResultVOUtils.error(ResultEnum.PARAM_VERIFY_FALL, "请先加入群~");
+        }
+        limit = limit > 500 ? 500 : limit;
+        List<GroupUser> groupUsers = groupUserService.listByGroupId(groupId, page, limit);
+
+        List<Long> uids = groupUsers.stream().map(GroupUser::getUid).collect(Collectors.toList());
+        Map<Long, UserInfoListResVO> userInfoListResVOMap = userService.listByUidIn(uids);
+
+        List<GroupIndexListResVO> groupIndexListResVOS = new ArrayList<>();
+        groupUsers.forEach(v -> {
+            GroupIndexListResVO groupIndexListResVO = new GroupIndexListResVO();
+            BeanUtils.copyProperties(v, groupIndexListResVO);
+            groupIndexListResVO.setUser(userInfoListResVOMap.get(v.getUid()));
+            groupIndexListResVOS.add(groupIndexListResVO);
+        });
+
+        return ResultVOUtils.success(groupIndexListResVOS);
+    }
 
     /**
      * 添加
@@ -46,7 +96,7 @@ public class GroupIndexController {
 
         // 验证登录
         UserLoginDTO userLoginDTO = UserLoginUtils.check(request);
-        if (userLoginDTO == null || userLoginDTO.getUid() == null) {
+        if (userLoginDTO == null) {
             return ResultVOUtils.error(ResultEnum.LOGIN_VERIFY_FALL);
         }
 
@@ -94,7 +144,7 @@ public class GroupIndexController {
 
         // 验证登录
         UserLoginDTO userLoginDTO = UserLoginUtils.check(request);
-        if (userLoginDTO == null || userLoginDTO.getUid() == null) {
+        if (userLoginDTO == null) {
             return ResultVOUtils.error(ResultEnum.LOGIN_VERIFY_FALL);
         }
 
@@ -107,22 +157,23 @@ public class GroupIndexController {
         }
 
         Group group = new Group();
+        group.setGroupId(groupSaveReqVO.getGroupId());
         boolean isUp = false;
-        if (!groupSaveReqVO.getName().equals(group1.getName())) {
+        if (null != groupSaveReqVO.getName() && !groupSaveReqVO.getName().equals(group1.getName())) {
             group.setName(groupSaveReqVO.getName());
             isUp = true;
         }
-        if (!groupSaveReqVO.getAvatar().equals(group1.getAvatar())) {
+        if (null != groupSaveReqVO.getAvatar() && !groupSaveReqVO.getAvatar().equals(group1.getAvatar())) {
             group.setAvatar(groupSaveReqVO.getAvatar());
             isUp = true;
         }
-        if (!groupSaveReqVO.getRemark().equals(group1.getRemark())) {
+        if (null != groupSaveReqVO.getRemark() && !groupSaveReqVO.getRemark().equals(group1.getRemark())) {
             group.setRemark(groupSaveReqVO.getRemark());
             isUp = true;
         }
         boolean b = true;
         if (isUp) {
-            b = groupService.insertGroup(group);
+            b = groupService.updateGroup(group);
         }
         if (!b) {
             return ResultVOUtils.error(ResultEnum.NOT_NETWORK);
@@ -147,7 +198,7 @@ public class GroupIndexController {
 
         // 验证登录
         UserLoginDTO userLoginDTO = UserLoginUtils.check(request);
-        if (userLoginDTO == null || userLoginDTO.getUid() == null) {
+        if (userLoginDTO == null) {
             return ResultVOUtils.error(ResultEnum.LOGIN_VERIFY_FALL);
         }
 

@@ -49,7 +49,7 @@ public class UserFriendAskController {
     
     // 验证登录
     UserLoginDTO userLoginDTO = UserLoginUtils.check(request);
-    if (userLoginDTO == null || userLoginDTO.getUid() == null) {
+    if (userLoginDTO == null) {
       return ResultVOUtils.error(ResultEnum.LOGIN_VERIFY_FALL);
     }
     
@@ -76,7 +76,7 @@ public class UserFriendAskController {
     
     // 验证登录
     UserLoginDTO userLoginDTO = UserLoginUtils.check(request);
-    if (userLoginDTO == null || userLoginDTO.getUid() == null) {
+    if (userLoginDTO == null) {
       return ResultVOUtils.error(ResultEnum.LOGIN_VERIFY_FALL);
     }
     
@@ -143,7 +143,7 @@ public class UserFriendAskController {
     
     // 验证登录
     UserLoginDTO userLoginDTO = UserLoginUtils.check(request);
-    if (userLoginDTO == null || userLoginDTO.getUid() == null) {
+    if (userLoginDTO == null) {
       return ResultVOUtils.error(ResultEnum.LOGIN_VERIFY_FALL);
     }
     
@@ -240,7 +240,7 @@ public class UserFriendAskController {
   
     // 验证登录
     UserLoginDTO userLoginDTO = UserLoginUtils.check(request);
-    if (userLoginDTO == null || userLoginDTO.getUid() == null) {
+    if (userLoginDTO == null) {
       return ResultVOUtils.error(ResultEnum.LOGIN_VERIFY_FALL);
     }
   

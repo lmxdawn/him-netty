@@ -3,6 +3,13 @@
 
 <mapper namespace="com.lmxdawn.him.api.dao.group.GroupUserDao">
 
+    <select id="findByGroupIdAndUid" resultType="com.lmxdawn.him.common.entity.group.GroupUser">
+        select id,`rank`,create_time
+        from `group_user`
+        where group_id = #{groupId} and uid = #{uid}
+        limit 1
+    </select>
+
     <select id="listByGroupId" resultType="com.lmxdawn.him.common.entity.group.GroupUser">
         select id,group_id,uid,remark,`rank`
         from `group_user`
@@ -11,7 +18,7 @@
     </select>
 
     <select id="listByUid" resultType="com.lmxdawn.him.common.entity.group.GroupUser">
-        select id,group_id,uid,last_ack_msg_id,last_msg_content,offline_count,`rank`,last_msg_time
+        select id,group_id,uid,last_ack_msg_id,last_msg_content,un_msg_count,`rank`,last_msg_time
         from `group_user`
         where uid = #{uid}
         limit #{offset},#{limit}
@@ -26,12 +33,13 @@
         #{rank},
         #{createTime},
         #{modifiedTime})
+        ON DUPLICATE KEY UPDATE modified_time = VALUES(modified_time)
     </insert>
 
     <update id="updateGroupUserByGroupIdAndUid" parameterType="com.lmxdawn.him.common.entity.group.GroupUser">
         update `group_user`
         <set>
-            <if test="remark != null">`remark`=#{remark},</if>
+            `remark`=#{remark},
             <if test="rank != null">`rank`=#{rank},</if>
             modified_time=#{modifiedTime}
         </set>
@@ -44,14 +52,14 @@
             <if test="lastAckMsgId != null">`last_ack_msg_id`=#{lastAckMsgId},</if>
             <if test="lastMsgContent != null">`last_msg_content`=#{lastMsgContent},</if>
             <if test="lastMsgTime != null">`last_msg_time`=#{lastMsgTime},</if>
-            <if test="offlineCount != null">`offline_count`= offline_count + #{offlineCount},</if>
+            <if test="unMsgCount != null">`un_msg_count`= un_msg_count + #{unMsgCount},</if>
             modified_time=#{modifiedTime}
         </set>
         where group_id = #{groupId}
     </update>
 
     <delete id="deleteByGroupIdAndUid">
-        delete from `group_user` where group_id = #{groupId} and uid = #{uid}
+        delete from `group_user` where group_id = #{groupId} and uid = #{uid} and `rank` != 2
     </delete>
 
     <delete id="deleteByGroupId">

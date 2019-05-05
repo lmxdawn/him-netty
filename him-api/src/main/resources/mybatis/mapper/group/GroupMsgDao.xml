@@ -3,12 +3,12 @@
 
 <mapper namespace="com.lmxdawn.him.api.dao.group.GroupMsgDao">
 
-    <select id="listByLastMsgId" parameterType="long" resultType="com.lmxdawn.him.common.entity.group.GroupMsg">
+    <select id="listByGroupIdAndCreateTime" resultType="com.lmxdawn.him.common.entity.group.GroupMsg">
         select msg_id,group_id,sender_uid,msg_type,msg_content,create_time
         from `group_msg`
-        where group_id = #{groupId} and msg_id > #{lastMsgId}
-        order by msg_id desc
-        limit 100
+        where group_id = #{groupId} and create_time >= #{createTime}
+        order by create_time desc
+        limit #{offset},#{limit}
     </select>
 
     <insert id="insertGroupMsg" keyProperty="msgId" parameterType="com.lmxdawn.him.common.entity.group.GroupMsg">

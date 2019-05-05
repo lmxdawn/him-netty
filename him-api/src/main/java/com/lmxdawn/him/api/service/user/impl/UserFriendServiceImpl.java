@@ -2,6 +2,7 @@ package com.lmxdawn.him.api.service.user.impl;
 
 import com.lmxdawn.him.api.dao.user.UserFriendDao;
 import com.lmxdawn.him.api.service.user.UserFriendService;
+import com.lmxdawn.him.api.utils.PageUtils;
 import com.lmxdawn.him.common.entity.user.UserFriend;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,8 @@ public class UserFriendServiceImpl implements UserFriendService {
     private UserFriendDao userFriendDao;
 
     @Override
-    public List<UserFriend> listByUid(Long uid, Integer offset, Integer limit) {
+    public List<UserFriend> listByUid(Long uid, Integer page, Integer limit) {
+        Integer offset = PageUtils.createOffset(page, limit);
         return userFriendDao.listByUid(uid, offset, limit);
     }
 

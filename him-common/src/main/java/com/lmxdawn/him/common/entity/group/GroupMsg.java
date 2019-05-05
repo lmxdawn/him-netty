@@ -23,9 +23,9 @@ public class GroupMsg {
  	*/
 	private Long senderUid;
 	/**
- 	* 消息类型 ( 0 : 文本消息 )
+ 	* 消息类型（0：普通文字消息，1：图片消息，2：文件消息，3：语音消息，4：视频消息）
  	*/
-	private Long msgType;
+	private Integer msgType;
 	/**
  	* 消息内容
  	*/

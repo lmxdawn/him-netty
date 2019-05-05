@@ -17,6 +17,11 @@ public class GroupUserServiceImpl implements GroupUserService {
     private GroupUserDao groupUserDao;
 
     @Override
+    public GroupUser findByGroupIdAndUid(Long groupId, Long uid) {
+        return groupUserDao.findByGroupIdAndUid(groupId, uid);
+    }
+
+    @Override
     public List<GroupUser> listByGroupId(Long groupId, Integer page, Integer limit) {
         Integer offset = PageUtils.createOffset(page, limit);
         return groupUserDao.listByGroupId(groupId, offset, limit);

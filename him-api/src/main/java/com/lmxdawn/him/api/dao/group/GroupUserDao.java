@@ -10,6 +10,13 @@ import java.util.List;
 public interface GroupUserDao {
 
     /**
+     * 查询群用户
+     * @return
+     */
+    GroupUser findByGroupIdAndUid(@Param("groupId") Long groupId,
+                                  @Param("uid") Long uid);
+
+    /**
      * 查询群的用户列表
      * @return
      */

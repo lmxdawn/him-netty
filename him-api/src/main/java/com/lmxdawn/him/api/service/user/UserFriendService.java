@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface UserFriendService {
 
-    List<UserFriend> listByUid(Long uid, Integer offset, Integer limit);
+    List<UserFriend> listByUid(Long uid, Integer page, Integer limit);
 
     UserFriend findByUidAndFriendUid(Long uid, Long friendUid);
 

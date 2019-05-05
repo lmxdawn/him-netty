@@ -2,11 +2,12 @@ package com.lmxdawn.him.api.service.group;
 
 import com.lmxdawn.him.common.entity.group.GroupMsg;
 
+import java.util.Date;
 import java.util.List;
 
 public interface GroupMsgService {
 
-    List<GroupMsg> listByLastMsgId(Long groupId, Long lastMsgId);
+    List<GroupMsg> listByGroupIdAndCreateTime(Long groupId, Date createTime, Integer page, Integer limit);
 
     boolean insertGroupMsg(GroupMsg groupMsg);
 

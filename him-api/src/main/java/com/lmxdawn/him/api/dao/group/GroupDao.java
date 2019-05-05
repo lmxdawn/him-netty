@@ -2,6 +2,7 @@ package com.lmxdawn.him.api.dao.group;
 
 import com.lmxdawn.him.common.entity.group.Group;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -31,6 +32,19 @@ public interface GroupDao {
      * @return
      */
     boolean updateGroup(Group group);
+
+    /**
+     * 递增用户数量
+     * @return
+     */
+    boolean incMemberNumByGroupId(@Param("groupId") Long groupId,
+                                  @Param("memberNum") Integer memberNum);
+
+    /**
+     * 递减用户数量
+     * @return
+     */
+    boolean decMemberNumByGroupId(@Param("groupId") Long groupId);
 
     /**
      * 删除

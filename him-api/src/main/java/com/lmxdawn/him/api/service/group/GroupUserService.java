@@ -7,6 +7,12 @@ import java.util.List;
 public interface GroupUserService {
 
     /**
+     * 查询群用户信息
+     * @return
+     */
+    GroupUser findByGroupIdAndUid(Long groupId, Long uid);
+
+    /**
      * 查询群的用户列表
      * @return
      */

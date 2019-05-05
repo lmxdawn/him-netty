@@ -49,19 +49,16 @@ public class UserFriendController {
         
         // 验证登录
         UserLoginDTO userLoginDTO = UserLoginUtils.check(request);
-        if (userLoginDTO == null || userLoginDTO.getUid() == null) {
+        if (userLoginDTO == null) {
             return ResultVOUtils.error(ResultEnum.LOGIN_VERIFY_FALL);
         }
-        
+
+        limit = limit > 50 ? 50 : limit;
+
         Long uid = userLoginDTO.getUid();
-    
-        if (limit > 50) {
-            limit = 50;
-        }
-    
-        Integer offset = PageUtils.createOffset(page, limit);
-    
-        List<UserFriend> userFriends = userFriendService.listByUid(uid, offset, limit);
+
+
+        List<UserFriend> userFriends = userFriendService.listByUid(uid, page, limit);
     
         List<Long> uids = userFriends.stream().map(UserFriend::getFriendUid).collect(Collectors.toList());
     
@@ -95,13 +92,13 @@ public class UserFriendController {
         
         // 验证登录
         UserLoginDTO userLoginDTO = UserLoginUtils.check(request);
-        if (userLoginDTO == null || userLoginDTO.getUid() == null) {
+        if (userLoginDTO == null) {
             return ResultVOUtils.error(ResultEnum.LOGIN_VERIFY_FALL);
         }
         
         Long uid = userLoginDTO.getUid();
         Long friendUid = userFriendDeleteReqVO.getFriendUid();
-        
+
         boolean b = userFriendService.deleteByUidAndFriendUid(uid, friendUid);
         boolean b1 = userFriendService.deleteByUidAndFriendUid(friendUid, uid);
         if (!b) {

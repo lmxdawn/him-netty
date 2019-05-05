@@ -11,7 +11,7 @@
     </select>
 
     <select id="listByGroupIdIn" resultType="com.lmxdawn.him.common.entity.group.Group">
-        SELECT group_id,uid,`name`,member_num,remark
+        SELECT group_id,uid,`name`,member_num,remark,create_time,modified_time
         FROM `group`
         where group_id in
         <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
@@ -38,6 +38,22 @@
             <if test="memberNum != null">`member_num`= member_num + #{memberNum},</if>
             <if test="remark != null">`remark`=#{remark},</if>
             modified_time=#{modifiedTime}
+        </set>
+        WHERE group_id=#{groupId}
+    </update>
+
+    <update id="decMemberNumByGroupId">
+        UPDATE `group`
+        <set>
+            `member_num`= member_num - 1
+        </set>
+        WHERE group_id=#{groupId} AND member_num > 0
+    </update>
+
+    <update id="incMemberNumByGroupId">
+        UPDATE `group`
+        <set>
+            `member_num`= member_num + #{memberNum}
         </set>
         WHERE group_id=#{groupId}
     </update>
