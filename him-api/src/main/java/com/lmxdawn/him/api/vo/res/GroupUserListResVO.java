@@ -3,6 +3,8 @@ package com.lmxdawn.him.api.vo.res;
 import com.lmxdawn.him.common.entity.group.Group;
 import lombok.Data;
 
+import java.util.Date;
+
 
 /**
  * 用户朋友列表信息
@@ -24,7 +26,10 @@ public class GroupUserListResVO {
      * 用户id
      */
     private Long uid;
-
+    /**
+     * 群内名称
+     */
+    private String remark;
     /**
      * 最后一次确认的消息ID
      */
@@ -33,6 +38,10 @@ public class GroupUserListResVO {
      * 最后一次的消息内容
      */
     private String lastMsgContent;
+    /**
+     * 最后一次的消息的时间
+     */
+    private Date lastMsgTime;
     /**
      * 未读消息数量
      */

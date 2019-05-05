@@ -11,9 +11,13 @@ import java.util.Date;
 public class UserFriendListInfoResVO {
 
     /**
-     * 用户
+     * 用户ID
      */
-    private UserInfoListResVO user;
+    private Long uid;
+    /**
+     * 朋友的ID
+     */
+    private Long friendUid;
     /**
      * 备注
      */
@@ -30,5 +34,10 @@ public class UserFriendListInfoResVO {
     private String lastMsgContent;
     
     private Date modifiedTime;
+
+    /**
+     * 用户
+     */
+    private UserInfoListResVO user;
 
 }
