@@ -6,19 +6,13 @@ import com.lmxdawn.him.api.service.user.UserFriendService;
 import com.lmxdawn.him.api.service.user.UserService;
 import com.lmxdawn.him.api.utils.PageUtils;
 import com.lmxdawn.him.api.utils.UserLoginUtils;
-import com.lmxdawn.him.api.vo.req.UserFriendAskAckReqVO;
-import com.lmxdawn.him.api.vo.req.UserFriendDeleteReqVO;
 import com.lmxdawn.him.api.vo.req.UserFriendMsgClearMsgCountReqVO;
 import com.lmxdawn.him.api.vo.req.UserFriendMsgSaveReqVO;
-import com.lmxdawn.him.api.vo.res.UserFriendListInfoResVO;
-import com.lmxdawn.him.api.vo.res.UserInfoListResVO;
-import com.lmxdawn.him.common.entity.user.User;
 import com.lmxdawn.him.common.entity.user.UserFriend;
 import com.lmxdawn.him.common.entity.user.UserFriendMsg;
 import com.lmxdawn.him.common.enums.ResultEnum;
 import com.lmxdawn.him.common.utils.ResultVOUtils;
 import com.lmxdawn.him.common.vo.res.BaseResVO;
-import org.springframework.beans.BeanUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,8 +22,6 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * 朋友相关
@@ -74,7 +66,7 @@ public class UserFriendMsgController {
         
         // 把最小的那个 用户ID作为查询条件
         uid = uid > senderUid ? senderUid : uid;
-    
+        
         List<UserFriendMsg> userFriendMsgs = userFriendMsgService.listByUid(uid, offset, limit);
     
         return ResultVOUtils.success(userFriendMsgs);
