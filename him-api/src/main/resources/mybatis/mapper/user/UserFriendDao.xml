@@ -37,6 +37,7 @@
                         0,
                     </when>
                     <otherwise>
+                        0,
                     </otherwise>
                 </choose>
                 #{item.lastMsgContent},
@@ -44,10 +45,6 @@
                 #{item.modifiedTime})
             </if>
         </foreach>
-        ON DUPLICATE KEY UPDATE
-        un_msg_count=un_msg_count + VALUES(un_msg_count),
-        last_msg_content=VALUES(last_msg_content),
-        modified_time = VALUES(modified_time)
     </insert>
 
     <update id="updateUserFriend" parameterType="com.lmxdawn.him.common.entity.user.UserFriend">

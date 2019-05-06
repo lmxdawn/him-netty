@@ -36,4 +36,7 @@ public class UserFriendAskListResVO {
      */
     private Date createTime;
 
+    // 用户信息
+    private UserInfoListResVO user;
+
 }

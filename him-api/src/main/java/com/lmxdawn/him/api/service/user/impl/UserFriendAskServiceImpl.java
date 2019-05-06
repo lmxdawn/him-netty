@@ -2,15 +2,13 @@ package com.lmxdawn.him.api.service.user.impl;
 
 import com.lmxdawn.him.api.dao.user.UserFriendAskDao;
 import com.lmxdawn.him.api.service.user.UserFriendAskService;
-import com.lmxdawn.him.api.vo.res.UserFriendAskListResVO;
+import com.lmxdawn.him.api.utils.PageUtils;
 import com.lmxdawn.him.common.entity.user.UserFriendAsk;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class UserFriendAskServiceImpl implements UserFriendAskService {
@@ -19,14 +17,9 @@ public class UserFriendAskServiceImpl implements UserFriendAskService {
     private UserFriendAskDao userFriendAskDao;
 
     @Override
-    public List<UserFriendAskListResVO> listByUid(Long uid, Integer offset, Integer limit) {
-        List<UserFriendAsk> userFriendAsks = userFriendAskDao.listByUid(uid, offset, limit);
-        List<UserFriendAskListResVO> userFriendAskListResVOS = userFriendAsks.stream().map(v -> {
-            UserFriendAskListResVO userFriendAskListResVO = new UserFriendAskListResVO();
-            BeanUtils.copyProperties(v, userFriendAskListResVO);
-            return userFriendAskListResVO;
-        }).collect(Collectors.toList());
-        return userFriendAskListResVOS;
+    public List<UserFriendAsk> listByUid(Long uid, Integer page, Integer limit) {
+        Integer offset = PageUtils.createOffset(page, limit);
+        return userFriendAskDao.listByUid(uid, offset, limit);
     }
     
     @Override

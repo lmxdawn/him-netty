@@ -29,13 +29,13 @@ public class GroupSaveReqVO extends BaseLimitReqVO {
     /**.
      * 群头像
      */
-    @Length(min = 1, max = 255, message = "参数错误~")
+    @Length(min = 0, max = 255, message = "参数错误~")
     private String avatar;
 
     /**.
      * 说明
      */
-    @Length(min = 1, max = 255, message = "参数错误~")
+    @Length(min = 0, max = 255, message = "参数错误~")
     private String remark;
 
 }

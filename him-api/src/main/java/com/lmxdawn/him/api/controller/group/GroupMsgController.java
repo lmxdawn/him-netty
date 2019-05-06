@@ -119,40 +119,10 @@ public class GroupMsgController {
 
         Integer msgType = groupMsgCreateReqVO.getMsgType();
         String msgContent = groupMsgCreateReqVO.getMsgContent();
-        String lastMsgContent = msgContent;
-
-        GroupMsg groupMsg = new GroupMsg();
-        groupMsg.setGroupId(groupId);
-        groupMsg.setSenderUid(uid);
-        groupMsg.setMsgType(msgType);
-        groupMsg.setMsgContent(msgContent);
-        switch (msgType) {
-            case 1:
-                lastMsgContent = "[图片消息]";
-                break;
-            case 2:
-                lastMsgContent = "[文件消息]";
-                break;
-            case 3:
-                lastMsgContent = "[语言消息]";
-                break;
-            case 4:
-                lastMsgContent = "[视频消息]";
-                break;
-        }
-
-        boolean b = groupMsgService.insertGroupMsg(groupMsg);
+        boolean b = groupMsgService.addpMsg(uid, groupId, msgType, msgContent);
         if (!b) {
             return ResultVOUtils.error(ResultEnum.NOT_NETWORK);
         }
-
-        GroupUser groupUser = new GroupUser();
-        groupUser.setGroupId(groupId);
-        groupUser.setLastAckMsgId(groupMsg.getMsgId());
-        groupUser.setLastMsgContent(lastMsgContent);
-        groupUser.setLastMsgTime(new Date());
-        groupUser.setUnMsgCount(1);
-        boolean b1 = groupUserService.updateGroupUserByGroupId(groupUser);
 
         return ResultVOUtils.success();
     }

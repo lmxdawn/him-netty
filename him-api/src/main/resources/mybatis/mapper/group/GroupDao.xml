@@ -4,7 +4,7 @@
 <mapper namespace="com.lmxdawn.him.api.dao.group.GroupDao">
 
     <select id="findByGroupId" parameterType="long" resultType="com.lmxdawn.him.common.entity.group.Group">
-        SELECT group_id,uid,`name`,member_num,create_time
+        SELECT group_id,uid,`name`,member_num,remark,create_time
         FROM `group`
         where group_id=#{groupId}
         limit 1

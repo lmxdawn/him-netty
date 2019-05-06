@@ -1,6 +1,7 @@
 package com.lmxdawn.him.api.controller.group;
 
 import com.lmxdawn.him.api.dto.UserLoginDTO;
+import com.lmxdawn.him.api.service.group.GroupMsgService;
 import com.lmxdawn.him.api.service.group.GroupService;
 import com.lmxdawn.him.api.service.group.GroupUserService;
 import com.lmxdawn.him.api.utils.GroupUserUtils;
@@ -38,6 +39,9 @@ public class GroupUserController {
     
     @Resource
     private GroupUserService groupUserService;
+
+    @Resource
+    private GroupMsgService groupMsgService;
     
     /**
      * 列表
@@ -87,11 +91,7 @@ public class GroupUserController {
      */
     @PostMapping("/create")
     public BaseResVO create(@RequestParam("checkCode") String checkCode,
-                            BindingResult bindingResult,
                             HttpServletRequest request) {
-        if (bindingResult.hasErrors()) {
-            return ResultVOUtils.error(ResultEnum.PARAM_VERIFY_FALL, bindingResult.getFieldError().getDefaultMessage());
-        }
         
         // 验证登录
         UserLoginDTO userLoginDTO = UserLoginUtils.check(request);
@@ -113,7 +113,7 @@ public class GroupUserController {
         }
         // 如果是群主
         if (uid.equals(group.getUid())) {
-            return ResultVOUtils.success();
+            return ResultVOUtils.error(ResultEnum.PARAM_VERIFY_FALL, "已在当前群聊~");
         }
         
         // 最多500人
@@ -124,7 +124,7 @@ public class GroupUserController {
         // 判断是否在群里面
         GroupUser groupUser1 = groupUserService.findByGroupIdAndUid(groupId, uid);
         if (groupUser1 != null) {
-            return ResultVOUtils.success();
+            return ResultVOUtils.error(ResultEnum.PARAM_VERIFY_FALL, "已在当前群聊~");
         }
         
         GroupUser groupUser = new GroupUser();
@@ -140,8 +140,20 @@ public class GroupUserController {
         if (!b) {
             return ResultVOUtils.error(ResultEnum.NOT_NETWORK);
         }
-        
-        return ResultVOUtils.success();
+
+        // 追加群消息
+        Integer msgType = 0;
+        String msgContent = "嗨！大家好~";
+        groupMsgService.addpMsg(uid, groupId, msgType, msgContent);
+
+        GroupUserListResVO groupUserListResVO = new GroupUserListResVO();
+        BeanUtils.copyProperties(groupUser, groupUserListResVO);
+        groupUserListResVO.setLastMsgContent(msgContent);
+        groupUserListResVO.setLastMsgTime(new Date());
+        groupUserListResVO.setUnMsgCount(1);
+        groupUserListResVO.setGroup(group);
+
+        return ResultVOUtils.success(groupUserListResVO);
     }
     
     /**

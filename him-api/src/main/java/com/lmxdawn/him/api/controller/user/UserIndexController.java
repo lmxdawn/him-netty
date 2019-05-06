@@ -48,12 +48,17 @@ public class UserIndexController {
         Long uid = userLoginDTO.getUid();
     
         User user = userService.findByUid(uid);
+        if (user == null) {
+            return ResultVOUtils.error(ResultEnum.LOGIN_VERIFY_FALL);
+        }
         
         UserProfile userProfile = userProfileService.findByUid(uid);
     
         UserProfileInfoResVO userProfileInfoResVO = new UserProfileInfoResVO();
-        BeanUtils.copyProperties(userProfile, userProfileInfoResVO);
-    
+        if (userProfile != null) {
+            BeanUtils.copyProperties(userProfile, userProfileInfoResVO);
+        }
+
         UserInfoResVO userInfoResVO = new UserInfoResVO();
         BeanUtils.copyProperties(user, userInfoResVO);
         userInfoResVO.setProfile(userProfileInfoResVO);

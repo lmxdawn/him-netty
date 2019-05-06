@@ -1,6 +1,7 @@
 package com.lmxdawn.him.api.controller.user;
 
 
+import com.lmxdawn.him.api.utils.UserLoginUtils;
 import com.lmxdawn.him.api.vo.req.UserLoginPwdReqVO;
 import com.lmxdawn.him.api.vo.res.UserLoginResVO;
 import com.lmxdawn.him.api.service.user.UserService;
@@ -47,10 +48,8 @@ public class UserLoginController {
         if (!md5Pwd.equals(user.getPwd())) {
             return  ResultVOUtils.error(ResultEnum.PARAM_VERIFY_FALL, "密码或用户名错误~");
         }
-        
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("uid", uid);
-        String token = JwtUtils.createToken(claims, 86400L); // 一天后过期
+
+        String token = UserLoginUtils.createSid(uid);
     
         UserLoginResVO userLoginResVO = new UserLoginResVO();
         userLoginResVO.setUid(uid);

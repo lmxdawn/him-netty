@@ -29,8 +29,11 @@ public class UserServiceImpl implements UserService {
     
     @Override
     public Map<Long, UserInfoListResVO> listByUidIn(List<Long> uids) {
-        List<User> users = userDao.listByUidIn(uids);
         Map<Long, UserInfoListResVO> userInfoListResVOMap = new HashMap<>();
+        if (uids.size() == 0) {
+            return userInfoListResVOMap;
+        }
+        List<User> users = userDao.listByUidIn(uids);
         users.forEach(v -> {
             UserInfoListResVO userInfoListResVO = new UserInfoListResVO();
             BeanUtils.copyProperties(v, userInfoListResVO);

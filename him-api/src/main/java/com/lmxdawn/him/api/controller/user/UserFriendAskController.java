@@ -2,16 +2,16 @@ package com.lmxdawn.him.api.controller.user;
 
 import com.lmxdawn.him.api.dto.UserLoginDTO;
 import com.lmxdawn.him.api.service.user.*;
-import com.lmxdawn.him.api.utils.PageUtils;
+import com.lmxdawn.him.api.utils.UserFriendUtils;
 import com.lmxdawn.him.api.utils.UserLoginUtils;
 import com.lmxdawn.him.api.vo.req.UserFriendAskAckReqVO;
-import com.lmxdawn.him.api.vo.req.UserFriendAskSaveReqVO;
 import com.lmxdawn.him.api.vo.res.UserFriendAskListResVO;
 import com.lmxdawn.him.api.vo.res.UserInfoListResVO;
 import com.lmxdawn.him.common.entity.user.*;
 import com.lmxdawn.him.common.enums.ResultEnum;
 import com.lmxdawn.him.common.utils.ResultVOUtils;
 import com.lmxdawn.him.common.vo.res.BaseResVO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +19,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 好友请求
@@ -56,24 +57,35 @@ public class UserFriendAskController {
     Long uid = userLoginDTO.getUid();
     
     limit = limit > 50 ? 50 : limit;
-    
-    Integer offset = PageUtils.createOffset(page, limit);
-    
-    List<UserFriendAskListResVO> userFriendAskListResVOS = userFriendAskService.listByUid(uid, offset, limit);
-    
+
+
+    List<UserFriendAskListResVO> userFriendAskListResVOS = new ArrayList<>();
+    List<UserFriendAsk> userFriendAsks = userFriendAskService.listByUid(uid, page, limit);
+
+    if (userFriendAsks.size() == 0) {
+      return ResultVOUtils.success(userFriendAskListResVOS);
+    }
+
+    List<Long> uids = userFriendAsks.stream().map(UserFriendAsk::getFriendUid).collect(Collectors.toList());
+
+    Map<Long, UserInfoListResVO> userInfoListResVOMap = userService.listByUidIn(uids);
+
+    userFriendAsks.forEach(v -> {
+      UserFriendAskListResVO userFriendAskListResVO = new UserFriendAskListResVO();
+      BeanUtils.copyProperties(v, userFriendAskListResVO);
+      userFriendAskListResVO.setUser(userInfoListResVOMap.get(v.getFriendUid()));
+      userFriendAskListResVOS.add(userFriendAskListResVO);
+    });
+
     return ResultVOUtils.success(userFriendAskListResVOS);
     
   }
   
   
   @PostMapping("/create")
-  public BaseResVO create(@Valid @RequestBody UserFriendAskSaveReqVO userFriendAskSaveReqVO,
-                          BindingResult bindingResult,
+  public BaseResVO create(@RequestParam("checkCode") String checkCode,
+                          @RequestParam(value = "remark", required = false, defaultValue = "") String remark,
                           HttpServletRequest request) {
-    if (bindingResult.hasErrors()) {
-      return ResultVOUtils.error(ResultEnum.PARAM_VERIFY_FALL, bindingResult.getFieldError().getDefaultMessage());
-    }
-    
     // 验证登录
     UserLoginDTO userLoginDTO = UserLoginUtils.check(request);
     if (userLoginDTO == null) {
@@ -81,7 +93,11 @@ public class UserFriendAskController {
     }
     
     Long uid = userLoginDTO.getUid();
-    Long friendUid = userFriendAskSaveReqVO.getFriendUid();
+    Long friendUid = UserFriendUtils.checkCode(checkCode);
+    // 验证用户是否合法加入
+    if (friendUid == null) {
+      return ResultVOUtils.error(ResultEnum.PARAM_VERIFY_FALL, "二维码过期~");
+    }
     if (uid.equals(friendUid)) {
       return ResultVOUtils.error(ResultEnum.PARAM_VERIFY_FALL, "不能自己加自己~");
     }
@@ -109,14 +125,13 @@ public class UserFriendAskController {
     UserFriendAsk userFriendAsk = new UserFriendAsk();
     userFriendAsk.setUid(friendUid);
     userFriendAsk.setFriendUid(uid);
-    userFriendAsk.setRemark(userFriendAskSaveReqVO.getRemark());
+    userFriendAsk.setRemark(remark);
     userFriendAsk.setStatus(0);
     
     boolean b = userFriendAskService.insertUserFriendAsk(userFriendAsk);
     if (!b) {
       return ResultVOUtils.error();
     }
-    System.out.println(userFriendAsk);
     
     // 增加朋友请求数量
     userProfileService.incFriendAskCount(friendUid, 1);
@@ -151,55 +166,72 @@ public class UserFriendAskController {
     Long id = userFriendAskAckReqVO.getId();
     
     UserFriendAsk userFriendAsk = userFriendAskService.findById(id);
+    // 已经添加过了
     if (userFriendAsk == null || !uid.equals(userFriendAsk.getUid()) || userFriendAsk.getStatus() != 0) {
-      return ResultVOUtils.success();
-    }
-    Long friendUid = userFriendAsk.getFriendUid();
-    // 判断好友数量
-    List<UserProfile> userProfiles = userProfileService.listByUidIn(Arrays.asList(uid, friendUid));
-    for (UserProfile userProfile : userProfiles) {
-      if (userProfile != null
-        && userProfile.getFriendCount() != null
-        && userProfile.getFriendCount() >= 2000) {
-        return ResultVOUtils.error(ResultEnum.PARAM_VERIFY_FALL, "好友数量已到上限~");
-      }
+      return ResultVOUtils.error(ResultEnum.PARAM_VERIFY_FALL, "请勿重复添加~");
     }
     
     UserFriendAsk upUserFriendAsk = new UserFriendAsk();
     upUserFriendAsk.setId(id);
     upUserFriendAsk.setStatus(userFriendAskAckReqVO.getStatus());
     boolean b = userFriendAskService.updateUserFriendAsk(upUserFriendAsk);
-    
-    if (!b || userFriendAskAckReqVO.getStatus() == 2) {
+
+    // 拒绝添加
+    if (!b) {
+      return ResultVOUtils.error();
+    }
+
+    // 如果是拒绝
+    if (userFriendAskAckReqVO.getStatus() == 2) {
       return ResultVOUtils.success();
     }
-    
+
+    Long friendUid = userFriendAsk.getFriendUid();
+    // 判断是不是好友
+    UserFriend userFriend = userFriendService.findByUidAndFriendUid(uid, friendUid);
+    if (userFriend != null && userFriend.getId() != null) {
+      return ResultVOUtils.success();
+    }
+
+    // 判断好友数量
+    List<UserProfile> userProfiles = userProfileService.listByUidIn(Arrays.asList(uid, friendUid));
+    for (UserProfile userProfile : userProfiles) {
+      if (userProfile != null
+              && userProfile.getFriendCount() != null
+              && userProfile.getFriendCount() >= 2000) {
+        return ResultVOUtils.error(ResultEnum.PARAM_VERIFY_FALL, "好友数量已到上限~");
+      }
+    }
+    String msgContent = userFriendAsk.getRemark();
+
+    msgContent = msgContent != null && !"".equals(msgContent) ? msgContent : "成为好友，现在开始聊吧~";
+
     // 增加朋友
     List<UserFriend> userFriends = new ArrayList<>();
-    
+
     // 增加当前用户的好友列表
     UserFriend userFriend1 = new UserFriend();
     userFriend1.setUid(uid);
     userFriend1.setFriendUid(friendUid);
     userFriend1.setRemark("");
-    userFriend1.setLastMsgContent(userFriendAsk.getRemark());
+    userFriend1.setLastMsgContent(msgContent);
     userFriend1.setCreateTime(new Date());
     userFriend1.setModifiedTime(new Date());
     userFriends.add(userFriend1);
-    
+
     // 增加申请人的好友列表
     UserFriend userFriend2 = new UserFriend();
     userFriend2.setUid(friendUid);
     userFriend2.setFriendUid(uid);
     userFriend2.setRemark("");
-    userFriend2.setLastMsgContent("");
+    userFriend2.setLastMsgContent(msgContent);
     userFriend2.setCreateTime(new Date());
     userFriend2.setModifiedTime(new Date());
     userFriends.add(userFriend2);
-    
-    
+
+
     boolean b1 = userFriendService.insertUserFriendAll(userFriends);
-    
+
     // 更新好友数量
     List<UserProfile> userProfileArrayList = new ArrayList<>();
     UserProfile userProfile1 = new UserProfile();
@@ -215,19 +247,17 @@ public class UserFriendAskController {
     userProfile2.setModifiedTime(new Date());
     userProfileArrayList.add(userProfile2);
     boolean b2 = userProfileService.incFriendCountAll(userProfileArrayList);
-    
+
     // 追加消息
     UserFriendMsg userFriendMsg = new UserFriendMsg();
     // 把最小的那个 用户ID作为 之后的查询uid
     userFriendMsg.setUid(uid > friendUid ? friendUid : uid);
     userFriendMsg.setSenderUid(friendUid);
-    userFriendMsg.setMsgContent(userFriendAsk.getRemark());
+    userFriendMsg.setMsgContent(msgContent);
     userFriendMsg.setMsgType(1);
     userFriendMsgService.insertUserFriendMsg(userFriendMsg);
-    
-    Map<Long, UserInfoListResVO> userInfoListResVOMap = userService.listByUidIn(Collections.singletonList(friendUid));
-    
-    return ResultVOUtils.success(userInfoListResVOMap.get(friendUid));
+
+    return ResultVOUtils.success();
     
   }
   
