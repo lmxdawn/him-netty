@@ -7,6 +7,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * 用户登录工具类
@@ -31,6 +32,32 @@ public class UserLoginUtils {
    */
   public static String createSid(Long uid) {
     return createSid(uid, 0L);
+  }
+
+  /**
+   * 通过token获取用户ID
+   * @param token
+   * @return
+   */
+  public static Boolean checkToken(Long uid, String token) {
+    if (token == null || token.isEmpty()) {
+      return false;
+    }
+    try {
+      // 验证 token
+      Claims claims = JwtUtils.parse(token);
+      if (claims == null) {
+        return false;
+      }
+      Long jwtUid = Long.valueOf(claims.get("uid").toString());
+      if (uid.compareTo(jwtUid) != 0) {
+        return false;
+      }
+
+    } catch (Exception e) {
+      return false;
+    }
+    return true;
   }
 
   /**
@@ -59,21 +86,15 @@ public class UserLoginUtils {
     if (sUid == null || token == null) {
       return null;
     }
+
     Long uid = null;
     try {
-      
       uid = Long.valueOf(sUid);
-      // 验证 token
-      Claims claims = JwtUtils.parse(token);
-      if (claims == null) {
-        return null;
-      }
-      Long jwtUid = Long.valueOf(claims.get("uid").toString());
-      if (uid.compareTo(jwtUid) != 0) {
-        return null;
-      }
-      
-    } catch (Exception e) {
+    }catch (Exception e){
+      return null;
+    }
+
+    if (!checkToken(uid, token)) {
       return null;
     }
     

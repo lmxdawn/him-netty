@@ -1,0 +1,13 @@
+syntax ="proto3";
+package protocol;
+
+//optimize_for 加快解析的速度
+option optimize_for = SPEED;
+option java_package = "com.lmxdawn.him.common.protobuf";
+
+// 请求实体
+message WSMessageReqProto{
+    int32 type = 1;
+    uint64 uid = 2; // 用户ID
+    string sid = 3; // 登录验证
+}
