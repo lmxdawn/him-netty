@@ -30,7 +30,7 @@ public class HelloController {
 
         System.out.println(wsMessageReqVO);
 
-        Boolean aBoolean = wsService.sendMsg(wsMessageReqVO);
+        Boolean aBoolean = wsService.sendMsg(uid, wsMessageReqVO);
 
         return aBoolean ? "success" : "客户端不在线";
     }

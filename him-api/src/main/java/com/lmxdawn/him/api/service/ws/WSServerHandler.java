@@ -29,7 +29,7 @@ public class WSServerHandler extends SimpleChannelInboundHandler<WSMessageReqPro
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         // 可能出现业务判断离线后再次触发 channelInactive
         log.warn("触发 channelInactive 掉线!");
-        userOffLine(ctx);
+        // userOffLine(ctx);
     }
 
     /**
@@ -80,7 +80,6 @@ public class WSServerHandler extends SimpleChannelInboundHandler<WSMessageReqPro
 
         // 加入 在线 map 中
         SessionSocketHolder.put(uid, ctx.channel());
-
     }
 
     @Override

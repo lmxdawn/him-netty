@@ -1,12 +1,15 @@
 package com.lmxdawn.him.api.controller.group;
 
 import com.lmxdawn.him.api.dto.UserLoginDTO;
+import com.lmxdawn.him.api.enums.WSReqTypeEnum;
 import com.lmxdawn.him.api.service.group.GroupMsgService;
 import com.lmxdawn.him.api.service.group.GroupService;
 import com.lmxdawn.him.api.service.group.GroupUserService;
 import com.lmxdawn.him.api.service.user.UserService;
+import com.lmxdawn.him.api.service.ws.WSService;
 import com.lmxdawn.him.api.utils.UserLoginUtils;
 import com.lmxdawn.him.api.vo.req.GroupMsgCreateReqVO;
+import com.lmxdawn.him.api.vo.req.WSMessageReqVO;
 import com.lmxdawn.him.api.vo.res.GroupMsgListResVO;
 import com.lmxdawn.him.api.vo.res.UserInfoListResVO;
 import com.lmxdawn.him.common.entity.group.GroupMsg;
@@ -42,6 +45,9 @@ public class GroupMsgController {
 
     @Resource
     private UserService userService;
+    
+    @Resource
+    private WSService wsService;
 
     /**
      * 列表
@@ -123,6 +129,26 @@ public class GroupMsgController {
         if (!b) {
             return ResultVOUtils.error(ResultEnum.NOT_NETWORK);
         }
+    
+    
+        // 发送入群消息
+        WSMessageReqVO wsMessageReqVO = new WSMessageReqVO();
+        wsMessageReqVO.setType(WSReqTypeEnum.FRIEND_ACK.getType());
+        wsMessageReqVO.setSenderId(uid);
+        wsMessageReqVO.setReceiveId(groupId);
+        wsMessageReqVO.setMsgType(0);
+        wsMessageReqVO.setMsgContent(msgContent);
+    
+        // 查找群里的所有用户信息
+        List<GroupUser> groupUsers = groupUserService.listByGroupId(groupId, 1, 500);
+    
+        groupUsers.forEach(v -> {
+            System.out.println(v.getUid());
+            // 排除自己
+            if (!uid.equals(v.getUid())) {
+                wsService.sendMsg(v.getUid(), wsMessageReqVO);
+            }
+        });
 
         return ResultVOUtils.success();
     }

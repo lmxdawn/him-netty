@@ -58,7 +58,7 @@ public class WSService {
     public void destroy() {
         boss.shutdownGracefully().syncUninterruptibly();
         work.shutdownGracefully().syncUninterruptibly();
-        log.info("关闭 cim server 成功");
+        log.info("关闭 ws server 成功");
     }
 
     /**
@@ -66,10 +66,9 @@ public class WSService {
      *
      * @param wsMessageReqVO 消息
      */
-    public Boolean sendMsg(WSMessageReqVO wsMessageReqVO) {
-        Channel channel = SessionSocketHolder.get(wsMessageReqVO.getReceiveId());
+    public Boolean sendMsg(Long uid, WSMessageReqVO wsMessageReqVO) {
+        Channel channel = SessionSocketHolder.get(uid);
 
-        System.out.println(channel);
         if (null == channel) {
             log.info("客户端[" + wsMessageReqVO.getReceiveId() + "]不在线！");
             return false;

@@ -1,10 +1,13 @@
 package com.lmxdawn.him.api.controller.user;
 
 import com.lmxdawn.him.api.dto.UserLoginDTO;
+import com.lmxdawn.him.api.enums.WSReqTypeEnum;
 import com.lmxdawn.him.api.service.user.*;
+import com.lmxdawn.him.api.service.ws.WSService;
 import com.lmxdawn.him.api.utils.UserFriendUtils;
 import com.lmxdawn.him.api.utils.UserLoginUtils;
 import com.lmxdawn.him.api.vo.req.UserFriendAskAckReqVO;
+import com.lmxdawn.him.api.vo.req.WSMessageReqVO;
 import com.lmxdawn.him.api.vo.res.UserFriendAskListResVO;
 import com.lmxdawn.him.api.vo.res.UserInfoListResVO;
 import com.lmxdawn.him.common.entity.user.*;
@@ -39,6 +42,9 @@ public class UserFriendAskController {
   
   @Resource
   private UserService userService;
+  
+  @Resource
+  private WSService wsService;
   
   @Resource
   private UserFriendMsgService userFriendMsgService;
@@ -135,6 +141,15 @@ public class UserFriendAskController {
     
     // 增加朋友请求数量
     userProfileService.incFriendAskCount(friendUid, 1);
+    
+    // 发送好友请求消息
+    WSMessageReqVO wsMessageReqVO = new WSMessageReqVO();
+    wsMessageReqVO.setType(WSReqTypeEnum.FRIEND_ASK.getType());
+    wsMessageReqVO.setSenderId(uid);
+    wsMessageReqVO.setReceiveId(friendUid);
+    wsMessageReqVO.setMsgType(0);
+    wsMessageReqVO.setMsgContent("请求加为好友~");
+    wsService.sendMsg(friendUid, wsMessageReqVO);
     
     return ResultVOUtils.success();
     
@@ -252,10 +267,19 @@ public class UserFriendAskController {
     UserFriendMsg userFriendMsg = new UserFriendMsg();
     // 把最小的那个 用户ID作为 之后的查询uid
     userFriendMsg.setUid(uid > friendUid ? friendUid : uid);
-    userFriendMsg.setSenderUid(friendUid);
+    userFriendMsg.setSenderUid(uid);
     userFriendMsg.setMsgContent(msgContent);
     userFriendMsg.setMsgType(1);
     userFriendMsgService.insertUserFriendMsg(userFriendMsg);
+    
+    // 发送好友请求消息
+    WSMessageReqVO wsMessageReqVO = new WSMessageReqVO();
+    wsMessageReqVO.setType(WSReqTypeEnum.FRIEND_ACK.getType());
+    wsMessageReqVO.setSenderId(uid);
+    wsMessageReqVO.setReceiveId(friendUid);
+    wsMessageReqVO.setMsgType(0);
+    wsMessageReqVO.setMsgContent(msgContent);
+    wsService.sendMsg(friendUid, wsMessageReqVO);
 
     return ResultVOUtils.success();
     

@@ -1,13 +1,15 @@
 package com.lmxdawn.him.api.controller.user;
 
 import com.lmxdawn.him.api.dto.UserLoginDTO;
+import com.lmxdawn.him.api.enums.WSReqTypeEnum;
 import com.lmxdawn.him.api.service.user.UserFriendMsgService;
 import com.lmxdawn.him.api.service.user.UserFriendService;
-import com.lmxdawn.him.api.service.user.UserService;
+import com.lmxdawn.him.api.service.ws.WSService;
 import com.lmxdawn.him.api.utils.PageUtils;
 import com.lmxdawn.him.api.utils.UserLoginUtils;
 import com.lmxdawn.him.api.vo.req.UserFriendMsgClearMsgCountReqVO;
 import com.lmxdawn.him.api.vo.req.UserFriendMsgSaveReqVO;
+import com.lmxdawn.him.api.vo.req.WSMessageReqVO;
 import com.lmxdawn.him.common.entity.user.UserFriend;
 import com.lmxdawn.him.common.entity.user.UserFriendMsg;
 import com.lmxdawn.him.common.enums.ResultEnum;
@@ -37,7 +39,7 @@ public class UserFriendMsgController {
     private UserFriendService userFriendService;
     
     @Resource
-    private UserService userService;
+    private WSService wsService;
     
     /**
      * 获取朋友列表
@@ -57,24 +59,25 @@ public class UserFriendMsgController {
         }
         
         Long uid = userLoginDTO.getUid();
-
+        
         if (limit > 50) {
             limit = 50;
         }
-    
+        
         Integer offset = PageUtils.createOffset(page, limit);
         
         // 把最小的那个 用户ID作为查询条件
         uid = uid > senderUid ? senderUid : uid;
         
         List<UserFriendMsg> userFriendMsgs = userFriendMsgService.listByUid(uid, offset, limit);
-    
+        
         return ResultVOUtils.success(userFriendMsgs);
         
     }
     
     /**
      * 发送消息
+     *
      * @return
      */
     @PostMapping("/create")
@@ -84,23 +87,23 @@ public class UserFriendMsgController {
         if (bindingResult.hasErrors()) {
             return ResultVOUtils.error(ResultEnum.PARAM_VERIFY_FALL, bindingResult.getFieldError().getDefaultMessage());
         }
-    
+        
         // 验证登录
         UserLoginDTO userLoginDTO = UserLoginUtils.check(request);
         if (userLoginDTO == null) {
             return ResultVOUtils.error(ResultEnum.LOGIN_VERIFY_FALL);
         }
-    
+        
         Long uid = userLoginDTO.getUid();
-    
+        
         Long receiverUid = userFriendMsgSaveReqVO.getReceiverUid();
-    
+        
         // 判断是不是朋友
         UserFriend userFriend = userFriendService.findByUidAndFriendUid(uid, receiverUid);
         if (userFriend == null) {
             return ResultVOUtils.error(ResultEnum.PARAM_VERIFY_FALL, "该用户还不是你的好友~");
         }
-    
+        
         // 追加消息
         UserFriendMsg userFriendMsg = new UserFriendMsg();
         // 把最小的那个 用户ID作为 之后的查询uid
@@ -110,6 +113,8 @@ public class UserFriendMsgController {
         String msgContent = userFriendMsgSaveReqVO.getMsgContent();
         String lastMsgContent = msgContent;
         switch (msgType) {
+            case 0:
+                break;
             case 1:
                 lastMsgContent = "[图片消息]";
                 break;
@@ -122,6 +127,8 @@ public class UserFriendMsgController {
             case 4:
                 lastMsgContent = "[视频消息]";
                 break;
+            default:
+                return ResultVOUtils.error(ResultEnum.PARAM_VERIFY_FALL, "位置消息类型");
         }
         userFriendMsg.setMsgType(msgType);
         userFriendMsg.setMsgContent(msgContent);
@@ -151,31 +158,41 @@ public class UserFriendMsgController {
         userFriends.add(userFriend2);
         
         userFriendService.insertUserFriendAll(userFriends);
-    
+        
+        // 发送消息
+        WSMessageReqVO wsMessageReqVO = new WSMessageReqVO();
+        wsMessageReqVO.setType(WSReqTypeEnum.FRIEND.getType());
+        wsMessageReqVO.setSenderId(uid);
+        wsMessageReqVO.setReceiveId(receiverUid);
+        wsMessageReqVO.setMsgType(msgType);
+        wsMessageReqVO.setMsgContent(msgContent);
+        wsService.sendMsg(receiverUid, wsMessageReqVO);
+        
         return ResultVOUtils.success();
     }
     
     
     /**
      * 清空未读的消息数量
+     *
      * @return
      */
     @PostMapping("/clearUnMsgCount")
     public BaseResVO clearUnMsgCount(@Valid @RequestBody UserFriendMsgClearMsgCountReqVO msgCountReqVO,
-                            BindingResult bindingResult,
-                            HttpServletRequest request) {
+                                     BindingResult bindingResult,
+                                     HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
             return ResultVOUtils.error(ResultEnum.PARAM_VERIFY_FALL, bindingResult.getFieldError().getDefaultMessage());
         }
-    
+        
         // 验证登录
         UserLoginDTO userLoginDTO = UserLoginUtils.check(request);
         if (userLoginDTO == null) {
             return ResultVOUtils.error(ResultEnum.LOGIN_VERIFY_FALL);
         }
-    
+        
         Long uid = userLoginDTO.getUid();
-    
+        
         Long receiverUid = msgCountReqVO.getReceiverUid();
         
         // 更新最后一次的消息

@@ -31,7 +31,7 @@ public class UserLoginUtils {
    * @return
    */
   public static String createSid(Long uid) {
-    return createSid(uid, 0L);
+    return createSid(uid, null);
   }
 
   /**
