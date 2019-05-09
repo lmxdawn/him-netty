@@ -19,21 +19,21 @@ public final class WSMessageResProtoOuterClass {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>uint64 receive_id = 2;</code>
+     * <code>uint64 receive_id = 1;</code>
      */
     long getReceiveId();
 
     /**
-     * <code>int32 msg_type = 3;</code>
+     * <code>int32 msg_type = 2;</code>
      */
     int getMsgType();
 
     /**
-     * <code>string msg_content = 4;</code>
+     * <code>string msg_content = 3;</code>
      */
     java.lang.String getMsgContent();
     /**
-     * <code>string msg_content = 4;</code>
+     * <code>string msg_content = 3;</code>
      */
     com.google.protobuf.ByteString
         getMsgContentBytes();
@@ -82,17 +82,17 @@ public final class WSMessageResProtoOuterClass {
             case 0:
               done = true;
               break;
-            case 16: {
+            case 8: {
 
               receiveId_ = input.readUInt64();
               break;
             }
-            case 24: {
+            case 16: {
 
               msgType_ = input.readInt32();
               break;
             }
-            case 34: {
+            case 26: {
               java.lang.String s = input.readStringRequireUtf8();
 
               msgContent_ = s;
@@ -130,28 +130,28 @@ public final class WSMessageResProtoOuterClass {
               com.lmxdawn.him.common.protobuf.WSMessageResProtoOuterClass.WSMessageResProto.class, com.lmxdawn.him.common.protobuf.WSMessageResProtoOuterClass.WSMessageResProto.Builder.class);
     }
 
-    public static final int RECEIVE_ID_FIELD_NUMBER = 2;
+    public static final int RECEIVE_ID_FIELD_NUMBER = 1;
     private long receiveId_;
     /**
-     * <code>uint64 receive_id = 2;</code>
+     * <code>uint64 receive_id = 1;</code>
      */
     public long getReceiveId() {
       return receiveId_;
     }
 
-    public static final int MSG_TYPE_FIELD_NUMBER = 3;
+    public static final int MSG_TYPE_FIELD_NUMBER = 2;
     private int msgType_;
     /**
-     * <code>int32 msg_type = 3;</code>
+     * <code>int32 msg_type = 2;</code>
      */
     public int getMsgType() {
       return msgType_;
     }
 
-    public static final int MSG_CONTENT_FIELD_NUMBER = 4;
+    public static final int MSG_CONTENT_FIELD_NUMBER = 3;
     private volatile java.lang.Object msgContent_;
     /**
-     * <code>string msg_content = 4;</code>
+     * <code>string msg_content = 3;</code>
      */
     public java.lang.String getMsgContent() {
       java.lang.Object ref = msgContent_;
@@ -166,7 +166,7 @@ public final class WSMessageResProtoOuterClass {
       }
     }
     /**
-     * <code>string msg_content = 4;</code>
+     * <code>string msg_content = 3;</code>
      */
     public com.google.protobuf.ByteString
         getMsgContentBytes() {
@@ -197,13 +197,13 @@ public final class WSMessageResProtoOuterClass {
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (receiveId_ != 0L) {
-        output.writeUInt64(2, receiveId_);
+        output.writeUInt64(1, receiveId_);
       }
       if (msgType_ != 0) {
-        output.writeInt32(3, msgType_);
+        output.writeInt32(2, msgType_);
       }
       if (!getMsgContentBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, msgContent_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, msgContent_);
       }
       unknownFields.writeTo(output);
     }
@@ -216,14 +216,14 @@ public final class WSMessageResProtoOuterClass {
       size = 0;
       if (receiveId_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt64Size(2, receiveId_);
+          .computeUInt64Size(1, receiveId_);
       }
       if (msgType_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(3, msgType_);
+          .computeInt32Size(2, msgType_);
       }
       if (!getMsgContentBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, msgContent_);
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, msgContent_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -525,13 +525,13 @@ public final class WSMessageResProtoOuterClass {
 
       private long receiveId_ ;
       /**
-       * <code>uint64 receive_id = 2;</code>
+       * <code>uint64 receive_id = 1;</code>
        */
       public long getReceiveId() {
         return receiveId_;
       }
       /**
-       * <code>uint64 receive_id = 2;</code>
+       * <code>uint64 receive_id = 1;</code>
        */
       public Builder setReceiveId(long value) {
         
@@ -540,7 +540,7 @@ public final class WSMessageResProtoOuterClass {
         return this;
       }
       /**
-       * <code>uint64 receive_id = 2;</code>
+       * <code>uint64 receive_id = 1;</code>
        */
       public Builder clearReceiveId() {
         
@@ -551,13 +551,13 @@ public final class WSMessageResProtoOuterClass {
 
       private int msgType_ ;
       /**
-       * <code>int32 msg_type = 3;</code>
+       * <code>int32 msg_type = 2;</code>
        */
       public int getMsgType() {
         return msgType_;
       }
       /**
-       * <code>int32 msg_type = 3;</code>
+       * <code>int32 msg_type = 2;</code>
        */
       public Builder setMsgType(int value) {
         
@@ -566,7 +566,7 @@ public final class WSMessageResProtoOuterClass {
         return this;
       }
       /**
-       * <code>int32 msg_type = 3;</code>
+       * <code>int32 msg_type = 2;</code>
        */
       public Builder clearMsgType() {
         
@@ -577,7 +577,7 @@ public final class WSMessageResProtoOuterClass {
 
       private java.lang.Object msgContent_ = "";
       /**
-       * <code>string msg_content = 4;</code>
+       * <code>string msg_content = 3;</code>
        */
       public java.lang.String getMsgContent() {
         java.lang.Object ref = msgContent_;
@@ -592,7 +592,7 @@ public final class WSMessageResProtoOuterClass {
         }
       }
       /**
-       * <code>string msg_content = 4;</code>
+       * <code>string msg_content = 3;</code>
        */
       public com.google.protobuf.ByteString
           getMsgContentBytes() {
@@ -608,7 +608,7 @@ public final class WSMessageResProtoOuterClass {
         }
       }
       /**
-       * <code>string msg_content = 4;</code>
+       * <code>string msg_content = 3;</code>
        */
       public Builder setMsgContent(
           java.lang.String value) {
@@ -621,7 +621,7 @@ public final class WSMessageResProtoOuterClass {
         return this;
       }
       /**
-       * <code>string msg_content = 4;</code>
+       * <code>string msg_content = 3;</code>
        */
       public Builder clearMsgContent() {
         
@@ -630,7 +630,7 @@ public final class WSMessageResProtoOuterClass {
         return this;
       }
       /**
-       * <code>string msg_content = 4;</code>
+       * <code>string msg_content = 3;</code>
        */
       public Builder setMsgContentBytes(
           com.google.protobuf.ByteString value) {
@@ -711,8 +711,8 @@ public final class WSMessageResProtoOuterClass {
   static {
     java.lang.String[] descriptorData = {
       "\n\027WSMessageResProto.proto\022\010protocol\"N\n\021W" +
-      "SMessageResProto\022\022\n\nreceive_id\030\002 \001(\004\022\020\n\010" +
-      "msg_type\030\003 \001(\005\022\023\n\013msg_content\030\004 \001(\tB#\n\037c" +
+      "SMessageResProto\022\022\n\nreceive_id\030\001 \001(\004\022\020\n\010" +
+      "msg_type\030\002 \001(\005\022\023\n\013msg_content\030\003 \001(\tB#\n\037c" +
       "om.lmxdawn.him.common.protobufH\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =

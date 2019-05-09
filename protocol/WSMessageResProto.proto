@@ -7,7 +7,7 @@ option java_package = "com.lmxdawn.him.common.protobuf";
 
 // 请求实体
 message WSMessageResProto{
-    uint64 receive_id = 2;
-    int32 msg_type = 3;
-    string msg_content = 4;
+    uint64 receive_id = 1;
+    int32 msg_type = 2;
+    string msg_content = 3;
 }

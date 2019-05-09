@@ -97,7 +97,7 @@ public class WSService {
                 .setCreateTime(new Date().toString())
                 .build();
 
-        channel.writeAndFlush(wsMessageResProto);
+        channel.writeAndFlush(wsBaseResProto);
         return true;
     }
 
