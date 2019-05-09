@@ -35,6 +35,24 @@ public class QqWebAuthServiceImpl implements QqWebAuthService {
         return split[0].toString().split("=")[1];
     }
     
+    // 测试 QQ返回的数据能不能解析成功
+    public static void main(String[] args) {
+        
+        String res = "callback(   {\"client_id\":\"YOUR_APPID\",\"openid\":\"YOUR_OPENID\"} );";
+        int indexOf1 = res.indexOf("(");
+        int indexOf2 = res.indexOf(")");
+        String json = res.substring(indexOf1 + 1, indexOf2);
+        System.out.println(json);
+        QqOpenIdResVO qqOpenIdResVO = JSON.parseObject(json, QqOpenIdResVO.class);
+    
+        System.out.println(qqOpenIdResVO.getOpenid());
+    
+        res = "access_token=FE04************************CCE2&expires_in=7776000&refresh_token=88E4************************BE14";
+        String[] split = res.split("&");
+        String accessToken = split[0].toString().split("=")[1];
+        System.out.println(accessToken);
+    }
+    
     @Override
     public QqOpenIdResVO getOpenID(String accessToken) {
         Map<String, String> map = new HashMap<>();
@@ -48,7 +66,7 @@ public class QqWebAuthServiceImpl implements QqWebAuthService {
     
         int indexOf1 = res.indexOf("(");
         int indexOf2 = res.indexOf(")");
-        String json = res.substring(indexOf1, indexOf2);
+        String json = res.substring(indexOf1 + 1, indexOf2);
     
         return JSON.parseObject(json, QqOpenIdResVO.class);
     }
