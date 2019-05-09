@@ -52,7 +52,7 @@ public class WSServerHandler extends SimpleChannelInboundHandler<WSBaseReqProtoO
      * 用户下线
      */
     private void userOffLine(ChannelHandlerContext ctx) throws IOException {
-        SessionSocketHolder.remove(ctx.channel());
+        WSSocketHolder.remove(ctx.channel());
         ctx.channel().close();
     }
 
@@ -81,7 +81,7 @@ public class WSServerHandler extends SimpleChannelInboundHandler<WSBaseReqProtoO
         ctx.channel().writeAndFlush(wsBaseResProto);
 
         // 加入 在线 map 中
-        SessionSocketHolder.put(uid, ctx.channel());
+        WSSocketHolder.put(uid, ctx.channel());
     }
 
     @Override

@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * 操作 在线用户的 Channel
  */
-public class SessionSocketHolder {
+public class WSSocketHolder {
 
     private static final Map<Long, Channel> CHANNEL_MAP = new ConcurrentHashMap<>(16);
 

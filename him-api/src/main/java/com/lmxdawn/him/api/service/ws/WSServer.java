@@ -21,7 +21,7 @@ import java.util.Date;
 
 @Component
 @Slf4j
-public class WSService {
+public class WSServer {
 
     @Value("${ws.port}")
     private int wsPort;
@@ -69,7 +69,7 @@ public class WSService {
      * @return
      */
     public Boolean sendMsg(Long fromUid, WSBaseReqVO wsBaseReqVO) {
-        Channel channel = SessionSocketHolder.get(fromUid);
+        Channel channel = WSSocketHolder.get(fromUid);
 
         if (null == channel) {
             log.info("用户ID[" + fromUid + "]不在线！");
