@@ -2,6 +2,7 @@ package com.lmxdawn.him.api.service.ws;
 
 import com.lmxdawn.him.api.utils.UserLoginUtils;
 import com.lmxdawn.him.common.protobuf.WSBaseReqProtoOuterClass;
+import com.lmxdawn.him.common.protobuf.WSBaseResProtoOuterClass;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -10,6 +11,7 @@ import io.netty.handler.timeout.IdleStateEvent;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
+import java.util.Date;
 
 @ChannelHandler.Sharable
 @Slf4j
@@ -72,6 +74,11 @@ public class WSServerHandler extends SimpleChannelInboundHandler<WSBaseReqProtoO
         }
 
         log.info("客户端心跳连接");
+        WSBaseResProtoOuterClass.WSBaseResProto wsBaseResProto = WSBaseResProtoOuterClass.WSBaseResProto.newBuilder()
+                .setType(0)
+                .setCreateTime(new Date().toString())
+                .build();
+        ctx.channel().writeAndFlush(wsBaseResProto);
 
         // 加入 在线 map 中
         SessionSocketHolder.put(uid, ctx.channel());
@@ -80,6 +87,7 @@ public class WSServerHandler extends SimpleChannelInboundHandler<WSBaseReqProtoO
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         if ("Connection reset by peer".equals(cause.getMessage())) {
+            log.error("连接出现问题");
             return;
         }
 

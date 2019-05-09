@@ -31,7 +31,7 @@ public class WSServerInitializer extends ChannelInitializer<SocketChannel> {
     protected void initChannel(SocketChannel ch) throws Exception {
         ChannelPipeline pipeline = ch.pipeline();
         //15 秒客户端没有向服务器发送心跳则关闭连接
-        pipeline.addLast(new IdleStateHandler(11, 0, 0));
+        pipeline.addLast(new IdleStateHandler(15, 0, 0));
         // HTTP请求的解码和编码
         pipeline.addLast(new HttpServerCodec());
         // 把多个消息转换为一个单一的FullHttpRequest或是FullHttpResponse，
