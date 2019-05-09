@@ -1,4 +1,4 @@
-package com.lmxdawn.him.api.service.ws;
+package com.lmxdawn.him.api.ws;
 
 import com.lmxdawn.him.api.utils.UserLoginUtils;
 import com.lmxdawn.him.common.protobuf.WSBaseReqProtoOuterClass;

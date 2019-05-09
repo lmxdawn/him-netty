@@ -1,4 +1,4 @@
-package com.lmxdawn.him.api.service.ws;
+package com.lmxdawn.him.api.ws;
 
 import com.google.protobuf.MessageLite;
 import com.google.protobuf.MessageLiteOrBuilder;

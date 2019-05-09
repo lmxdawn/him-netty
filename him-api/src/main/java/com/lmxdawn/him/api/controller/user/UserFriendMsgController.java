@@ -5,7 +5,7 @@ import com.lmxdawn.him.api.enums.WSReqTypeEnum;
 import com.lmxdawn.him.api.service.user.UserFriendMsgService;
 import com.lmxdawn.him.api.service.user.UserFriendService;
 import com.lmxdawn.him.api.service.user.UserService;
-import com.lmxdawn.him.api.service.ws.WSServer;
+import com.lmxdawn.him.api.ws.WSServer;
 import com.lmxdawn.him.api.utils.PageUtils;
 import com.lmxdawn.him.api.utils.UserLoginUtils;
 import com.lmxdawn.him.api.utils.WSBaseReqUtils;

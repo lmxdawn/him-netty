@@ -1,4 +1,4 @@
-package com.lmxdawn.him.api.service.ws;
+package com.lmxdawn.him.api.ws;
 
 import com.lmxdawn.him.api.vo.req.WSMessageReqVO;
 import com.lmxdawn.him.api.vo.req.WSBaseReqVO;

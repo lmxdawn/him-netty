@@ -1,7 +1,6 @@
-package com.lmxdawn.him.api.service.ws;
+package com.lmxdawn.him.api.ws;
 
 import io.netty.channel.Channel;
-import io.netty.channel.socket.nio.NioSocketChannel;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

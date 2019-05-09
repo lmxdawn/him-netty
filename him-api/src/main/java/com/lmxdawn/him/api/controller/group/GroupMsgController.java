@@ -5,7 +5,7 @@ import com.lmxdawn.him.api.enums.WSReqTypeEnum;
 import com.lmxdawn.him.api.service.group.GroupMsgService;
 import com.lmxdawn.him.api.service.group.GroupUserService;
 import com.lmxdawn.him.api.service.user.UserService;
-import com.lmxdawn.him.api.service.ws.WSServer;
+import com.lmxdawn.him.api.ws.WSServer;
 import com.lmxdawn.him.api.utils.UserLoginUtils;
 import com.lmxdawn.him.api.utils.WSBaseReqUtils;
 import com.lmxdawn.him.api.vo.req.GroupMsgCreateReqVO;

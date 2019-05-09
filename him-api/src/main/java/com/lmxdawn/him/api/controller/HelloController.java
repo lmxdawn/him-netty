@@ -1,6 +1,6 @@
 package com.lmxdawn.him.api.controller;
 
-import com.lmxdawn.him.api.service.ws.WSServer;
+import com.lmxdawn.him.api.ws.WSServer;
 import com.lmxdawn.him.api.utils.WSBaseReqUtils;
 import com.lmxdawn.him.api.vo.req.WSBaseReqVO;
 import org.springframework.beans.factory.annotation.Autowired;

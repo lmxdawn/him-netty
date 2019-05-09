@@ -3,7 +3,7 @@ package com.lmxdawn.him.api.controller.user;
 import com.lmxdawn.him.api.dto.UserLoginDTO;
 import com.lmxdawn.him.api.enums.WSReqTypeEnum;
 import com.lmxdawn.him.api.service.user.*;
-import com.lmxdawn.him.api.service.ws.WSServer;
+import com.lmxdawn.him.api.ws.WSServer;
 import com.lmxdawn.him.api.utils.UserFriendUtils;
 import com.lmxdawn.him.api.utils.UserLoginUtils;
 import com.lmxdawn.him.api.utils.WSBaseReqUtils;
