@@ -4,12 +4,16 @@ import com.lmxdawn.him.api.dto.UserLoginDTO;
 import com.lmxdawn.him.api.enums.WSReqTypeEnum;
 import com.lmxdawn.him.api.service.user.UserFriendMsgService;
 import com.lmxdawn.him.api.service.user.UserFriendService;
+import com.lmxdawn.him.api.service.user.UserService;
 import com.lmxdawn.him.api.service.ws.WSService;
 import com.lmxdawn.him.api.utils.PageUtils;
 import com.lmxdawn.him.api.utils.UserLoginUtils;
+import com.lmxdawn.him.api.utils.WSBaseReqUtils;
 import com.lmxdawn.him.api.vo.req.UserFriendMsgClearMsgCountReqVO;
 import com.lmxdawn.him.api.vo.req.UserFriendMsgSaveReqVO;
+import com.lmxdawn.him.api.vo.req.WSBaseReqVO;
 import com.lmxdawn.him.api.vo.req.WSMessageReqVO;
+import com.lmxdawn.him.common.entity.user.User;
 import com.lmxdawn.him.common.entity.user.UserFriend;
 import com.lmxdawn.him.common.entity.user.UserFriendMsg;
 import com.lmxdawn.him.common.enums.ResultEnum;
@@ -38,6 +42,9 @@ public class UserFriendMsgController {
     @Resource
     private UserFriendService userFriendService;
     
+    @Resource
+    private UserService userService;
+
     @Resource
     private WSService wsService;
     
@@ -158,15 +165,16 @@ public class UserFriendMsgController {
         userFriends.add(userFriend2);
         
         userFriendService.insertUserFriendAll(userFriends);
-        
-        // 发送消息
-        WSMessageReqVO wsMessageReqVO = new WSMessageReqVO();
-        wsMessageReqVO.setType(WSReqTypeEnum.FRIEND.getType());
-        wsMessageReqVO.setSenderId(uid);
-        wsMessageReqVO.setReceiveId(receiverUid);
-        wsMessageReqVO.setMsgType(msgType);
-        wsMessageReqVO.setMsgContent(msgContent);
-        wsService.sendMsg(receiverUid, wsMessageReqVO);
+
+        // 发送在线消息
+        // 查询用户信息
+        User user = userService.findByUid(uid);
+        Long sUid = user.getUid();
+        String name = user.getName();
+        String avatar = user.getAvatar();
+        String remark = user.getRemark();
+        WSBaseReqVO wsBaseReqVO = WSBaseReqUtils.create(WSReqTypeEnum.FRIEND.getType(), receiverUid, msgType, msgContent, sUid, name, avatar, remark);
+        wsService.sendMsg(receiverUid, wsBaseReqVO);
         
         return ResultVOUtils.success();
     }

@@ -2,7 +2,7 @@ package com.lmxdawn.him.api.service.ws;
 
 import com.google.protobuf.MessageLite;
 import com.google.protobuf.MessageLiteOrBuilder;
-import com.lmxdawn.him.common.protobuf.WSMessageReqProtoOuterClass;
+import com.lmxdawn.him.common.protobuf.WSBaseReqProtoOuterClass;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInitializer;
@@ -73,7 +73,7 @@ public class WSServerInitializer extends ChannelInitializer<SocketChannel> {
         });
 
         // 协议包解码时指定Protobuf字节数实例化为CommonProtocol类型
-        pipeline.addLast(new ProtobufDecoder(WSMessageReqProtoOuterClass.WSMessageReqProto.getDefaultInstance()));
+        pipeline.addLast(new ProtobufDecoder(WSBaseReqProtoOuterClass.WSBaseReqProto.getDefaultInstance()));
 
         // websocket定义了传递数据的6中frame类型
         pipeline.addLast(new WSServerHandler());

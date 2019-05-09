@@ -1,15 +1,12 @@
-package com.lmxdawn.him.api.vo.res;
+package com.lmxdawn.him.api.vo.req;
 
 import lombok.Data;
 
-import java.util.Date;
-
 /**
- * 用户信息
+ * websocket 通信的用户信息
  */
 @Data
-public class UserInfoResVO {
-
+public class WSUserReqVO {
     /**
      * 用户id
      */
@@ -26,11 +23,5 @@ public class UserInfoResVO {
      * 个性签名
      */
     private String remark;
-    /**
-     * 创建时间
-     */
-    private Date createTime;
-    
-    private UserProfileInfoResVO profile;
 
 }

@@ -6,7 +6,9 @@ import com.lmxdawn.him.api.service.user.*;
 import com.lmxdawn.him.api.service.ws.WSService;
 import com.lmxdawn.him.api.utils.UserFriendUtils;
 import com.lmxdawn.him.api.utils.UserLoginUtils;
+import com.lmxdawn.him.api.utils.WSBaseReqUtils;
 import com.lmxdawn.him.api.vo.req.UserFriendAskAckReqVO;
+import com.lmxdawn.him.api.vo.req.WSBaseReqVO;
 import com.lmxdawn.him.api.vo.req.WSMessageReqVO;
 import com.lmxdawn.him.api.vo.res.UserFriendAskListResVO;
 import com.lmxdawn.him.api.vo.res.UserInfoListResVO;
@@ -113,8 +115,8 @@ public class UserFriendAskController {
       return ResultVOUtils.error(ResultEnum.DATA_REPEAT, "已经是好友了~");
     }
     
-    User user = userService.findByUid(friendUid);
-    if (user == null) {
+    User friendUser = userService.findByUid(friendUid);
+    if (friendUser == null) {
       return ResultVOUtils.error(ResultEnum.DATA_NOT);
     }
     
@@ -141,15 +143,19 @@ public class UserFriendAskController {
     
     // 增加朋友请求数量
     userProfileService.incFriendAskCount(friendUid, 1);
-    
-    // 发送好友请求消息
-    WSMessageReqVO wsMessageReqVO = new WSMessageReqVO();
-    wsMessageReqVO.setType(WSReqTypeEnum.FRIEND_ASK.getType());
-    wsMessageReqVO.setSenderId(uid);
-    wsMessageReqVO.setReceiveId(friendUid);
-    wsMessageReqVO.setMsgType(0);
-    wsMessageReqVO.setMsgContent("请求加为好友~");
-    wsService.sendMsg(friendUid, wsMessageReqVO);
+
+    // 发送在线消息
+    // 查询用户信息
+    User user = userService.findByUid(uid);
+    Integer msgType = 0;
+    String msgContent = "请求加为好友";
+    Long sUid = user.getUid();
+    String name = user.getName();
+    String avatar = user.getAvatar();
+    String remark1 = user.getRemark();
+    WSBaseReqVO wsBaseReqVO = WSBaseReqUtils.create(WSReqTypeEnum.FRIEND_ASK.getType(), friendUid, msgType, msgContent, sUid, name, avatar, remark1);
+
+    wsService.sendMsg(friendUid, wsBaseReqVO);
     
     return ResultVOUtils.success();
     
@@ -271,15 +277,17 @@ public class UserFriendAskController {
     userFriendMsg.setMsgContent(msgContent);
     userFriendMsg.setMsgType(1);
     userFriendMsgService.insertUserFriendMsg(userFriendMsg);
-    
-    // 发送好友请求消息
-    WSMessageReqVO wsMessageReqVO = new WSMessageReqVO();
-    wsMessageReqVO.setType(WSReqTypeEnum.FRIEND_ACK.getType());
-    wsMessageReqVO.setSenderId(uid);
-    wsMessageReqVO.setReceiveId(friendUid);
-    wsMessageReqVO.setMsgType(0);
-    wsMessageReqVO.setMsgContent(msgContent);
-    wsService.sendMsg(friendUid, wsMessageReqVO);
+
+    // 发送在线消息
+    // 查询用户信息
+    User user = userService.findByUid(uid);
+    Integer msgType = 0;
+    Long sUid = user.getUid();
+    String name = user.getName();
+    String avatar = user.getAvatar();
+    String remark1 = user.getRemark();
+    WSBaseReqVO wsBaseReqVO = WSBaseReqUtils.create(WSReqTypeEnum.FRIEND_ACK.getType(), friendUid, msgType, msgContent, sUid, name, avatar, remark1);
+    wsService.sendMsg(friendUid, wsBaseReqVO);
 
     return ResultVOUtils.success();
     

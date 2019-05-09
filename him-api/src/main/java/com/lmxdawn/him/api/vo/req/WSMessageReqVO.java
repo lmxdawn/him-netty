@@ -3,20 +3,10 @@ package com.lmxdawn.him.api.vo.req;
 import lombok.Data;
 
 /**
- * websocket 通信的类
+ * websocket 消息实体
  */
 @Data
 public class WSMessageReqVO {
-
-    /**
-     * 类型
-     */
-    private Integer type;
-
-    /**
-     * 发送者ID
-     */
-    private Long senderId;
 
     /**
      * 接收者ID
@@ -32,5 +22,5 @@ public class WSMessageReqVO {
      * 消息内容
      */
     private String msgContent;
-    
+
 }

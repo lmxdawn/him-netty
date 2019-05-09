@@ -1,0 +1,17 @@
+syntax ="proto3";
+package protocol;
+
+import "WSMessageResProto.proto";
+import "WSUserResProto.proto";
+
+//optimize_for 加快解析的速度
+option optimize_for = SPEED;
+option java_package = "com.lmxdawn.him.common.protobuf";
+
+// 返回实体
+message WSBaseResProto{
+    int32 type = 1;
+    WSMessageResProto message = 2;
+    WSUserResProto user = 3;
+    string create_time = 4;
+}

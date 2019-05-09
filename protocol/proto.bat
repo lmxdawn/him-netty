@@ -1,5 +1,5 @@
 set outPath=../him-common/src/main/java
-set fileArray=(WSMessageProto WSMessageReqProto WSMessageResProto)
+set fileArray=(WSBaseReqProto WSBaseResProto WSMessageResProto WSUserResProto)
 
 # 将.proto文件生成java类
 for %%i in %fileArray% do (

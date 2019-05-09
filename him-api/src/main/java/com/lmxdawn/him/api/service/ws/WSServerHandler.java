@@ -1,24 +1,19 @@
 package com.lmxdawn.him.api.service.ws;
 
 import com.lmxdawn.him.api.utils.UserLoginUtils;
-import com.lmxdawn.him.common.protobuf.WSMessageProtoOuterClass;
-import com.lmxdawn.him.common.protobuf.WSMessageReqProtoOuterClass;
-import com.lmxdawn.him.common.protobuf.WSMessageResProtoOuterClass;
-import io.netty.channel.Channel;
+import com.lmxdawn.him.common.protobuf.WSBaseReqProtoOuterClass;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
-import java.util.Date;
 
 @ChannelHandler.Sharable
 @Slf4j
-public class WSServerHandler extends SimpleChannelInboundHandler<WSMessageReqProtoOuterClass.WSMessageReqProto> {
+public class WSServerHandler extends SimpleChannelInboundHandler<WSBaseReqProtoOuterClass.WSBaseReqProto> {
 
     /**
      * 取消绑定
@@ -66,7 +61,7 @@ public class WSServerHandler extends SimpleChannelInboundHandler<WSMessageReqPro
      * @throws Exception
      */
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, WSMessageReqProtoOuterClass.WSMessageReqProto msg) throws Exception {
+    protected void channelRead0(ChannelHandlerContext ctx, WSBaseReqProtoOuterClass.WSBaseReqProto msg) throws Exception {
 
         String sid = msg.getSid();
         long uid = msg.getUid();

@@ -6,8 +6,9 @@ option optimize_for = SPEED;
 option java_package = "com.lmxdawn.him.common.protobuf";
 
 // 请求实体
-message WSMessageReqProto{
-    int32 type = 1;
-    uint64 uid = 2; // 用户ID
-    string sid = 3; // 登录验证
+message WSUserResProto{
+    uint64 uid = 1;
+    string name = 2;
+    string avatar = 3;
+    string remark = 4;
 }

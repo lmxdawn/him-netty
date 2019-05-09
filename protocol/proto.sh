@@ -1,7 +1,7 @@
 #!/bin/bash
 
 outPath=../him-common/src/main/java
-fileArray=(WSMessageProto WSMessageReqProto WSMessageResProto)
+fileArray=(WSBaseReqProto WSBaseResProto WSMessageResProto WSUserResProto)
 
 for i in ${fileArray[@]};
 do

@@ -5,15 +5,19 @@ import com.lmxdawn.him.api.enums.WSReqTypeEnum;
 import com.lmxdawn.him.api.service.group.GroupMsgService;
 import com.lmxdawn.him.api.service.group.GroupService;
 import com.lmxdawn.him.api.service.group.GroupUserService;
+import com.lmxdawn.him.api.service.user.UserService;
 import com.lmxdawn.him.api.service.ws.WSService;
 import com.lmxdawn.him.api.utils.GroupUserUtils;
 import com.lmxdawn.him.api.utils.UserLoginUtils;
+import com.lmxdawn.him.api.utils.WSBaseReqUtils;
 import com.lmxdawn.him.api.vo.req.GroupUserSaveReqVO;
+import com.lmxdawn.him.api.vo.req.WSBaseReqVO;
 import com.lmxdawn.him.api.vo.req.WSMessageReqVO;
 import com.lmxdawn.him.api.vo.res.GroupUserListResVO;
 import com.lmxdawn.him.common.entity.group.Group;
 import com.lmxdawn.him.common.entity.group.GroupMsg;
 import com.lmxdawn.him.common.entity.group.GroupUser;
+import com.lmxdawn.him.common.entity.user.User;
 import com.lmxdawn.him.common.enums.ResultEnum;
 import com.lmxdawn.him.common.utils.ResultVOUtils;
 import com.lmxdawn.him.common.vo.res.BaseResVO;
@@ -46,6 +50,9 @@ public class GroupUserController {
     @Resource
     private GroupMsgService groupMsgService;
     
+    @Resource
+    private UserService userService;
+
     @Resource
     private WSService wsService;
     
@@ -158,23 +165,23 @@ public class GroupUserController {
         groupUserListResVO.setLastMsgTime(new Date());
         groupUserListResVO.setUnMsgCount(1);
         groupUserListResVO.setGroup(group);
-    
-    
-        // 发送入群消息
-        WSMessageReqVO wsMessageReqVO = new WSMessageReqVO();
-        wsMessageReqVO.setType(WSReqTypeEnum.FRIEND_ACK.getType());
-        wsMessageReqVO.setSenderId(uid);
-        wsMessageReqVO.setReceiveId(groupId);
-        wsMessageReqVO.setMsgType(0);
-        wsMessageReqVO.setMsgContent(msgContent);
-        
+
+        // 查询用户信息
+        User user = userService.findByUid(uid);
+        // 发送在线消息
+        Long sUid = user.getUid();
+        String name = user.getName();
+        String avatar = user.getAvatar();
+        String remark = user.getRemark();
+        WSBaseReqVO wsBaseReqVO = WSBaseReqUtils.create(WSReqTypeEnum.FRIEND_ACK.getType(), groupId, msgType, msgContent, sUid, name, avatar, remark);
+
         // 查找群里的所有用户信息
         List<GroupUser> groupUsers = groupUserService.listByGroupId(groupId, 1, 500);
         
         groupUsers.forEach(v -> {
             // 排除自己
             if (!uid.equals(v.getUid())) {
-                wsService.sendMsg(v.getUid(), wsMessageReqVO);
+                wsService.sendMsg(v.getUid(), wsBaseReqVO);
             }
         });
     
