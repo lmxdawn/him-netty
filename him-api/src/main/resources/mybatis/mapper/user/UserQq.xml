@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.lmxdawn.him.api.dao.user.UserDao">
+
+    <select id="findByOpenId" parameterType="long" resultType="com.lmxdawn.him.common.entity.user.UserQq">
+        SELECT uid
+        FROM `user_qq`
+        where openid=#{openId}
+        limit 1
+    </select>
+
+    <insert id="insertUserQq" keyProperty="id" parameterType="com.lmxdawn.him.common.entity.user.UserQq">
+        INSERT INTO user_qq(`uid`,openid,create_time)
+        VALUES
+        (#{uid},
+        #{openid},
+        #{create_time})
+    </insert>
+
+    <delete id="deleteByUid" parameterType="long">
+        delete from `user_qq` where uid = #{uid}
+    </delete>
+
+</mapper>
