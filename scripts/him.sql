@@ -11,7 +11,7 @@
  Target Server Version : 50717
  File Encoding         : 65001
 
- Date: 05/05/2019 19:12:57
+ Date: 09/05/2019 20:14:05
 */
 
 SET NAMES utf8mb4;
@@ -31,15 +31,12 @@ CREATE TABLE `group`  (
   `create_time` datetime(0) NOT NULL COMMENT '创建时间',
   `modified_time` datetime(0) NOT NULL COMMENT '更新时间',
   PRIMARY KEY (`group_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of group
 -- ----------------------------
-INSERT INTO `group` VALUES (4, 1, '??', NULL, 1, NULL, '2019-05-05 12:53:39', '2019-05-05 12:53:39');
-INSERT INTO `group` VALUES (5, 1, '测试', NULL, 2, '否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否', '2019-05-05 12:55:36', '2019-05-05 13:09:44');
-INSERT INTO `group` VALUES (6, 1, '测试', NULL, 1, '否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否', '2019-05-05 12:58:17', '2019-05-05 12:58:17');
-INSERT INTO `group` VALUES (7, 1, '测试', NULL, 1, '否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否否😂', '2019-05-05 12:59:37', '2019-05-05 12:59:37');
+INSERT INTO `group` VALUES (12, 2, '测试', NULL, 1, '', '2019-05-06 19:05:29', '2019-05-06 19:05:29');
 
 -- ----------------------------
 -- Table structure for group_msg
@@ -55,12 +52,12 @@ CREATE TABLE `group_msg`  (
   `modified_time` datetime(0) NOT NULL COMMENT '更新时间',
   PRIMARY KEY (`msg_id`) USING BTREE,
   INDEX `idx_group_id_create_time`(`group_id`, `create_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '群的消息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '群的消息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of group_msg
 -- ----------------------------
-INSERT INTO `group_msg` VALUES (1, 5, 1, 1, '反反复复凤飞飞', '2019-05-05 16:32:27', '2019-05-05 16:32:27');
+INSERT INTO `group_msg` VALUES (7, 12, 2, 0, '1111', '2019-05-06 19:05:39', '2019-05-06 19:05:39');
 
 -- ----------------------------
 -- Table structure for group_user
@@ -81,15 +78,12 @@ CREATE TABLE `group_user`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uk_group_id_uid`(`group_id`, `uid`) USING BTREE,
   INDEX `idx_uid`(`uid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '群组表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '群组表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of group_user
 -- ----------------------------
-INSERT INTO `group_user` VALUES (4, 5, 1, '哈哈1111', 1, '[图片消息]', '2019-05-05 16:32:28', 1, 2, '2019-05-05 12:55:36', '2019-05-05 16:32:28');
-INSERT INTO `group_user` VALUES (5, 6, 1, NULL, 0, NULL, NULL, 0, 2, '2019-05-05 12:58:17', '2019-05-05 12:58:17');
-INSERT INTO `group_user` VALUES (6, 7, 1, NULL, 0, NULL, NULL, 0, 2, '2019-05-05 12:59:37', '2019-05-05 12:59:37');
-INSERT INTO `group_user` VALUES (8, 5, 2, NULL, 0, NULL, NULL, 0, 0, '2019-05-05 18:41:17', '2019-05-05 18:41:19');
+INSERT INTO `group_user` VALUES (15, 12, 2, NULL, 0, '1111', '2019-05-06 19:05:39', 0, 2, '2019-05-06 19:05:29', '2019-05-07 09:12:51');
 
 -- ----------------------------
 -- Table structure for user
@@ -128,15 +122,13 @@ CREATE TABLE `user_friend`  (
   `modified_time` datetime(0) NOT NULL COMMENT '更新的时间',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uk_uid_friend_uid`(`uid`, `friend_uid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 36 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户的朋友表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 134 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户的朋友表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_friend
 -- ----------------------------
-INSERT INTO `user_friend` VALUES (20, 2, 1, '', 0, '😂', '2019-05-04 12:53:46', '2019-05-05 13:00:11');
-INSERT INTO `user_friend` VALUES (21, 1, 2, '', 8, '😂', '2019-05-04 12:53:46', '2019-05-05 13:00:11');
-INSERT INTO `user_friend` VALUES (22, 2, 3, 'fff', 0, '[图片消息]', '2019-05-04 23:32:57', '2019-05-05 01:46:37');
-INSERT INTO `user_friend` VALUES (35, 1, 3, NULL, 0, NULL, '2019-05-05 18:24:52', '2019-05-05 18:24:54');
+INSERT INTO `user_friend` VALUES (40, 2, 1, '', 2, '66666', '2019-05-06 19:43:42', '2019-05-09 18:02:07');
+INSERT INTO `user_friend` VALUES (41, 1, 2, '', 0, '66666', '2019-05-06 19:43:42', '2019-05-09 18:02:07');
 
 -- ----------------------------
 -- Table structure for user_friend_ask
@@ -152,28 +144,16 @@ CREATE TABLE `user_friend_ask`  (
   `modified_time` datetime(0) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_uid`(`uid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '好友请求表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '好友请求表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_friend_ask
 -- ----------------------------
-INSERT INTO `user_friend_ask` VALUES (1, 1, 2, '大胆的', 0, '2019-05-03 22:44:26', '2019-05-03 22:44:28');
-INSERT INTO `user_friend_ask` VALUES (2, 1, 3, 'fff', 0, '2019-05-03 22:48:47', '2019-05-03 22:48:49');
-INSERT INTO `user_friend_ask` VALUES (3, 1, 4, 'ddd', 0, '2019-05-03 23:02:23', '2019-05-03 23:02:25');
-INSERT INTO `user_friend_ask` VALUES (4, 1, 5, 'sss', 0, '2019-05-03 23:02:35', '2019-05-03 23:02:37');
-INSERT INTO `user_friend_ask` VALUES (5, 1, 6, 'sssss', 0, '2019-05-03 23:03:52', '2019-05-03 23:03:55');
-INSERT INTO `user_friend_ask` VALUES (6, 1, 7, 'ssssf', 0, '2019-05-03 23:04:06', '2019-05-03 23:04:08');
-INSERT INTO `user_friend_ask` VALUES (7, 2, 1, 'dddd', 0, '2019-05-03 23:04:57', '2019-05-03 23:04:59');
-INSERT INTO `user_friend_ask` VALUES (8, 2, 3, 'fff', 0, '2019-05-03 23:05:13', '2019-05-03 23:05:14');
-INSERT INTO `user_friend_ask` VALUES (9, 2, 4, 'rrrr', 0, '2019-05-03 23:05:35', '2019-05-03 23:05:37');
-INSERT INTO `user_friend_ask` VALUES (10, 2, 5, 'ssss', 0, '2019-05-03 23:05:45', '2019-05-03 23:05:49');
-INSERT INTO `user_friend_ask` VALUES (11, 3, 1, 'ssss', 0, '2019-05-03 23:06:09', '2019-05-03 23:06:11');
-INSERT INTO `user_friend_ask` VALUES (12, 3, 2, 'ssss', 0, '2019-05-03 23:06:20', '2019-05-03 23:06:22');
-INSERT INTO `user_friend_ask` VALUES (13, 2, 1, 'hi额hi是浪费减肥', 0, '2019-05-04 04:22:44', '2019-05-04 04:22:44');
-INSERT INTO `user_friend_ask` VALUES (14, 2, 1, 'hi额hi是浪费减肥', 0, '2019-05-04 04:25:40', '2019-05-04 04:25:40');
-INSERT INTO `user_friend_ask` VALUES (15, 2, 1, 'hi额hi是浪费减肥', 0, '2019-05-04 04:26:04', '2019-05-04 04:26:04');
-INSERT INTO `user_friend_ask` VALUES (16, 2, 1, 'hi额hi是浪费减肥', 0, '2019-05-04 04:27:20', '2019-05-04 04:27:20');
-INSERT INTO `user_friend_ask` VALUES (17, 2, 1, 'hi额hi是浪费减肥', 1, '2019-05-04 04:30:21', '2019-05-04 12:53:46');
+INSERT INTO `user_friend_ask` VALUES (22, 2, 1, '', 1, '2019-05-06 19:27:37', '2019-05-06 19:27:50');
+INSERT INTO `user_friend_ask` VALUES (23, 2, 1, '', 1, '2019-05-06 19:27:52', '2019-05-06 19:28:10');
+INSERT INTO `user_friend_ask` VALUES (24, 2, 1, '', 1, '2019-05-06 19:39:51', '2019-05-06 19:43:42');
+INSERT INTO `user_friend_ask` VALUES (25, 2, 1, '', 1, '2019-05-06 19:40:42', '2019-05-06 19:40:58');
+INSERT INTO `user_friend_ask` VALUES (26, 2, 1, '', 1, '2019-05-06 19:43:30', '2019-05-06 19:47:53');
 
 -- ----------------------------
 -- Table structure for user_friend_msg
@@ -188,34 +168,57 @@ CREATE TABLE `user_friend_msg`  (
   `create_time` datetime(0) NOT NULL COMMENT '消息创建时间',
   PRIMARY KEY (`msg_id`) USING BTREE,
   INDEX `idx_uid`(`uid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 47 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户的好友消息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 95 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户的好友消息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_friend_msg
 -- ----------------------------
-INSERT INTO `user_friend_msg` VALUES (24, 1, 2, 0, '反反复复', '2019-05-05 02:09:38');
-INSERT INTO `user_friend_msg` VALUES (25, 1, 2, 0, '是是是', '2019-05-05 02:11:18');
-INSERT INTO `user_friend_msg` VALUES (26, 1, 2, 0, ':emoji[sunglasses]三生三世', '2019-05-05 02:11:56');
-INSERT INTO `user_friend_msg` VALUES (27, 1, 1, 0, '毒贩夫妇', '2019-05-05 02:12:42');
-INSERT INTO `user_friend_msg` VALUES (28, 1, 2, 0, '😋\n', '2019-05-05 02:22:24');
-INSERT INTO `user_friend_msg` VALUES (29, 1, 2, 0, '😋\n', '2019-05-05 02:24:41');
-INSERT INTO `user_friend_msg` VALUES (30, 1, 2, 0, '😋\n', '2019-05-05 02:24:46');
-INSERT INTO `user_friend_msg` VALUES (31, 1, 2, 0, '😋\n', '2019-05-05 02:26:27');
-INSERT INTO `user_friend_msg` VALUES (32, 1, 2, 0, '?\n', '2019-05-05 02:34:34');
-INSERT INTO `user_friend_msg` VALUES (33, 1, 2, 0, '?\n', '2019-05-05 02:40:20');
-INSERT INTO `user_friend_msg` VALUES (34, 1, 2, 0, '?', '2019-05-05 02:42:07');
-INSERT INTO `user_friend_msg` VALUES (35, 1, 2, 0, '?', '2019-05-05 02:44:22');
-INSERT INTO `user_friend_msg` VALUES (36, 1, 2, 0, '😆', '2019-05-05 02:46:12');
-INSERT INTO `user_friend_msg` VALUES (37, 1, 2, 0, '😆', '2019-05-05 02:47:23');
-INSERT INTO `user_friend_msg` VALUES (38, 1, 2, 0, '😆', '2019-05-05 02:48:28');
-INSERT INTO `user_friend_msg` VALUES (39, 1, 2, 0, '哈哈哈😆', '2019-05-05 03:03:54');
-INSERT INTO `user_friend_msg` VALUES (40, 1, 2, 0, '哈哈哈😆', '2019-05-05 03:06:13');
-INSERT INTO `user_friend_msg` VALUES (41, 1, 2, 0, '哈哈哈😆', '2019-05-05 03:08:33');
-INSERT INTO `user_friend_msg` VALUES (42, 1, 2, 0, '哈哈😆', '2019-05-05 03:34:28');
-INSERT INTO `user_friend_msg` VALUES (43, 1, 2, 0, '4444', '2019-05-05 03:34:40');
-INSERT INTO `user_friend_msg` VALUES (44, 1, 2, 0, '柔柔弱弱', '2019-05-05 03:35:41');
-INSERT INTO `user_friend_msg` VALUES (45, 1, 2, 0, '4eeee', '2019-05-05 03:39:31');
-INSERT INTO `user_friend_msg` VALUES (46, 1, 2, 0, '😂', '2019-05-05 13:00:11');
+INSERT INTO `user_friend_msg` VALUES (49, 1, 1, 1, '成为好友，现在开始聊吧~', '2019-05-06 19:43:42');
+INSERT INTO `user_friend_msg` VALUES (50, 1, 1, 0, '1111', '2019-05-09 10:38:47');
+INSERT INTO `user_friend_msg` VALUES (51, 1, 1, 0, '11222', '2019-05-09 10:39:03');
+INSERT INTO `user_friend_msg` VALUES (52, 1, 1, 0, '2222', '2019-05-09 10:52:11');
+INSERT INTO `user_friend_msg` VALUES (53, 1, 1, 0, '是是是', '2019-05-09 10:52:22');
+INSERT INTO `user_friend_msg` VALUES (54, 1, 1, 0, '反反复复', '2019-05-09 13:19:02');
+INSERT INTO `user_friend_msg` VALUES (55, 1, 1, 0, '通天塔', '2019-05-09 13:22:21');
+INSERT INTO `user_friend_msg` VALUES (56, 1, 1, 0, '发部部v', '2019-05-09 13:22:50');
+INSERT INTO `user_friend_msg` VALUES (57, 1, 1, 0, '发发发', '2019-05-09 13:25:02');
+INSERT INTO `user_friend_msg` VALUES (58, 1, 1, 0, '发发发', '2019-05-09 13:26:34');
+INSERT INTO `user_friend_msg` VALUES (59, 1, 1, 0, '发发发', '2019-05-09 13:34:52');
+INSERT INTO `user_friend_msg` VALUES (60, 1, 1, 0, 'xxx', '2019-05-09 13:34:59');
+INSERT INTO `user_friend_msg` VALUES (61, 1, 1, 0, '6666', '2019-05-09 14:06:12');
+INSERT INTO `user_friend_msg` VALUES (62, 1, 1, 0, '111', '2019-05-09 14:16:37');
+INSERT INTO `user_friend_msg` VALUES (63, 1, 1, 0, '111', '2019-05-09 14:16:43');
+INSERT INTO `user_friend_msg` VALUES (64, 1, 1, 0, '2222', '2019-05-09 14:22:27');
+INSERT INTO `user_friend_msg` VALUES (65, 1, 1, 0, '2222', '2019-05-09 14:22:31');
+INSERT INTO `user_friend_msg` VALUES (66, 1, 1, 0, '吧吧吧v', '2019-05-09 14:22:40');
+INSERT INTO `user_friend_msg` VALUES (67, 1, 1, 0, 'xxx', '2019-05-09 14:22:46');
+INSERT INTO `user_friend_msg` VALUES (68, 1, 1, 0, 'vvvvvvvvvvv', '2019-05-09 14:23:10');
+INSERT INTO `user_friend_msg` VALUES (69, 1, 1, 0, '6666666', '2019-05-09 14:23:18');
+INSERT INTO `user_friend_msg` VALUES (70, 1, 2, 0, '444444', '2019-05-09 14:30:35');
+INSERT INTO `user_friend_msg` VALUES (71, 1, 2, 0, 'vvvvv', '2019-05-09 14:30:44');
+INSERT INTO `user_friend_msg` VALUES (72, 1, 2, 0, 'vvvv', '2019-05-09 14:31:50');
+INSERT INTO `user_friend_msg` VALUES (73, 1, 2, 0, 'ccccc', '2019-05-09 14:32:11');
+INSERT INTO `user_friend_msg` VALUES (74, 1, 1, 0, 'ggggg', '2019-05-09 14:32:32');
+INSERT INTO `user_friend_msg` VALUES (75, 1, 1, 0, 'cccc', '2019-05-09 14:37:24');
+INSERT INTO `user_friend_msg` VALUES (76, 1, 1, 0, '反反复复', '2019-05-09 14:47:33');
+INSERT INTO `user_friend_msg` VALUES (77, 1, 1, 0, '嘻嘻嘻嘻嘻', '2019-05-09 14:47:42');
+INSERT INTO `user_friend_msg` VALUES (78, 1, 1, 0, 'xxxx', '2019-05-09 14:47:53');
+INSERT INTO `user_friend_msg` VALUES (79, 1, 1, 0, '反反复复6666', '2019-05-09 14:48:00');
+INSERT INTO `user_friend_msg` VALUES (80, 1, 1, 0, '啛啛喳喳', '2019-05-09 14:48:21');
+INSERT INTO `user_friend_msg` VALUES (81, 1, 1, 0, '777777', '2019-05-09 14:48:28');
+INSERT INTO `user_friend_msg` VALUES (82, 1, 1, 0, '8888888', '2019-05-09 14:53:11');
+INSERT INTO `user_friend_msg` VALUES (83, 1, 1, 0, '吧吧吧吧吧v', '2019-05-09 14:53:46');
+INSERT INTO `user_friend_msg` VALUES (84, 1, 1, 0, '66666666', '2019-05-09 14:53:59');
+INSERT INTO `user_friend_msg` VALUES (85, 1, 1, 0, '啛啛喳喳错', '2019-05-09 14:54:06');
+INSERT INTO `user_friend_msg` VALUES (86, 1, 1, 0, '吧吧吧吧吧吧v', '2019-05-09 14:54:19');
+INSERT INTO `user_friend_msg` VALUES (87, 1, 1, 0, '66666666', '2019-05-09 14:54:28');
+INSERT INTO `user_friend_msg` VALUES (88, 1, 1, 0, 'vvvv5555', '2019-05-09 14:54:45');
+INSERT INTO `user_friend_msg` VALUES (89, 1, 1, 0, 'xxxxxx', '2019-05-09 14:54:55');
+INSERT INTO `user_friend_msg` VALUES (90, 1, 1, 0, '试试', '2019-05-09 17:54:47');
+INSERT INTO `user_friend_msg` VALUES (91, 1, 1, 0, '66666', '2019-05-09 17:54:58');
+INSERT INTO `user_friend_msg` VALUES (92, 1, 2, 0, '吧吧吧v', '2019-05-09 17:59:04');
+INSERT INTO `user_friend_msg` VALUES (93, 1, 1, 0, 'vvv', '2019-05-09 18:01:52');
+INSERT INTO `user_friend_msg` VALUES (94, 1, 1, 0, '66666', '2019-05-09 18:02:07');
 
 -- ----------------------------
 -- Table structure for user_profile
@@ -230,12 +233,12 @@ CREATE TABLE `user_profile`  (
   `modified_time` datetime(0) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uk_uid`(`uid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户的额外信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户的额外信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_profile
 -- ----------------------------
-INSERT INTO `user_profile` VALUES (1, 2, 0, 1, '2019-05-04 04:27:20', '2019-05-04 12:53:46');
-INSERT INTO `user_profile` VALUES (3, 1, 0, 1, '2019-05-04 11:51:30', '2019-05-04 12:53:46');
+INSERT INTO `user_profile` VALUES (11, 2, 0, 2, '2019-05-06 18:57:20', '2019-05-06 19:43:42');
+INSERT INTO `user_profile` VALUES (12, 1, 0, 2, '2019-05-06 18:58:06', '2019-05-06 19:43:42');
 
 SET FOREIGN_KEY_CHECKS = 1;
