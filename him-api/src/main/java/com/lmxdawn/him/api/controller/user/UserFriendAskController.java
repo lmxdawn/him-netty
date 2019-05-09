@@ -3,13 +3,12 @@ package com.lmxdawn.him.api.controller.user;
 import com.lmxdawn.him.api.dto.UserLoginDTO;
 import com.lmxdawn.him.api.enums.WSReqTypeEnum;
 import com.lmxdawn.him.api.service.user.*;
-import com.lmxdawn.him.api.service.ws.WSService;
+import com.lmxdawn.him.api.service.ws.WSServer;
 import com.lmxdawn.him.api.utils.UserFriendUtils;
 import com.lmxdawn.him.api.utils.UserLoginUtils;
 import com.lmxdawn.him.api.utils.WSBaseReqUtils;
 import com.lmxdawn.him.api.vo.req.UserFriendAskAckReqVO;
 import com.lmxdawn.him.api.vo.req.WSBaseReqVO;
-import com.lmxdawn.him.api.vo.req.WSMessageReqVO;
 import com.lmxdawn.him.api.vo.res.UserFriendAskListResVO;
 import com.lmxdawn.him.api.vo.res.UserInfoListResVO;
 import com.lmxdawn.him.common.entity.user.*;
@@ -46,7 +45,7 @@ public class UserFriendAskController {
   private UserService userService;
   
   @Resource
-  private WSService wsService;
+  private WSServer wsServer;
   
   @Resource
   private UserFriendMsgService userFriendMsgService;
@@ -155,7 +154,7 @@ public class UserFriendAskController {
     String remark1 = user.getRemark();
     WSBaseReqVO wsBaseReqVO = WSBaseReqUtils.create(WSReqTypeEnum.FRIEND_ASK.getType(), friendUid, msgType, msgContent, sUid, name, avatar, remark1);
 
-    wsService.sendMsg(friendUid, wsBaseReqVO);
+    wsServer.sendMsg(friendUid, wsBaseReqVO);
     
     return ResultVOUtils.success();
     
@@ -287,7 +286,7 @@ public class UserFriendAskController {
     String avatar = user.getAvatar();
     String remark1 = user.getRemark();
     WSBaseReqVO wsBaseReqVO = WSBaseReqUtils.create(WSReqTypeEnum.FRIEND_ACK.getType(), friendUid, msgType, msgContent, sUid, name, avatar, remark1);
-    wsService.sendMsg(friendUid, wsBaseReqVO);
+    wsServer.sendMsg(friendUid, wsBaseReqVO);
 
     return ResultVOUtils.success();
     

@@ -3,16 +3,13 @@ package com.lmxdawn.him.api.controller.group;
 import com.lmxdawn.him.api.dto.UserLoginDTO;
 import com.lmxdawn.him.api.enums.WSReqTypeEnum;
 import com.lmxdawn.him.api.service.group.GroupMsgService;
-import com.lmxdawn.him.api.service.group.GroupService;
 import com.lmxdawn.him.api.service.group.GroupUserService;
 import com.lmxdawn.him.api.service.user.UserService;
-import com.lmxdawn.him.api.service.ws.WSService;
+import com.lmxdawn.him.api.service.ws.WSServer;
 import com.lmxdawn.him.api.utils.UserLoginUtils;
 import com.lmxdawn.him.api.utils.WSBaseReqUtils;
 import com.lmxdawn.him.api.vo.req.GroupMsgCreateReqVO;
 import com.lmxdawn.him.api.vo.req.WSBaseReqVO;
-import com.lmxdawn.him.api.vo.req.WSMessageReqVO;
-import com.lmxdawn.him.api.vo.req.WSUserReqVO;
 import com.lmxdawn.him.api.vo.res.GroupMsgListResVO;
 import com.lmxdawn.him.api.vo.res.UserInfoListResVO;
 import com.lmxdawn.him.common.entity.group.GroupMsg;
@@ -29,7 +26,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -51,7 +47,7 @@ public class GroupMsgController {
     private UserService userService;
     
     @Resource
-    private WSService wsService;
+    private WSServer wsServer;
 
     /**
      * 列表
@@ -150,7 +146,7 @@ public class GroupMsgController {
             System.out.println(v.getUid());
             // 排除自己
             if (!uid.equals(v.getUid())) {
-                wsService.sendMsg(v.getUid(), wsBaseReqVO);
+                wsServer.sendMsg(v.getUid(), wsBaseReqVO);
             }
         });
 

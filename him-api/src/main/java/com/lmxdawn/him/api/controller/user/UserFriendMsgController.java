@@ -5,14 +5,13 @@ import com.lmxdawn.him.api.enums.WSReqTypeEnum;
 import com.lmxdawn.him.api.service.user.UserFriendMsgService;
 import com.lmxdawn.him.api.service.user.UserFriendService;
 import com.lmxdawn.him.api.service.user.UserService;
-import com.lmxdawn.him.api.service.ws.WSService;
+import com.lmxdawn.him.api.service.ws.WSServer;
 import com.lmxdawn.him.api.utils.PageUtils;
 import com.lmxdawn.him.api.utils.UserLoginUtils;
 import com.lmxdawn.him.api.utils.WSBaseReqUtils;
 import com.lmxdawn.him.api.vo.req.UserFriendMsgClearMsgCountReqVO;
 import com.lmxdawn.him.api.vo.req.UserFriendMsgSaveReqVO;
 import com.lmxdawn.him.api.vo.req.WSBaseReqVO;
-import com.lmxdawn.him.api.vo.req.WSMessageReqVO;
 import com.lmxdawn.him.common.entity.user.User;
 import com.lmxdawn.him.common.entity.user.UserFriend;
 import com.lmxdawn.him.common.entity.user.UserFriendMsg;
@@ -46,7 +45,7 @@ public class UserFriendMsgController {
     private UserService userService;
 
     @Resource
-    private WSService wsService;
+    private WSServer wsServer;
     
     /**
      * 获取朋友列表
@@ -174,7 +173,7 @@ public class UserFriendMsgController {
         String avatar = user.getAvatar();
         String remark = user.getRemark();
         WSBaseReqVO wsBaseReqVO = WSBaseReqUtils.create(WSReqTypeEnum.FRIEND.getType(), receiverUid, msgType, msgContent, sUid, name, avatar, remark);
-        wsService.sendMsg(receiverUid, wsBaseReqVO);
+        wsServer.sendMsg(receiverUid, wsBaseReqVO);
         
         return ResultVOUtils.success();
     }

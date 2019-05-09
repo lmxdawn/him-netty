@@ -2,6 +2,7 @@ package com.lmxdawn.him.api.dao.user;
 
 import com.lmxdawn.him.common.entity.user.UserQq;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface UserQqDao {
@@ -11,7 +12,7 @@ public interface UserQqDao {
      * @param openId
      * @return
      */
-    UserQq findByOpenId(String openId);
+    UserQq findByOpenId(@Param("openId") String openId);
 
     /**
      * 插入
@@ -25,6 +26,6 @@ public interface UserQqDao {
      * @param uid
      * @return
      */
-    boolean deleteByUid(Long uid);
+    boolean deleteByUid(@Param("uid") Long uid);
 
 }

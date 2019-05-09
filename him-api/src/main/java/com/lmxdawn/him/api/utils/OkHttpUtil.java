@@ -40,7 +40,7 @@ public class OkHttpUtil {
      * @return
      */
     private static String execNewCall(Request request) {
-        OkHttpClient okHttpClient = SpringBeanFactory.getBean(OkHttpClient.class);
+        OkHttpClient okHttpClient = SpringBeanFactoryUtils.getBean(OkHttpClient.class);
         try (Response response = okHttpClient.newCall(request).execute()) {
             if (!response.isSuccessful()) {
                 return "";

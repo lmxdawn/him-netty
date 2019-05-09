@@ -6,16 +6,14 @@ import com.lmxdawn.him.api.service.group.GroupMsgService;
 import com.lmxdawn.him.api.service.group.GroupService;
 import com.lmxdawn.him.api.service.group.GroupUserService;
 import com.lmxdawn.him.api.service.user.UserService;
-import com.lmxdawn.him.api.service.ws.WSService;
+import com.lmxdawn.him.api.service.ws.WSServer;
 import com.lmxdawn.him.api.utils.GroupUserUtils;
 import com.lmxdawn.him.api.utils.UserLoginUtils;
 import com.lmxdawn.him.api.utils.WSBaseReqUtils;
 import com.lmxdawn.him.api.vo.req.GroupUserSaveReqVO;
 import com.lmxdawn.him.api.vo.req.WSBaseReqVO;
-import com.lmxdawn.him.api.vo.req.WSMessageReqVO;
 import com.lmxdawn.him.api.vo.res.GroupUserListResVO;
 import com.lmxdawn.him.common.entity.group.Group;
-import com.lmxdawn.him.common.entity.group.GroupMsg;
 import com.lmxdawn.him.common.entity.group.GroupUser;
 import com.lmxdawn.him.common.entity.user.User;
 import com.lmxdawn.him.common.enums.ResultEnum;
@@ -54,7 +52,7 @@ public class GroupUserController {
     private UserService userService;
 
     @Resource
-    private WSService wsService;
+    private WSServer wsServer;
     
     /**
      * 列表
@@ -181,7 +179,7 @@ public class GroupUserController {
         groupUsers.forEach(v -> {
             // 排除自己
             if (!uid.equals(v.getUid())) {
-                wsService.sendMsg(v.getUid(), wsBaseReqVO);
+                wsServer.sendMsg(v.getUid(), wsBaseReqVO);
             }
         });
     
