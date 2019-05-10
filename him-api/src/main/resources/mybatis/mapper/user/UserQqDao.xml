@@ -3,7 +3,7 @@
 
 <mapper namespace="com.lmxdawn.him.api.dao.user.UserQqDao">
 
-    <select id="findByOpenId" parameterType="long" resultType="com.lmxdawn.him.common.entity.user.UserQq">
+    <select id="findByOpenId" resultType="com.lmxdawn.him.common.entity.user.UserQq">
         SELECT uid
         FROM `user_qq`
         where openid=#{openId}
@@ -15,7 +15,7 @@
         VALUES
         (#{uid},
         #{openid},
-        #{create_time})
+        #{createTime})
     </insert>
 
     <delete id="deleteByUid" parameterType="long">

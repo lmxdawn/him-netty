@@ -31,26 +31,11 @@ public class QqWebAuthServiceImpl implements QqWebAuthService {
         map.put("redirect_uri", redirect_uri);
         String url = "https://graph.qq.com/oauth2.0/token";
         String res = OkHttpUtil.get(url, map);
+        if (res.contains("callback")) {
+            return null;
+        }
         String[] split = res.split("&");
-        return split[0].toString().split("=")[1];
-    }
-    
-    // 测试 QQ返回的数据能不能解析成功
-    public static void main(String[] args) {
-        
-        String res = "callback(   {\"client_id\":\"YOUR_APPID\",\"openid\":\"YOUR_OPENID\"} );";
-        int indexOf1 = res.indexOf("(");
-        int indexOf2 = res.indexOf(")");
-        String json = res.substring(indexOf1 + 1, indexOf2);
-        System.out.println(json);
-        QqOpenIdResVO qqOpenIdResVO = JSON.parseObject(json, QqOpenIdResVO.class);
-    
-        System.out.println(qqOpenIdResVO.getOpenid());
-    
-        res = "access_token=FE04************************CCE2&expires_in=7776000&refresh_token=88E4************************BE14";
-        String[] split = res.split("&");
-        String accessToken = split[0].toString().split("=")[1];
-        System.out.println(accessToken);
+        return split[0].toString().split("=")[1].toString();
     }
     
     @Override
@@ -59,7 +44,6 @@ public class QqWebAuthServiceImpl implements QqWebAuthService {
         map.put("access_token", accessToken);
         String url = "https://graph.qq.com/oauth2.0/me";
         String res = OkHttpUtil.get(url, map);
-    
         if (!res.contains("callback")) {
             return null;
         }
@@ -67,7 +51,6 @@ public class QqWebAuthServiceImpl implements QqWebAuthService {
         int indexOf1 = res.indexOf("(");
         int indexOf2 = res.indexOf(")");
         String json = res.substring(indexOf1 + 1, indexOf2);
-    
         return JSON.parseObject(json, QqOpenIdResVO.class);
     }
     
@@ -76,16 +59,32 @@ public class QqWebAuthServiceImpl implements QqWebAuthService {
         
         Map<String, String> map = new HashMap<>();
         map.put("access_token", accessToken);
-        map.put("oauth_consumer_key", appkey);
+        map.put("oauth_consumer_key", appid);
         map.put("openid", openID);
         String url = "https://graph.qq.com/user/get_user_info";
         String json = OkHttpUtil.get(url, map);
-    
         QqUserInfoResVO qqUserInfoResVO = JSON.parseObject(json, QqUserInfoResVO.class);
-        
         if (null == qqUserInfoResVO.getRet() || qqUserInfoResVO.getRet() != 0) {
             return null;
         }
         return qqUserInfoResVO;
+    }
+
+    // 测试 QQ返回的数据能不能解析成功
+    public static void main(String[] args) {
+
+        String res = "callback(   {\"client_id\":\"YOUR_APPID\",\"openid\":\"YOUR_OPENID\"} );";
+        int indexOf1 = res.indexOf("(");
+        int indexOf2 = res.indexOf(")");
+        String json = res.substring(indexOf1 + 1, indexOf2);
+        System.out.println(json);
+        QqOpenIdResVO qqOpenIdResVO = JSON.parseObject(json, QqOpenIdResVO.class);
+
+        System.out.println(qqOpenIdResVO.getOpenid());
+
+        res = "access_token=FE04************************CCE2&expires_in=7776000&refresh_token=88E4************************BE14";
+        String[] split = res.split("&");
+        String accessToken = split[0].toString().split("=")[1];
+        System.out.println(accessToken);
     }
 }

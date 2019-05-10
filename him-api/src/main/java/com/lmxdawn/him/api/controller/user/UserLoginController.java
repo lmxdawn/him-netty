@@ -80,18 +80,17 @@ public class UserLoginController {
     
         String accessToken = qqWebAuthService.getAccessToken(code, redirect_uri);
         if (accessToken == null || "".equals(accessToken)) {
-            return ResultVOUtils.error(ResultEnum.PARAM_VERIFY_FALL, "QQ授权失败~");
+            return ResultVOUtils.error(ResultEnum.PARAM_VERIFY_FALL, "accessToken 获取失败~");
         }
     
         QqOpenIdResVO openIdResVO = qqWebAuthService.getOpenID(accessToken);
         if (openIdResVO == null || openIdResVO.getOpenid() == null || "".equals(openIdResVO.getOpenid())) {
-            return ResultVOUtils.error(ResultEnum.PARAM_VERIFY_FALL, "QQ授权失败~");
+            return ResultVOUtils.error(ResultEnum.PARAM_VERIFY_FALL, "openid 获取是吧~");
         }
-        
-        QqUserInfoResVO userInfo = qqWebAuthService.getUserInfo(code, redirect_uri);
+        QqUserInfoResVO userInfo = qqWebAuthService.getUserInfo(accessToken, openIdResVO.getOpenid());
         
         if (userInfo == null) {
-            return ResultVOUtils.error(ResultEnum.PARAM_VERIFY_FALL, "QQ授权失败~");
+            return ResultVOUtils.error(ResultEnum.PARAM_VERIFY_FALL, "userInfo 获取失败~");
         }
     
         UserQq userQq = userQqService.findByOpenId(openIdResVO.getOpenid());
@@ -104,12 +103,16 @@ public class UserLoginController {
             user.setAvatar(userInfo.getFigureurl());
             boolean b = userService.insertUser(user);
             if (!b) {
-                return ResultVOUtils.error(ResultEnum.PARAM_VERIFY_FALL, "创建用户失败~");
+                return ResultVOUtils.error();
             }
-    
+            // 创建QQ用户
             userQq = new UserQq();
             userQq.setUid(user.getUid());
             userQq.setOpenid(openIdResVO.getOpenid());
+            boolean b1 = userQqService.insertUserQq(userQq);
+            if (!b) {
+                return ResultVOUtils.error();
+            }
         }
     
         Long uid = userQq.getUid();

@@ -9,7 +9,7 @@ import okhttp3.*;
  * 请求工具类
  **/
 public class OkHttpUtil {
-    
+
     /**
      * 根据map获取get请求参数
      *
@@ -32,7 +32,7 @@ public class OkHttpUtil {
         }
         return sb;
     }
-    
+
     /**
      * 调用okhttp的newCall方法
      *
@@ -41,20 +41,29 @@ public class OkHttpUtil {
      */
     private static String execNewCall(Request request) {
         OkHttpClient okHttpClient = SpringBeanFactoryUtils.getBean(OkHttpClient.class);
-        try (Response response = okHttpClient.newCall(request).execute()) {
+
+        ResponseBody body = null;
+        try {
+            Response response = okHttpClient.newCall(request).execute();
             if (!response.isSuccessful()) {
                 return "";
             }
-            ResponseBody body = response.body();
-            if (body == null) {
-                return "";
+            body = response.body();
+            String json = "";
+            if (body != null) {
+                json = body.string();
             }
-            return body.toString();
-        } catch (IOException e) {
+            return json;
+        } catch (Exception exception) {
             return "";
+        } finally {
+            if (body != null) {
+                body.close();
+            }
         }
+
     }
-    
+
     /**
      * get
      *
@@ -69,7 +78,7 @@ public class OkHttpUtil {
                 .build();
         return execNewCall(request);
     }
-    
+
     /**
      * post
      *
@@ -91,8 +100,8 @@ public class OkHttpUtil {
                 .build();
         return execNewCall(request);
     }
-    
-    
+
+
     /**
      * Post请求发送JSON数据....{"name":"zhangsan","pwd":"123456"}
      * 参数一：请求Url
@@ -107,7 +116,7 @@ public class OkHttpUtil {
                 .build();
         return execNewCall(request);
     }
-    
+
     /**
      * Post请求发送xml数据....
      * 参数一：请求Url
