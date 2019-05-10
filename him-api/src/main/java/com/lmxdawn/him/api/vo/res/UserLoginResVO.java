@@ -10,6 +10,6 @@ public class UserLoginResVO {
     
     private Long uid;
     
-    private String token;
+    private String sid;
     
 }

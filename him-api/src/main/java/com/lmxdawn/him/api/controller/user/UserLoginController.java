@@ -64,7 +64,7 @@ public class UserLoginController {
         
         UserLoginResVO userLoginResVO = new UserLoginResVO();
         userLoginResVO.setUid(uid);
-        userLoginResVO.setToken(token);
+        userLoginResVO.setSid(token);
         return ResultVOUtils.success(userLoginResVO);
     }
     
@@ -118,7 +118,7 @@ public class UserLoginController {
         
         UserLoginResVO userLoginResVO = new UserLoginResVO();
         userLoginResVO.setUid(uid);
-        userLoginResVO.setToken(token);
+        userLoginResVO.setSid(token);
         return ResultVOUtils.success(userLoginResVO);
     }
     
