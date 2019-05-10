@@ -33,7 +33,7 @@
             <dependency>
                 <groupId>com.lmxdawn</groupId>
                 <artifactId>him-common</artifactId>
-                <version>${version}</version>
+                <version>0.0.1-SNAPSHOT</version>
             </dependency>
 
             <!--Json 操作-->
