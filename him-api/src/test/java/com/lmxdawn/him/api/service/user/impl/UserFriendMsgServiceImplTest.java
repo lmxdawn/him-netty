@@ -23,15 +23,6 @@ public class UserFriendMsgServiceImplTest extends BaseApplicationTest {
     @Test
     public void insertUserOfflineMsg() {
 
-        UserFriendMsg userFriendMsg = new UserFriendMsg();
-        userFriendMsg.setUid(1L);
-        userFriendMsg.setSenderUid(2L);
-        userFriendMsg.setMsgType(0);
-        userFriendMsg.setMsgContent("ssssss");
-
-        boolean b = userFriendMsgService.insertUserFriendMsg(userFriendMsg);
-
-        assertNotNull(userFriendMsg.getMsgId());
 
     }
 }
