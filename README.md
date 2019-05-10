@@ -28,6 +28,9 @@
 
 > java -jar him-api/target/him-api-0.0.1-SNAPSHOT.jar
 
+> 如果要加环境配置 --spring.profiles.active=pro 即可， 默认是 dev 环境。
+  **特别要注意：配置文件里面有跨域配置，这个一定要注意**
+
 him-vue [前往](https://github.com/lmxdawn/him-vue) 和 him-netty [前往](https://github.com/lmxdawn/him-netty) 都启动后访问 http://localhost:8080
 
 
