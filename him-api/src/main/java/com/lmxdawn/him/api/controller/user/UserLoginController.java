@@ -57,10 +57,9 @@ public class UserLoginController {
         Long uid = userLoginPwdReqVO.getUid();
         User user = userService.findPwdByUid(uid);
         String md5Pwd = PasswordUtils.md52md5(userLoginPwdReqVO.getPwd());
-        if (!md5Pwd.equals(user.getPwd())) {
+        if (user == null || !md5Pwd.equals(user.getPwd())) {
             return ResultVOUtils.error(ResultEnum.PARAM_VERIFY_FALL, "密码或用户名错误~");
         }
-        
         String token = UserLoginUtils.createSid(uid);
         
         UserLoginResVO userLoginResVO = new UserLoginResVO();

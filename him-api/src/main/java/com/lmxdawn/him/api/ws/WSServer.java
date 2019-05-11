@@ -83,7 +83,6 @@ public class WSServer {
                 .build();
     
         WSUserReqVO wsUserReqVO = wsBaseReqVO.getUser();
-        System.out.println(wsUserReqVO);
         WSUserResProtoOuterClass.WSUserResProto wsUserResProto = WSUserResProtoOuterClass.WSUserResProto.newBuilder()
                 .setUid(wsUserReqVO.getUid())
                 .setName(wsUserReqVO.getName())
