@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `group`;
 CREATE TABLE `group` (
   `group_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '群ID',
   `uid` bigint(20) NOT NULL COMMENT '创建者用户ID',
-  `name` varchar(255) NOT NULL COMMENT '群昵称',
+  `name` varchar(255) CHARACTER SET utf8mb4 NOT NULL COMMENT '群昵称',
   `avatar` varchar(255) DEFAULT NULL COMMENT '群头像',
   `member_num` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '成员数量',
   `remark` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '描述',
