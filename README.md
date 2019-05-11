@@ -33,6 +33,36 @@
 
 him-vue [前往](https://github.com/lmxdawn/him-vue) 和 him-netty [前往](https://github.com/lmxdawn/him-netty) 都启动后访问 http://localhost:8080
 
+# 跨域问题
+
+> NGINX 做了端口的代理后, header 头 设置了跨域, 但是还是获取不了, 不知道为啥, 欢迎大神来指导
+
+> 最后我的解决办法, 全部用一个域名, 然后 NGINX 做路径的转换,下面贴一下我的配置
+
+```
+# 前端路径
+location /h5 {
+   try_files $uri $uri/ /h5/index.html;
+}
+# API 路径
+location /api
+{
+  proxy_pass http://127.0.0.1:9000/api;
+  proxy_http_version 1.1;
+  proxy_set_header Upgrade $http_upgrade;
+  proxy_set_header Connection "Upgrade";
+  proxy_set_header X-Real-IP $remote_addr;
+}
+# ws 路径
+location /ws
+{
+  proxy_pass http://127.0.0.1:9001;
+  proxy_http_version 1.1;
+  proxy_set_header Upgrade $http_upgrade;
+  proxy_set_header Connection "Upgrade";
+  proxy_set_header X-Real-IP $remote_addr;
+}
+```
 
 # protobuf 杂谈
  

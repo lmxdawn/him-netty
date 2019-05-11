@@ -21,6 +21,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 /**
@@ -110,18 +111,18 @@ public class UserLoginController {
             userQq.setUid(user.getUid());
             userQq.setOpenid(openIdResVO.getOpenid());
             boolean b1 = userQqService.insertUserQq(userQq);
-            if (!b) {
+            if (!b1) {
                 return ResultVOUtils.error();
             }
         }
     
         Long uid = userQq.getUid();
         
-        String token = UserLoginUtils.createSid(uid);
+        String sid = UserLoginUtils.createSid(uid);
         
         UserLoginResVO userLoginResVO = new UserLoginResVO();
         userLoginResVO.setUid(uid);
-        userLoginResVO.setSid(token);
+        userLoginResVO.setSid(sid);
         return ResultVOUtils.success(userLoginResVO);
     }
     

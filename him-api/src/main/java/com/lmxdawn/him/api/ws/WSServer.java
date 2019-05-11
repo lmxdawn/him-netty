@@ -75,21 +75,23 @@ public class WSServer {
             log.info("用户ID[" + fromUid + "]不在线！");
             return false;
         }
+        System.out.println(wsBaseReqVO);
         WSMessageReqVO wsMessageReqVO = wsBaseReqVO.getMessage();
         WSMessageResProtoOuterClass.WSMessageResProto wsMessageResProto = WSMessageResProtoOuterClass.WSMessageResProto.newBuilder()
                 .setReceiveId(wsMessageReqVO.getReceiveId())
                 .setMsgType(wsMessageReqVO.getMsgType())
                 .setMsgContent(wsMessageReqVO.getMsgContent())
                 .build();
-
+    
         WSUserReqVO wsUserReqVO = wsBaseReqVO.getUser();
+        System.out.println(wsUserReqVO);
         WSUserResProtoOuterClass.WSUserResProto wsUserResProto = WSUserResProtoOuterClass.WSUserResProto.newBuilder()
                 .setUid(wsUserReqVO.getUid())
                 .setName(wsUserReqVO.getName())
                 .setAvatar(wsUserReqVO.getAvatar())
                 .setRemark(wsUserReqVO.getRemark())
                 .build();
-
+    
         WSBaseResProtoOuterClass.WSBaseResProto wsBaseResProto = WSBaseResProtoOuterClass.WSBaseResProto.newBuilder()
                 .setType(wsBaseReqVO.getType())
                 .setMessage(wsMessageResProto)

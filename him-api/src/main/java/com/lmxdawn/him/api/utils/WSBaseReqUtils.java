@@ -14,19 +14,19 @@ public class WSBaseReqUtils {
 
         // 消息实体
         WSMessageReqVO wsMessageReqVO = new WSMessageReqVO();
-        wsMessageReqVO.setReceiveId(receiveId);
-        wsMessageReqVO.setMsgType(msgType);
+        wsMessageReqVO.setReceiveId(receiveId != null ? receiveId : 0);
+        wsMessageReqVO.setMsgType(msgType != null ? msgType : 0);
         wsMessageReqVO.setMsgContent(msgContent);
 
         // 用户信息
         WSUserReqVO wsUserReqVO = new WSUserReqVO();
-        wsUserReqVO.setUid(uid);
-        wsUserReqVO.setName(name);
-        wsUserReqVO.setAvatar(avatar);
-        wsUserReqVO.setRemark(remark);
+        wsUserReqVO.setUid(uid != null ? uid : 0);
+        wsUserReqVO.setName(name != null ? name : "");
+        wsUserReqVO.setAvatar(avatar != null ? avatar : "");
+        wsUserReqVO.setRemark(remark != null ? remark : "");
 
         WSBaseReqVO wsBaseReqVO = new WSBaseReqVO();
-        wsBaseReqVO.setType(type);
+        wsBaseReqVO.setType(type != null ? type : 0);
         wsBaseReqVO.setMessage(wsMessageReqVO);
         wsBaseReqVO.setUser(wsUserReqVO);
         return wsBaseReqVO;

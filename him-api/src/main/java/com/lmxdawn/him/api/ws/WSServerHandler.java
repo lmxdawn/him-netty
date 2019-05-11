@@ -73,12 +73,13 @@ public class WSServerHandler extends SimpleChannelInboundHandler<WSBaseReqProtoO
             return;
         }
 
-        log.info("客户端心跳连接");
-        WSBaseResProtoOuterClass.WSBaseResProto wsBaseResProto = WSBaseResProtoOuterClass.WSBaseResProto.newBuilder()
-                .setType(0)
-                .setCreateTime(new Date().toString())
-                .build();
-        ctx.channel().writeAndFlush(wsBaseResProto);
+        // 这里可以不做, 所以我注释掉了
+        log.info("回应客户端心跳连接");
+        // WSBaseResProtoOuterClass.WSBaseResProto wsBaseResProto = WSBaseResProtoOuterClass.WSBaseResProto.newBuilder()
+        //         .setType(0)
+        //         .setCreateTime(new Date().toString())
+        //         .build();
+        // ctx.channel().writeAndFlush(wsBaseResProto);
 
         // 加入 在线 map 中
         WSSocketHolder.put(uid, ctx.channel());
