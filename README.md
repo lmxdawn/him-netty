@@ -1,25 +1,27 @@
 
-<p align="center">
-
-<img src="http://prbsvykmy.bkt.clouddn.com/pic/him.jpg"/>
-
-</p>
-<p align="center">
-
-[![him-vue](https://img.shields.io/badge/him-him--vue-1.svg)](https://github.com/lmxdawn/him-vue)
-[![him-netty](https://img.shields.io/badge/him-him--netty-1.svg)](https://github.com/lmxdawn/him-netty)
-[![QQ群](https://img.shields.io/badge/QQ%E7%BE%A4-210277856-orange.svg)](https://shang.qq.com/wpa/qunwpa?idkey=d4965fc7101936dcdea5eb1d05e2eaeb3128f20796028ee937ab516652083c6c)
-[![](https://badge.juejin.im/entry/5c2c000e6fb9a049f5713e26/likes.svg?style=flat-square)](https://juejin.im/post/5c2bffdc51882509181395d7)
-
-</p>
-
-<p align="center">
-
-[![vue](https://img.shields.io/badge/vue-2.x-1.svg)](https://github.com/vuejs/vue)
-[![netty](https://img.shields.io/badge/netty-4.1.25.Final-1.svg)](https://github.com/netty/netty)
-[![spring-boot](https://img.shields.io/badge/spring--boot-2.1.2.RELEASE-1.svg)](https://github.com/spring-projects/spring-boot)
-
-</p>
+<div align="center">
+    <p align="center">
+    
+   <img src="http://prbsvykmy.bkt.clouddn.com/pic/him.jpg"/>
+    
+   </p>
+   <p align="center">
+    
+   [![him-vue](https://img.shields.io/badge/him-him--vue-1.svg)](https://github.com/lmxdawn/him-vue)
+   [![him-netty](https://img.shields.io/badge/him-him--netty-1.svg)](https://github.com/lmxdawn/him-netty)
+   [![QQ群](https://img.shields.io/badge/QQ%E7%BE%A4-210277856-orange.svg)](https://shang.qq.com/wpa/qunwpa?idkey=d4965fc7101936dcdea5eb1d05e2eaeb3128f20796028ee937ab516652083c6c)
+   [![](https://badge.juejin.im/entry/5c2c000e6fb9a049f5713e26/likes.svg?style=flat-square)](https://juejin.im/post/5c2bffdc51882509181395d7)
+    
+   </p>
+    
+   <p align="center">
+    
+   [![vue](https://img.shields.io/badge/vue-2.x-1.svg)](https://github.com/vuejs/vue)
+   [![netty](https://img.shields.io/badge/netty-4.1.25.Final-1.svg)](https://github.com/netty/netty)
+   [![spring-boot](https://img.shields.io/badge/spring--boot-2.1.2.RELEASE-1.svg)](https://github.com/spring-projects/spring-boot)
+    
+   </p>
+</div>
 
 # him-netty
 
