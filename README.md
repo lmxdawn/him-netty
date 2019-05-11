@@ -1,6 +1,26 @@
+
+<div align="center">  
+
+<br/>
+
+[![him-vue](https://img.shields.io/badge/him-him--vue-1.svg)](https://github.com/lmxdawn/him-vue)
+[![him-netty](https://img.shields.io/badge/him-him--netty-1.svg)](https://github.com/lmxdawn/him-netty)
+[![QQ群](https://img.shields.io/badge/QQ%E7%BE%A4-210277856-orange.svg)](https://shang.qq.com/wpa/qunwpa?idkey=d4965fc7101936dcdea5eb1d05e2eaeb3128f20796028ee937ab516652083c6c)
+[![](https://badge.juejin.im/entry/5c2c000e6fb9a049f5713e26/likes.svg?style=flat-square)](https://juejin.im/post/5c2bffdc51882509181395d7)
+
+<br/>
+
+[![vue](https://img.shields.io/badge/vue-2.x-1.svg)](https://github.com/vuejs/vue)
+[![netty](https://img.shields.io/badge/netty-4.1.25.Final-1.svg)](https://github.com/netty/netty)
+[![spring-boot](https://img.shields.io/badge/spring--boot-2.1.2.RELEASE-1.svg)](https://github.com/spring-projects/spring-boot)
+
+</div>
+<br/>
+
 # him-netty
 
 > 前端：vue  [前往](https://github.com/lmxdawn/him-vue) ，服务端 netty [前往](https://github.com/lmxdawn/him-netty)
+
 
 # 环境要求 
 
@@ -34,6 +54,10 @@
 him-vue [前往](https://github.com/lmxdawn/him-vue) 和 him-netty [前往](https://github.com/lmxdawn/him-netty) 都启动后访问 http://localhost:8080
 
 注意默认使用 QQ登录, 这个需要去申请QQ互联, 如果不想去申请, 则可以直接设置 Cookie, 两个值 UID 和 SID, 这两个值可以通过接口 /api/user/login/byPwd 获取, 具体请看java 代码
+
+# 示例
+
+<img src="http://prbsvykmy.bkt.clouddn.com/pic/WechatIMG14.jpeg"  /> 
 
 # QQ 互联相关配置
 
