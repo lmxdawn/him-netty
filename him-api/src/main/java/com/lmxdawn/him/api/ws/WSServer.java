@@ -75,7 +75,6 @@ public class WSServer {
             log.info("用户ID[" + fromUid + "]不在线！");
             return false;
         }
-        System.out.println(wsBaseReqVO);
         WSMessageReqVO wsMessageReqVO = wsBaseReqVO.getMessage();
         WSMessageResProtoOuterClass.WSMessageResProto wsMessageResProto = WSMessageResProtoOuterClass.WSMessageResProto.newBuilder()
                 .setReceiveId(wsMessageReqVO.getReceiveId())

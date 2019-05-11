@@ -137,7 +137,7 @@ public class GroupMsgController {
         String name = user.getName();
         String avatar = user.getAvatar();
         String remark = user.getRemark();
-        WSBaseReqVO wsBaseReqVO = WSBaseReqUtils.create(WSReqTypeEnum.FRIEND_ACK.getType(), groupId, msgType, msgContent, sUid, name, avatar, remark);
+        WSBaseReqVO wsBaseReqVO = WSBaseReqUtils.create(WSReqTypeEnum.GROUP.getType(), groupId, msgType, msgContent, sUid, name, avatar, remark);
     
         // 查找群里的所有用户信息
         List<GroupUser> groupUsers = groupUserService.listByGroupId(groupId, 1, 500);
