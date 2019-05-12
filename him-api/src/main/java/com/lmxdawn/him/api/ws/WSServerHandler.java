@@ -87,8 +87,14 @@ public class WSServerHandler extends SimpleChannelInboundHandler<WSBaseReqProtoO
     
     private void userLogin(ChannelHandlerContext ctx, Long uid, String sid) throws IOException {
         if (!UserLoginUtils.checkToken(uid, sid)) {
-            log.info("非法登录");
-            userOffLine(ctx);
+            log.info("非法登录: {}, {}", uid, sid);
+            // 登录异常, 发送下线通知
+            WSBaseResProtoOuterClass.WSBaseResProto wsBaseResProto = WSBaseResProtoOuterClass.WSBaseResProto.newBuilder()
+                    .setType(WSResTypeConstant.LOGIN_OUT)
+                    .setCreateTime(new Date().toString())
+                    .build();
+            // 发送下线消息
+            ctx.channel().writeAndFlush(wsBaseResProto);
             return;
         }
     
@@ -97,7 +103,7 @@ public class WSServerHandler extends SimpleChannelInboundHandler<WSBaseReqProtoO
         // 如果不是第一次登陆, 并且 客户端ID和当前的不匹配, 则通知之前的客户端下线
         if (channel != null && !ctx.channel().id().equals(channel.id())) {
             WSBaseResProtoOuterClass.WSBaseResProto wsBaseResProto = WSBaseResProtoOuterClass.WSBaseResProto.newBuilder()
-                    .setType(WSResTypeConstant.OUT)
+                    .setType(WSResTypeConstant.WS_OUT)
                     .setCreateTime(new Date().toString())
                     .build();
             // 发送下线消息
