@@ -80,13 +80,17 @@ public class UserLoginController {
         if (type != 1 && type != 2) {
             return ResultVOUtils.error(ResultEnum.PARAM_VERIFY_FALL, "请选择游客性别~");
         }
-        
-        String name = "火星人" + RandomStringUtils.random(7);
+        char[] chr = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A',
+                'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+                'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+        String name = "火星人" + RandomStringUtils.random(7, chr);
         String avatar = String.format("http://prbsvykmy.bkt.clouddn.com/static/image/user-%d-default.png", type);
+        String remark = "沉浸在知识的海洋~";
         // 创建用户
         User user = new User();
         user.setName(name);
         user.setAvatar(avatar);
+        user.setRemark(remark);
         boolean b = userService.insertUser(user);
         if (!b) {
             return ResultVOUtils.error();

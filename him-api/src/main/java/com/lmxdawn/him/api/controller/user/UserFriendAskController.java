@@ -1,7 +1,8 @@
 package com.lmxdawn.him.api.controller.user;
 
 import com.lmxdawn.him.api.dto.UserLoginDTO;
-import com.lmxdawn.him.api.enums.WSReqTypeEnum;
+import com.lmxdawn.him.api.constant.WSMsgTypeConstant;
+import com.lmxdawn.him.api.constant.WSResTypeConstant;
 import com.lmxdawn.him.api.service.user.*;
 import com.lmxdawn.him.api.ws.WSServer;
 import com.lmxdawn.him.api.utils.UserFriendUtils;
@@ -146,13 +147,13 @@ public class UserFriendAskController {
     // 发送在线消息
     // 查询用户信息
     User user = userService.findByUid(uid);
-    Integer msgType = 0;
+    Integer msgType = WSMsgTypeConstant.TEXT;
     String msgContent = "请求加为好友";
     Long sUid = user.getUid();
     String name = user.getName();
     String avatar = user.getAvatar();
     String remark1 = user.getRemark();
-    WSBaseReqVO wsBaseReqVO = WSBaseReqUtils.create(WSReqTypeEnum.FRIEND_ASK.getType(), friendUid, msgType, msgContent, sUid, name, avatar, remark1);
+    WSBaseReqVO wsBaseReqVO = WSBaseReqUtils.create(WSResTypeConstant.FRIEND_ASK, friendUid, msgType, msgContent, sUid, name, avatar, remark1);
 
     wsServer.sendMsg(friendUid, wsBaseReqVO);
     
@@ -280,12 +281,12 @@ public class UserFriendAskController {
     // 发送在线消息
     // 查询用户信息
     User user = userService.findByUid(uid);
-    Integer msgType = 0;
+    Integer msgType = WSMsgTypeConstant.TEXT;
     Long sUid = user.getUid();
     String name = user.getName();
     String avatar = user.getAvatar();
     String remark1 = user.getRemark();
-    WSBaseReqVO wsBaseReqVO = WSBaseReqUtils.create(WSReqTypeEnum.FRIEND_ACK.getType(), friendUid, msgType, msgContent, sUid, name, avatar, remark1);
+    WSBaseReqVO wsBaseReqVO = WSBaseReqUtils.create(WSResTypeConstant.FRIEND_ACK, friendUid, msgType, msgContent, sUid, name, avatar, remark1);
     wsServer.sendMsg(friendUid, wsBaseReqVO);
 
     return ResultVOUtils.success();
