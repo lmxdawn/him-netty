@@ -26,7 +26,7 @@
 
 # him-netty
 
-> 使用前先阅读**开源协议**: [中文版](https://github.com/lmxdawn/him-netty/LICENSE_CN) ,  [English version](https://github.com/lmxdawn/him-netty/LICENSE)
+> 使用前先阅读**开源协议**: [中文版](https://github.com/lmxdawn/him-netty/LICENSE_CN) ,  [English version](https://github.com/lmxdawn/him-netty/LICENSE) , 协议出处 [Anti-996-License-1.0](https://github.com/kattgu7/Anti-996-License)
 
 > 前端：vue  [前往](https://github.com/lmxdawn/him-vue) ，服务端 netty [前往](https://github.com/lmxdawn/him-netty)
 
