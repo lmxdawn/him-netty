@@ -28,6 +28,23 @@
 
 > 前端：vue  [前往](https://github.com/lmxdawn/him-vue) ，服务端 netty [前往](https://github.com/lmxdawn/him-netty)
 
+# 功能列表
+* [x] 单聊
+* [x] 群聊
+* [x] protobuf 编解码
+* [x] 客户端心跳
+* [x] 客户端断开重连
+* [x] 异地登录, 通知下线
+* [x] 移动端/PC端适配
+* [x] 离线消息 (消息通过 ack 机制, 实现可达性)
+* [x] 第三方QQ登录
+* [x] 自带 emoji 表情
+* [x] 文本消息
+* [ ] 图片消息
+* [ ] 音频消息
+* [ ] 视屏消息
+* [ ] 分布式部署
+
 
 # 环境要求 
 
@@ -128,5 +145,5 @@ location /ws
 
 > 目前下载的 v3.7.1，解压到任意目录  ，然后把这个目录添加到环境变量 Path 中
 
-> 然后 windows 版本执行 proto.bat 即可，Linux 运行 proto.sh
+> 然后 windows 版本执行 `proto.bat` 即可，Linux/Max 运行 `sh proto.sh`
 
