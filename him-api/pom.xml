@@ -107,6 +107,12 @@
             <artifactId>okhttp</artifactId>
         </dependency>
 
+        <!--apache的工具包-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+
     </dependencies>
 
 

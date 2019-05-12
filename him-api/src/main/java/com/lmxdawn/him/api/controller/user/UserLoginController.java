@@ -17,6 +17,7 @@ import com.lmxdawn.him.common.vo.res.BaseResVO;
 import com.lmxdawn.him.common.utils.ResultVOUtils;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -70,6 +71,38 @@ public class UserLoginController {
     
     /**
      * 用户密码登录
+     *
+     * @return
+     */
+    @PostMapping("/byTourist")
+    public BaseResVO byTourist(@RequestParam(value = "sex") Integer type) {
+    
+        if (type != 1 && type != 2) {
+            return ResultVOUtils.error(ResultEnum.PARAM_VERIFY_FALL, "请选择游客性别~");
+        }
+        
+        String name = "火星人" + RandomStringUtils.random(7);
+        String avatar = String.format("http://prbsvykmy.bkt.clouddn.com/static/image/user-%d-default.png", type);
+        // 创建用户
+        User user = new User();
+        user.setName(name);
+        user.setAvatar(avatar);
+        boolean b = userService.insertUser(user);
+        if (!b) {
+            return ResultVOUtils.error();
+        }
+        
+        Long uid = user.getUid();
+        String token = UserLoginUtils.createSid(uid);
+        
+        UserLoginResVO userLoginResVO = new UserLoginResVO();
+        userLoginResVO.setUid(uid);
+        userLoginResVO.setSid(token);
+        return ResultVOUtils.success(userLoginResVO);
+    }
+    
+    /**
+     * 第三方QQ登录
      *
      * @return
      */
