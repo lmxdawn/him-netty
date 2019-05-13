@@ -109,7 +109,10 @@ public class GroupIndexController {
         group.setName(groupSaveReqVO.getName());
         group.setAvatar(avatar);
         group.setMemberNum(1);
-        group.setRemark(groupSaveReqVO.getRemark());
+    
+        String remark = groupSaveReqVO.getRemark();
+        remark = remark == null || "".equals(remark) ? "你今生有没有坚定不移地相信过一件事或一个人？是那种至死不渝的相信？" : "";
+        group.setRemark(remark);
         boolean b = groupService.insertGroup(group);
 
         if (!b) {
