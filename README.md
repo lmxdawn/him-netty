@@ -70,6 +70,10 @@
 
 > cd him-netty
 
+## SQL的导入
+
+> 创建数据库，名称： him， 把 根目录下 scripts 里面的 him.sql 导入进去 
+
 ## 打包
 
 > mvn -Dmaven.test.skip=true clean package
