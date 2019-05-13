@@ -49,12 +49,6 @@ public class GroupUserController {
     @Resource
     private GroupMsgService groupMsgService;
     
-    @Resource
-    private UserService userService;
-
-    @Resource
-    private WSServer wsServer;
-    
     /**
      * 列表
      *
@@ -156,7 +150,7 @@ public class GroupUserController {
         // 追加群消息
         Integer msgType = WSMsgTypeConstant.TEXT;
         String msgContent = "嗨！大家好~";
-        groupMsgService.addpMsg(uid, groupId, msgType, msgContent);
+        groupMsgService.sendGroupMsg(uid, groupId, WSResTypeConstant.JOIN_GROUP, msgType, msgContent);
 
         GroupUserListResVO groupUserListResVO = new GroupUserListResVO();
         BeanUtils.copyProperties(groupUser, groupUserListResVO);
@@ -164,26 +158,6 @@ public class GroupUserController {
         groupUserListResVO.setLastMsgTime(new Date());
         groupUserListResVO.setUnMsgCount(1);
         groupUserListResVO.setGroup(group);
-
-        // 查询用户信息
-        User user = userService.findByUid(uid);
-        // 发送在线消息
-        Long sUid = user.getUid();
-        String name = user.getName();
-        String avatar = user.getAvatar();
-        String remark = user.getRemark();
-        WSBaseReqVO wsBaseReqVO = WSBaseReqUtils.create(WSResTypeConstant.JOIN_GROUP, groupId, msgType, msgContent, sUid, name, avatar, remark);
-
-        // 查找群里的所有用户信息
-        List<GroupUser> groupUsers = groupUserService.listByGroupId(groupId, 1, 500);
-        
-        groupUsers.forEach(v -> {
-            // 排除自己
-            if (!uid.equals(v.getUid())) {
-                wsServer.sendMsg(v.getUid(), wsBaseReqVO);
-            }
-        });
-    
     
         return ResultVOUtils.success(groupUserListResVO);
     }

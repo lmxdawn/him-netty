@@ -20,10 +20,11 @@
     </select>
 
     <insert id="insertGroup" keyProperty="groupId" parameterType="com.lmxdawn.him.common.entity.group.Group">
-        INSERT INTO `group`(uid,`name`,member_num,remark,create_time,modified_time)
+        INSERT INTO `group`(uid,`name`,avatar,member_num,remark,create_time,modified_time)
         VALUES
         (#{uid},
         #{name},
+        #{avatar},
         #{memberNum},
         #{remark},
         #{createTime},

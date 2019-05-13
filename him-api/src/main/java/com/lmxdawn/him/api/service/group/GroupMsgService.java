@@ -11,6 +11,6 @@ public interface GroupMsgService {
 
     boolean insertGroupMsg(GroupMsg groupMsg);
 
-    boolean addpMsg(Long uid, Long groupId, Integer msgType, String msgContent);
+    boolean sendGroupMsg(Long uid, Long groupId, Integer type, Integer msgType, String msgContent);
 
 }

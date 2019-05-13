@@ -125,30 +125,11 @@ public class GroupMsgController {
 
         Integer msgType = groupMsgCreateReqVO.getMsgType();
         String msgContent = groupMsgCreateReqVO.getMsgContent();
-        boolean b = groupMsgService.addpMsg(uid, groupId, msgType, msgContent);
+        boolean b = groupMsgService.sendGroupMsg(uid, groupId, WSResTypeConstant.GROUP, msgType, msgContent);
         if (!b) {
             return ResultVOUtils.error(ResultEnum.NOT_NETWORK);
         }
 
-        // 查询用户信息
-        User user = userService.findByUid(uid);
-        // 发送在线消息
-        Long sUid = user.getUid();
-        String name = user.getName();
-        String avatar = user.getAvatar();
-        String remark = user.getRemark();
-        WSBaseReqVO wsBaseReqVO = WSBaseReqUtils.create(WSResTypeConstant.GROUP, groupId, msgType, msgContent, sUid, name, avatar, remark);
-    
-        // 查找群里的所有用户信息
-        List<GroupUser> groupUsers = groupUserService.listByGroupId(groupId, 1, 500);
-    
-        groupUsers.forEach(v -> {
-            System.out.println(v.getUid());
-            // 排除自己
-            if (!uid.equals(v.getUid())) {
-                wsServer.sendMsg(v.getUid(), wsBaseReqVO);
-            }
-        });
 
         return ResultVOUtils.success();
     }
