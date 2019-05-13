@@ -52,7 +52,7 @@ public final class WSBaseReqProtoOuterClass {
   }
   /**
    * <pre>
-   * 请求实体
+   * 请求实体 type (0: 心跳, 1: 登录)
    * </pre>
    *
    * Protobuf type {@code protocol.WSBaseReqProto}
@@ -385,7 +385,7 @@ public final class WSBaseReqProtoOuterClass {
     }
     /**
      * <pre>
-     * 请求实体
+     * 请求实体 type (0: 心跳, 1: 登录)
      * </pre>
      *
      * Protobuf type {@code protocol.WSBaseReqProto}

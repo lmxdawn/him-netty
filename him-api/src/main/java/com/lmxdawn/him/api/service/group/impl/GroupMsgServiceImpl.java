@@ -1,13 +1,12 @@
 package com.lmxdawn.him.api.service.group.impl;
 
 import com.lmxdawn.him.api.dao.group.GroupMsgDao;
+import com.lmxdawn.him.api.constant.WSMsgTypeConstant;
 import com.lmxdawn.him.api.service.group.GroupMsgService;
 import com.lmxdawn.him.api.service.group.GroupUserService;
 import com.lmxdawn.him.api.utils.PageUtils;
 import com.lmxdawn.him.common.entity.group.GroupMsg;
 import com.lmxdawn.him.common.entity.group.GroupUser;
-import com.lmxdawn.him.common.enums.ResultEnum;
-import com.lmxdawn.him.common.utils.ResultVOUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -45,18 +44,23 @@ public class GroupMsgServiceImpl implements GroupMsgService {
         groupMsg.setMsgType(msgType);
         groupMsg.setMsgContent(msgContent);
         switch (msgType) {
-            case 1:
+            case WSMsgTypeConstant.TEXT:
+                break;
+            case WSMsgTypeConstant.IMAGE:
                 lastMsgContent = "[图片消息]";
                 break;
-            case 2:
+            case WSMsgTypeConstant.FILE:
                 lastMsgContent = "[文件消息]";
                 break;
-            case 3:
+            case WSMsgTypeConstant.VOICE:
                 lastMsgContent = "[语言消息]";
                 break;
-            case 4:
+            case WSMsgTypeConstant.VIDEO:
                 lastMsgContent = "[视频消息]";
                 break;
+            default:
+                // 位置类型
+                return false;
         }
 
         boolean b = insertGroupMsg(groupMsg);

@@ -1,7 +1,7 @@
 package com.lmxdawn.him.api.controller.group;
 
 import com.lmxdawn.him.api.dto.UserLoginDTO;
-import com.lmxdawn.him.api.enums.WSReqTypeEnum;
+import com.lmxdawn.him.api.constant.WSResTypeConstant;
 import com.lmxdawn.him.api.service.group.GroupMsgService;
 import com.lmxdawn.him.api.service.group.GroupUserService;
 import com.lmxdawn.him.api.service.user.UserService;
@@ -137,7 +137,7 @@ public class GroupMsgController {
         String name = user.getName();
         String avatar = user.getAvatar();
         String remark = user.getRemark();
-        WSBaseReqVO wsBaseReqVO = WSBaseReqUtils.create(WSReqTypeEnum.FRIEND_ACK.getType(), groupId, msgType, msgContent, sUid, name, avatar, remark);
+        WSBaseReqVO wsBaseReqVO = WSBaseReqUtils.create(WSResTypeConstant.GROUP, groupId, msgType, msgContent, sUid, name, avatar, remark);
     
         // 查找群里的所有用户信息
         List<GroupUser> groupUsers = groupUserService.listByGroupId(groupId, 1, 500);

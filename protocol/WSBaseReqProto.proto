@@ -5,7 +5,7 @@ package protocol;
 option optimize_for = SPEED;
 option java_package = "com.lmxdawn.him.common.protobuf";
 
-// 请求实体
+// 请求实体 type (0: 心跳, 1: 登录)
 message WSBaseReqProto{
     int32 type = 1;
     uint64 uid = 2; // 用户ID

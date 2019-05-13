@@ -1,8 +1,11 @@
 package com.lmxdawn.him.api.ws;
 
+import com.lmxdawn.him.api.constant.WSResTypeConstant;
+import com.lmxdawn.him.api.constant.WSReqTypeConstant;
 import com.lmxdawn.him.api.utils.UserLoginUtils;
 import com.lmxdawn.him.common.protobuf.WSBaseReqProtoOuterClass;
 import com.lmxdawn.him.common.protobuf.WSBaseResProtoOuterClass;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -67,19 +70,46 @@ public class WSServerHandler extends SimpleChannelInboundHandler<WSBaseReqProtoO
 
         String sid = msg.getSid();
         long uid = msg.getUid();
-        if (!UserLoginUtils.checkToken(uid, sid)) {
-            log.info("非法登录");
-            userOffLine(ctx);
-            return;
+        Integer type = msg.getType();
+        switch (type) {
+            case WSReqTypeConstant.LOGIN: // 登录类型
+                log.info("用户登录");
+                userLogin(ctx, uid, sid);
+                break;
+            case WSReqTypeConstant.PING: // 心跳
+                log.info("客户端心跳");
+                break;
+            default:
+                log.info("未知类型");
         }
 
-        log.info("客户端心跳连接");
-        WSBaseResProtoOuterClass.WSBaseResProto wsBaseResProto = WSBaseResProtoOuterClass.WSBaseResProto.newBuilder()
-                .setType(0)
-                .setCreateTime(new Date().toString())
-                .build();
-        ctx.channel().writeAndFlush(wsBaseResProto);
-
+    }
+    
+    private void userLogin(ChannelHandlerContext ctx, Long uid, String sid) throws IOException {
+        if (!UserLoginUtils.checkToken(uid, sid)) {
+            log.info("非法登录: {}, {}", uid, sid);
+            // 登录异常, 发送下线通知
+            WSBaseResProtoOuterClass.WSBaseResProto wsBaseResProto = WSBaseResProtoOuterClass.WSBaseResProto.newBuilder()
+                    .setType(WSResTypeConstant.LOGIN_OUT)
+                    .setCreateTime(new Date().toString())
+                    .build();
+            // 发送下线消息
+            ctx.channel().writeAndFlush(wsBaseResProto);
+            return;
+        }
+    
+        // 判断是否在线, 如果在线, 则剔除当前在线用户
+        Channel channel = WSSocketHolder.get(uid);
+        // 如果不是第一次登陆, 并且 客户端ID和当前的不匹配, 则通知之前的客户端下线
+        if (channel != null && !ctx.channel().id().equals(channel.id())) {
+            WSBaseResProtoOuterClass.WSBaseResProto wsBaseResProto = WSBaseResProtoOuterClass.WSBaseResProto.newBuilder()
+                    .setType(WSResTypeConstant.WS_OUT)
+                    .setCreateTime(new Date().toString())
+                    .build();
+            // 发送下线消息
+            channel.writeAndFlush(wsBaseResProto);
+        }
+        
         // 加入 在线 map 中
         WSSocketHolder.put(uid, ctx.channel());
     }

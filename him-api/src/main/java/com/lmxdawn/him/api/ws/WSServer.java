@@ -81,7 +81,7 @@ public class WSServer {
                 .setMsgType(wsMessageReqVO.getMsgType())
                 .setMsgContent(wsMessageReqVO.getMsgContent())
                 .build();
-
+    
         WSUserReqVO wsUserReqVO = wsBaseReqVO.getUser();
         WSUserResProtoOuterClass.WSUserResProto wsUserResProto = WSUserResProtoOuterClass.WSUserResProto.newBuilder()
                 .setUid(wsUserReqVO.getUid())
@@ -89,7 +89,7 @@ public class WSServer {
                 .setAvatar(wsUserReqVO.getAvatar())
                 .setRemark(wsUserReqVO.getRemark())
                 .build();
-
+    
         WSBaseResProtoOuterClass.WSBaseResProto wsBaseResProto = WSBaseResProtoOuterClass.WSBaseResProto.newBuilder()
                 .setType(wsBaseReqVO.getType())
                 .setMessage(wsMessageResProto)

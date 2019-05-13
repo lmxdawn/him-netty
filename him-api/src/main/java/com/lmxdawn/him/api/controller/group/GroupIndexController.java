@@ -102,10 +102,12 @@ public class GroupIndexController {
 
         Long uid = userLoginDTO.getUid();
 
+        String avatar = groupSaveReqVO.getAvatar() == null ? "http://prbsvykmy.bkt.clouddn.com/static/image/group-default.png" : groupSaveReqVO.getAvatar();
+        
         Group group = new Group();
         group.setUid(uid);
         group.setName(groupSaveReqVO.getName());
-        group.setAvatar(groupSaveReqVO.getAvatar());
+        group.setAvatar(avatar);
         group.setMemberNum(1);
         group.setRemark(groupSaveReqVO.getRemark());
         boolean b = groupService.insertGroup(group);

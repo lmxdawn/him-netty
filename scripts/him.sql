@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `group`;
 CREATE TABLE `group` (
   `group_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '群ID',
   `uid` bigint(20) NOT NULL COMMENT '创建者用户ID',
-  `name` varchar(255) NOT NULL COMMENT '群昵称',
+  `name` varchar(255) CHARACTER SET utf8mb4 NOT NULL COMMENT '群昵称',
   `avatar` varchar(255) DEFAULT NULL COMMENT '群头像',
   `member_num` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '成员数量',
   `remark` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '描述',
@@ -73,7 +73,7 @@ CREATE TABLE `group_user` (
   `uid` bigint(20) unsigned NOT NULL COMMENT '用户ID',
   `remark` varchar(30) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '群里的备注',
   `last_ack_msg_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '最后一次确认的消息ID',
-  `last_msg_content` varchar(255) DEFAULT NULL COMMENT '最后一次的消息内容',
+  `last_msg_content` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '最后一次的消息内容',
   `last_msg_time` datetime DEFAULT NULL COMMENT '最后一次的消息时间',
   `un_msg_count` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '未读消息数量',
   `rank` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '等级（0：普通成员，1：管理员，2：群主）',

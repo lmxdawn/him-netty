@@ -1,7 +1,8 @@
 package com.lmxdawn.him.api.controller.user;
 
 import com.lmxdawn.him.api.dto.UserLoginDTO;
-import com.lmxdawn.him.api.enums.WSReqTypeEnum;
+import com.lmxdawn.him.api.constant.WSMsgTypeConstant;
+import com.lmxdawn.him.api.constant.WSResTypeConstant;
 import com.lmxdawn.him.api.service.user.UserFriendMsgService;
 import com.lmxdawn.him.api.service.user.UserFriendService;
 import com.lmxdawn.him.api.service.user.UserService;
@@ -119,18 +120,18 @@ public class UserFriendMsgController {
         String msgContent = userFriendMsgSaveReqVO.getMsgContent();
         String lastMsgContent = msgContent;
         switch (msgType) {
-            case 0:
+            case WSMsgTypeConstant.TEXT:
                 break;
-            case 1:
+            case WSMsgTypeConstant.IMAGE:
                 lastMsgContent = "[图片消息]";
                 break;
-            case 2:
+            case WSMsgTypeConstant.FILE:
                 lastMsgContent = "[文件消息]";
                 break;
-            case 3:
+            case WSMsgTypeConstant.VOICE:
                 lastMsgContent = "[语言消息]";
                 break;
-            case 4:
+            case WSMsgTypeConstant.VIDEO:
                 lastMsgContent = "[视频消息]";
                 break;
             default:
@@ -172,7 +173,7 @@ public class UserFriendMsgController {
         String name = user.getName();
         String avatar = user.getAvatar();
         String remark = user.getRemark();
-        WSBaseReqVO wsBaseReqVO = WSBaseReqUtils.create(WSReqTypeEnum.FRIEND.getType(), receiverUid, msgType, msgContent, sUid, name, avatar, remark);
+        WSBaseReqVO wsBaseReqVO = WSBaseReqUtils.create(WSResTypeConstant.FRIEND, receiverUid, msgType, msgContent, sUid, name, avatar, remark);
         wsServer.sendMsg(receiverUid, wsBaseReqVO);
         
         return ResultVOUtils.success();
