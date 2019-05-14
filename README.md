@@ -30,13 +30,14 @@
 
 > 前端：vue  [前往](https://github.com/lmxdawn/him-vue) ，服务端 netty [前往](https://github.com/lmxdawn/him-netty)
 
-# 发现的一些坑
+# 踩坑指南
 
 > * 1. iOS版本手机QQ中清空不了 Cookie 的bug (Android 版本的QQ没试), 其它浏览器均正常
 
 > * 2. 手机微信中打开后点击输入文字后, 不管点不点击发送按钮都会出现短暂的不能点击的现象(任何按钮都不能点击), 后来发现是因为在微信里面, 输入法把 输入框顶上去了, 然后输入法隐藏后输入框还在上面!!!! [点击查看详情](https://developers.weixin.qq.com/community/develop/doc/00040a43cd4290dedbc7e7f1851400)
+  。找到一个解决输入框的方法:  @blur="chatTextBlur" 监听失去焦点的事件(vue 写法), 然后在事件里面执行 `window.scroll(0, 0);`
 
-> * 找到一个解决输入框的方法:  @blur="chatTextBlur" 监听失去焦点的事件(vue 写法), 然后设置 `window.scroll(0, 0);`
+> * 3. 因为设置了定位，`overflow: scroll` 原生滚动，iOS下会不流畅，解决办法：换成 `-webkit-overflow-scrolling: touch;`
 
 # 功能列表
 * [x] 单聊
