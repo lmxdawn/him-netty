@@ -22,7 +22,7 @@ public class UserLoginUtils {
   public static String createSid(Long uid, Long ttl) {
     Map<String, Object> claims = new HashMap<>();
     claims.put("uid", uid);
-    return JwtUtils.createToken(claims, 86400L); // 一天后过期
+    return JwtUtils.createToken(claims, ttl); // 一天后过期
   }
 
   /**
