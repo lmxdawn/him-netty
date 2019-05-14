@@ -11,7 +11,7 @@
     </select>
 
     <select id="listByGroupIdIn" resultType="com.lmxdawn.him.common.entity.group.Group">
-        SELECT group_id,uid,`name`,member_num,remark,create_time,modified_time
+        SELECT group_id,uid,`name`,avatar,member_num,remark,create_time,modified_time
         FROM `group`
         where group_id in
         <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
