@@ -268,12 +268,20 @@ public class UserFriendAskController {
     userProfile2.setModifiedTime(new Date());
     userProfileArrayList.add(userProfile2);
     boolean b2 = userProfileService.incFriendCountAll(userProfileArrayList);
-
+  
+    Long senderUid = uid;
+    
     // 追加消息
     UserFriendMsg userFriendMsg = new UserFriendMsg();
     // 把最小的那个 用户ID作为 之后的查询uid
-    userFriendMsg.setUid(uid > friendUid ? friendUid : uid);
-    userFriendMsg.setSenderUid(uid);
+    Long toUid = friendUid;
+    if (uid > friendUid) {
+      toUid = uid;
+      uid = friendUid;
+    }
+    userFriendMsg.setUid(uid);
+    userFriendMsg.setToUid(toUid);
+    userFriendMsg.setSenderUid(senderUid);
     userFriendMsg.setMsgContent(msgContent);
     userFriendMsg.setMsgType(1);
     userFriendMsgService.insertUserFriendMsg(userFriendMsg);

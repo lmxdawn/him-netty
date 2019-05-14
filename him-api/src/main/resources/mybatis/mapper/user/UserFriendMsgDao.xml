@@ -3,18 +3,20 @@
 
 <mapper namespace="com.lmxdawn.him.api.dao.user.UserFriendMsgDao">
 
-    <select id="listByUid" resultType="com.lmxdawn.him.common.entity.user.UserFriendMsg">
-        select msg_id,uid,sender_uid,msg_type,msg_content,create_time
+    <select id="listByUidAndToUid" resultType="com.lmxdawn.him.common.entity.user.UserFriendMsg">
+        select msg_id,sender_uid,msg_type,msg_content,create_time
         from `user_friend_msg`
         where uid = #{uid}
+        and to_uid = #{toUid}
         order by msg_id desc
         limit #{offset},#{limit}
     </select>
 
     <insert id="insertUserFriendMsg" keyProperty="msgId" parameterType="com.lmxdawn.him.common.entity.user.UserFriendMsg">
-        insert into `user_friend_msg`(`uid`,sender_uid,msg_type,msg_content,create_time)
+        insert into `user_friend_msg`(`uid`,to_uid,sender_uid,msg_type,msg_content,create_time)
         values
         (#{uid},
+        #{toUid},
         #{senderUid},
         #{msgType},
         #{msgContent},

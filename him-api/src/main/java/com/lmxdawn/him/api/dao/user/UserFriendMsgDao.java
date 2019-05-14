@@ -14,9 +14,10 @@ public interface UserFriendMsgDao {
      *
      * @return
      */
-    List<UserFriendMsg> listByUid(@Param(value = "uid") Long uid,
-                                  @Param(value = "offset") Integer offset,
-                                  @Param(value = "limit") Integer limit);
+    List<UserFriendMsg> listByUidAndToUid(@Param(value = "uid") Long uid,
+                                          @Param(value = "toUid") Long toUid,
+                                          @Param(value = "offset") Integer offset,
+                                          @Param(value = "limit") Integer limit);
     
     /**
      * 插入

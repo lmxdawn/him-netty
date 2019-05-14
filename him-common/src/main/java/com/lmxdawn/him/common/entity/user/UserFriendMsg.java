@@ -19,6 +19,10 @@ public class UserFriendMsg {
  	*/
 	private Long uid;
 	/**
+ 	* 和上面的uid做查询用
+ 	*/
+	private Long toUid;
+	/**
  	* 发送方用户ID
  	*/
 	private Long senderUid;

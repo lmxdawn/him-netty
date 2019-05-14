@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface UserFriendMsgService {
 
-    List<UserFriendMsg> listByUid(Long uid, Integer offset, Integer limit);
+    List<UserFriendMsg> listByUidAndToUid(Long uid, Long toUid, Integer offset, Integer limit);
 
     boolean insertUserFriendMsg(UserFriendMsg userFriendMsg);
 
