@@ -288,7 +288,7 @@ public class UserFriendAskController {
 
     // 发送在线消息
     // 查询用户信息
-    User user = userService.findByUid(uid);
+    User user = userService.findByUid(senderUid);
     Integer msgType = WSMsgTypeConstant.TEXT;
     Long sUid = user.getUid();
     String name = user.getName();
