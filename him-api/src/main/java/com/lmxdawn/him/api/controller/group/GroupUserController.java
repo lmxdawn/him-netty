@@ -96,7 +96,8 @@ public class GroupUserController {
      * @return
      */
     @PostMapping("/create")
-    public BaseResVO create(@RequestParam("checkCode") String checkCode,
+    public BaseResVO create(@RequestParam(value = "checkCode", required = false, defaultValue = "") String checkCode,
+                            @RequestParam(value = "groupId", required = false, defaultValue = "0L") Long groupId,
                             HttpServletRequest request) {
         
         // 验证登录
@@ -106,8 +107,9 @@ public class GroupUserController {
         }
         
         Long uid = userLoginDTO.getUid();
-        
-        Long groupId = GroupUserUtils.checkCode(checkCode);
+        if (groupId == null || groupId <= 0) {
+            groupId = GroupUserUtils.checkCode(checkCode);
+        }
         // 验证用户是否合法加入
         if (groupId == null) {
             return ResultVOUtils.error(ResultEnum.PARAM_VERIFY_FALL, "二维码过期~");

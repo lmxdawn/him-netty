@@ -91,7 +91,8 @@ public class UserFriendAskController {
   
   
   @PostMapping("/create")
-  public BaseResVO create(@RequestParam("checkCode") String checkCode,
+  public BaseResVO create(@RequestParam(value = "checkCode", required = false, defaultValue = "") String checkCode,
+                          @RequestParam(value = "friendUid", required = false, defaultValue = "0L") Long friendUid,
                           @RequestParam(value = "remark", required = false, defaultValue = "") String remark,
                           HttpServletRequest request) {
     // 验证登录
@@ -101,7 +102,9 @@ public class UserFriendAskController {
     }
     
     Long uid = userLoginDTO.getUid();
-    Long friendUid = UserFriendUtils.checkCode(checkCode);
+    if (friendUid == null || friendUid <= 0) {
+        friendUid = UserFriendUtils.checkCode(checkCode);
+    }
     // 验证用户是否合法加入
     if (friendUid == null) {
       return ResultVOUtils.error(ResultEnum.PARAM_VERIFY_FALL, "二维码过期~");
