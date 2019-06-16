@@ -2,7 +2,7 @@
 <div align="center">
     <p align="center">
     
-   [![him-vue](http://prbsvykmy.bkt.clouddn.com/pic/him.jpg)](http://him-netty.await.fun/h5)
+   [![him-vue](https://github.com/lmxdawn/him-vue/raw/master/pic/him.jpg)](http://him-netty.await.fun/h5)
    
 
    </p>
@@ -98,11 +98,11 @@ him-vue [前往](https://github.com/lmxdawn/him-vue) 和 him-netty [前往](http
 
 # 加好友演示
 
-[![him-vue](http://prbsvykmy.bkt.clouddn.com/pic/user-show-how.gif)](http://him-netty.await.fun/h5)
+[![him-vue](https://github.com/lmxdawn/him-vue/raw/master/pic/user-show-how.gif)](http://him-netty.await.fun/h5)
 
 # 加群演示
 
-[![him-vue](http://prbsvykmy.bkt.clouddn.com/pic/group-show-how.gif)](http://him-netty.await.fun/h5)
+[![him-vue](https://github.com/lmxdawn/him-vue/raw/master/pic/group-show-how.gif)](http://him-netty.await.fun/h5)
 
 
 # QQ 互联相关配置
